@@ -1,0 +1,10 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Instituto Politécnico Nacional
+${licensePrefix}Centro de Investigación en Computación (CIC-IPN)
+${licensePrefix}Laboratorio de Robótica y Mecatrónica
+${licensePrefix}Todos los derechos reservados
+<#if licenseLast??>
+${licenseLast}
+</#if>

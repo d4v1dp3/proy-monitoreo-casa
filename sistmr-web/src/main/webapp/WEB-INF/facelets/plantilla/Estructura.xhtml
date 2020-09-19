@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+    Document   : estructura
+    Created on : Septiembre 2020
+    Author     : Iliac Huerta Trujillo
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+       <h:head>
+            <ui:include src="/WEB-INF/facelets/composicion/head.xhtml"/> 
+        </h:head>
+
+        <h:body >
+            <f:facet name="last">
+                <h:outputStylesheet library="css" name="sismrstyle.css" />
+
+            </f:facet>
+
+            <f:subview id="scriptZone">
+                <ui:insert name="scriptZone"></ui:insert>
+            </f:subview> 
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" > <!--style="border: 1px;"> -->
+                    <ui:include src="/WEB-INF/facelets/composicion/encabezado.xhtml"/> 
+                </p:layoutUnit>
+
+
+                <p:layoutUnit position="center" style="border: 1px;">
+                    <ui:insert name="menu">
+                        <ui:include src="/WEB-INF/facelets/composicion/menu.xhtml"/>
+                    </ui:insert>
+                    <h1><ui:insert name="titulo"></ui:insert></h1>
+                    <br/>
+                    <div>
+                        <ui:insert name="mensajes"></ui:insert>
+                    </div>
+                    <!-- AQUI VAMOS A PONER EL CONTENIDO... espero funciones -->
+                    <f:subview id="contenido" > <!-- contentType="text/html"> -->
+                        <ui:insert name="contenido">EDITAR CONTENIDO</ui:insert>
+                    </f:subview>
+
+
+                </p:layoutUnit>
+                <p:layoutUnit position="south" > 
+                    <ui:include src="/WEB-INF/facelets/composicion/foot.xhtml"/>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+    </html>
+

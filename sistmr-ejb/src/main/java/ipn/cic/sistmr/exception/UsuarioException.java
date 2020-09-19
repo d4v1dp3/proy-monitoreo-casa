@@ -1,0 +1,28 @@
+/*
+ * Instituto Politécnico Nacional
+ * Centro de Investigación en Computación (CIC-IPN)
+ * Laboratorio de Robótica y Mecatrónica
+ * Todos los derechos reservados
+ */
+package ipn.cic.sistmr.exception;
+
+/**
+ *
+ * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
+ */
+public class UsuarioException extends Exception {
+
+    /**
+     * Constructs an instance of <code>UsuarioException</code> with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
+     */
+    public UsuarioException(String msg) {
+        super(msg);
+    }
+    
+    public UsuarioException(String msg, Throwable anid) {
+        super(msg, anid);
+    }
+}

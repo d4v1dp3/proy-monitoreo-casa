@@ -1,0 +1,85 @@
+/*
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+*/
+/* 
+    Hoja de estilos para las pantallas de log in y error log-in
+    Created on : 17 sep. 2020, 19:19:20
+    Author     : Iliac Huerta Trujillo <ihuertat@ipn.mx>
+*/
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+.foot_ley{
+   background-color: #333333;
+   color: white;
+   text-align: center;
+   padding-top:5px;
+   line-height:15px;
+   font-size:10px;
+   color: #e6e6e6;
+   clear:both;
+}
+
+.tituloNomLogin{
+    background: #fff;
+    font-size:15px;
+    font-family: sans-serif;
+    color: #00b140;
+}
