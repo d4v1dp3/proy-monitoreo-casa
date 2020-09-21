@@ -84,3 +84,11 @@ span.psw {
     font-family: sans-serif;
     color: #00b140;
 }
+
+.errorLogin{
+    background: #ccc;
+    font-size:15px;
+    font-family: sans-serif;
+    color: #f44336;
+    text-align: center;
+}
