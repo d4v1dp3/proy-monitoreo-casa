@@ -36,3 +36,21 @@ Todos los derechos reservados
     color: #00b140;
 }
 
+h1 {
+  color:#00b140;
+  font-size: 2.25em;
+  text-align: center;
+}
+h2 {
+  font-size: 1em;
+}
+h3 {
+  color:#243446;
+}
+
+ .vertical-container {
+        margin: 0;
+        min-height: 400px;
+        background: #efefef;
+        border-radius: 4px;
+    }

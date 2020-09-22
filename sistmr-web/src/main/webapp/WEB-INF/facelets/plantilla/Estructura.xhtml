@@ -17,42 +17,34 @@
         <h:body >
             <f:facet name="last">
                 <h:outputStylesheet library="css" name="sismrstyle.css" />
+                <h:outputStylesheet library="css" name="primeflex.css" />
 
             </f:facet>
 
             <f:subview id="scriptZone">
                 <ui:insert name="scriptZone"></ui:insert>
             </f:subview> 
-
-            <p:layout fullPage="true">
-
-                <p:layoutUnit position="north" > <!--style="border: 1px;"> -->
+            
+            <div id="principal" class="p-grid p-dir-col">
+                <div id="encabezado" class="p-col">
                     <ui:include src="/WEB-INF/facelets/composicion/encabezado.xhtml"/> 
-                </p:layoutUnit>
-
-
-                <p:layoutUnit position="center" style="border: 1px;">
+                </div>
+                
+                <div id="contenido" class="p-col vertical-container">
                     <ui:insert name="menu">
                         <ui:include src="/WEB-INF/facelets/composicion/menu.xhtml"/>
                     </ui:insert>
                     <h1><ui:insert name="titulo"></ui:insert></h1>
-                    <br/>
                     <div>
                         <ui:insert name="mensajes"></ui:insert>
                     </div>
-                    <!-- AQUI VAMOS A PONER EL CONTENIDO... espero funciones -->
                     <f:subview id="contenido" > <!-- contentType="text/html"> -->
                         <ui:insert name="contenido">EDITAR CONTENIDO</ui:insert>
                     </f:subview>
-
-
-                </p:layoutUnit>
-                <p:layoutUnit position="south" > 
+                </div>
+                <div id="footer" class="p-col p-col-align-end">
                     <ui:include src="/WEB-INF/facelets/composicion/foot.xhtml"/>
-                </p:layoutUnit>
-
-            </p:layout>
-
+                </div>
+            </div>
         </h:body>
     </html>
-
