@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EntPaciente.findByTelFijo", query = "SELECT e FROM EntPaciente e WHERE e.telFijo = :telFijo"),
     @NamedQuery(name = "EntPaciente.findByTelCel", query = "SELECT e FROM EntPaciente e WHERE e.telCel = :telCel")})
 public class EntPaciente implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,6 +79,10 @@ public class EntPaciente implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne(fetch = FetchType.LAZY)
     private EntPersona idPersona;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "entPaciente", fetch = FetchType.LAZY)
+    private EntAntecedentes entAntecedentes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entPaciente", fetch = FetchType.LAZY)
+    private List<EntSintomas> entSintomasList;
 
     public EntPaciente() {
     }
@@ -208,6 +212,23 @@ public class EntPaciente implements Serializable {
     @Override
     public String toString() {
         return "ipn.cic.sistmr.modelo.EntPaciente[ idPaciente=" + idPaciente + " ]";
+    }
+
+    public EntAntecedentes getEntAntecedentes() {
+        return entAntecedentes;
+    }
+
+    public void setEntAntecedentes(EntAntecedentes entAntecedentes) {
+        this.entAntecedentes = entAntecedentes;
+    }
+
+    @XmlTransient
+    public List<EntSintomas> getEntSintomasList() {
+        return entSintomasList;
+    }
+
+    public void setEntSintomasList(List<EntSintomas> entSintomasList) {
+        this.entSintomasList = entSintomasList;
     }
     
 }

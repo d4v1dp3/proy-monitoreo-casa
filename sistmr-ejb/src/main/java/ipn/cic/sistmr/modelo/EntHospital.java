@@ -38,14 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "EntHospital.findAll", query = "SELECT e FROM EntHospital e"),
     @NamedQuery(name = "EntHospital.findByIdHospital", query = "SELECT e FROM EntHospital e WHERE e.idHospital = :idHospital"),
-    @NamedQuery(name = "EntHospital.findByNombre", query = "SELECT e FROM EntHospital e WHERE e.nombre = :nombre"),
-    @NamedQuery(name = "EntHospital.findByUbicacionGeo", query = "SELECT e FROM EntHospital e WHERE e.ubicacionGeo = :ubicacionGeo"),
-    @NamedQuery(name = "EntHospital.findByTelEmergencias", query = "SELECT e FROM EntHospital e WHERE e.telEmergencias = :telEmergencias"),
-    @NamedQuery(name = "EntHospital.findByDirCalle", query = "SELECT e FROM EntHospital e WHERE e.dirCalle = :dirCalle"),
-    @NamedQuery(name = "EntHospital.findByNumero", query = "SELECT e FROM EntHospital e WHERE e.numero = :numero"),
-    @NamedQuery(name = "EntHospital.findByColonia", query = "SELECT e FROM EntHospital e WHERE e.colonia = :colonia"),
-    @NamedQuery(name = "EntHospital.findByMunicipio", query = "SELECT e FROM EntHospital e WHERE e.municipio = :municipio"),
-    @NamedQuery(name = "EntHospital.findByEstado", query = "SELECT e FROM EntHospital e WHERE e.estado = :estado")})
+    @NamedQuery(name = "EntHospital.findByNombre", query = "SELECT e FROM EntHospital e WHERE e.nombre = :nombre")
+})
 public class EntHospital implements Serializable {
 
     private static final long serialVersionUID = 1L;
