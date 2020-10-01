@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : gestionUsuarios
+    Created on : Septiembre 2020
+    Author     : Iliac Huerta Trujillo
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Gestión_Hospital
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            <h:form>
+                <p:growl id="msgs" showDetail="true" />
+                <div>
+
+                </div>
+                <p:panel id="pnGHospital" header="Gestión de Hospital" footer="" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>"
+                            </p>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
+                            <p:panel header="Datos de Hospital">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="nomHosp" value="Nombre hospital:" /> </p:column>
+                                        <p:column><p:inputText id="nomHosp" value="#{gestionHospitalMB.hospEnt.nombre}" required="true" /></p:column>
+                                        <p:column><p:message for="nomHosp" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align: center" class="ui-widget-header">Dirección</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="hCalle" value="Calle:" /></p:column>
+                                        <p:column><p:outputLabel for="hNum" value="Numero:" /></p:column>
+                                        <p:column><p:outputLabel for="hCol" value="Colonia:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="hCalle" value="#{gestionHospitalMB.hospEnt.dirCalle}" required="true" /></p:column>
+                                        <p:column><p:inputText id="hNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" /></p:column>
+                                        <p:column><p:inputText id="hCol" value="#{gestionHospitalMB.hospEnt.colonia}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="hCalle" /></p:column>
+                                        <p:column><p:message for="hNum" /></p:column>
+                                        <p:column><p:message for="hCol" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="hMun" value="Municipio:" /></p:column>
+                                        <p:column><p:outputLabel for="hEst" value="Estado:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="hMun" value="#{gestionHospitalMB.hospEnt.municipio}" required="true" /></p:column>
+                                        <p:column><p:inputText id="hEst" value="#{gestionHospitalMB.hospEnt.estado}" required="true" /></p:column>
+                                    </p:row>
+
+
+                                </p:panelGrid>
+                                <p:panelGrid >
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="2" >Ubicación geográfica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="lat" value="Latitud:" /></p:column>
+                                        <p:column><p:inputText id="lat" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="lng" value="Longitud:" /></p:column>
+                                        <p:column><p:inputText id="lng" /></p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <p:gmap id="geoGmap" widgetVar="geoMap" center="41.381542, 2.122893" zoom="8" 
+                                        type="ROADMAP" style="width:50%;height:200px" />
+                            </p:panel>
+                        </div>
+                    </div>
+
+                </p:panel>
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>
+
+
+
+
