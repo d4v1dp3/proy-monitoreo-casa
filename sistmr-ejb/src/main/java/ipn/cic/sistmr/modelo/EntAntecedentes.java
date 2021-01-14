@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 @Entity
-@Table(name = "MH_ANTECEDENTES")
+@Table(name = "RM_ANTECEDENTES")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EntAntecedentes.findAll", query = "SELECT e FROM EntAntecedentes e"),
