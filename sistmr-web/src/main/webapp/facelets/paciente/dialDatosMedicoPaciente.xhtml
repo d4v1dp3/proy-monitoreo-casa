@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:view>
+        <f:metadata> 
+            <f:viewParam name="medNombre" value="#{dialMedicoPacienteMB.medNombre}" />
+            <f:viewParam name="medPrimerAp" value="#{dialMedicoPacienteMB.medPrimerAp}" />
+            <f:viewParam name="medSegundoAp" value="#{dialMedicoPacienteMB.medSegundoAp}" />
+            <f:viewParam name="medEmail" value="#{dialMedicoPacienteMB.medEmail}" />
+            <f:viewParam name="medTel" value="#{dialMedicoPacienteMB.medTel}" />
+            <f:viewParam name="medTel" value="#{dialMedicoPacienteMB.medCedula}" />
+        </f:metadata>
+        <h:head>
+
+            <title>Datos Médico</title>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 90%;
+                }
+                .ui-widget-header{
+                    background-color: #e7e8e9 !important;
+                    border-color: #cacaca !important;
+                    font-weight: bold !important;
+                    color: black !important;
+                    text-align: left !important;
+                }
+                .titulo{
+                    font-weight: bold !important;
+                }
+            </style>
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+    
+        </h:head>
+
+        <h:body>
+
+            <center>
+            <h:form id="frmDatosMedico">
+                <p:growl id="msgDatosMed" showDetail="true" />
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column colspan="3">
+
+                            <center>
+                                <h1><i class="fas fa-user-md" style="font-size: 4em"></i></h1>
+                                <h2>                                    
+                                    <p:outputLabel value="MÉDICO ASIGNADO" class="titulo"></p:outputLabel>
+                                </h2>
+                            </center>
+                            
+                            <p:panelGrid>
+                                <p:row>
+                                    
+                                    <p:column colspan="3" class="ui-widget-header">Datos</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <table width="100%" border="0">
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-user-md"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Nombre:" />
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medPrimerAp}" style="font-weight: bold"> </p:outputLabel>
+                                                    <p:outputLabel value=" " />
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medSegundoAp}" style="font-weight: bold"> </p:outputLabel>
+                                                    <p:outputLabel value=" " />
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medNombre}" style="font-weight: bold"> </p:outputLabel>
+                                                </td>
+                                            </tr>    
+                                            <tr>
+                                                <td>                                                    
+                                                    <i class="fas fa-stethoscope"></i>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="Cédula Profesional:" />
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medCedula}" style="font-weight: bold"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="3" class="ui-widget-header">Contacto</p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <table width="100%" border="0" align="center">                                           
+                                            <tr>
+                                                <td>
+                                                    <i class="far fa-envelope"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Correo Electrónico:" />
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medEmail}" style="font-weight: bold"></p:outputLabel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-tablet"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Teléfono Celular:" />
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medTel}" style="font-weight: bold"></p:outputLabel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3" style="text-align: right">
+                            <p:commandButton value="Cerrar" actionListener="#{inicioPacienteMB.cerrarDialogo}"  />                 
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </h:form>
+            </center>
+        </h:body>
+    </f:view>
+</html>

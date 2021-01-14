@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:view>
+        <h:head>
+
+            <title>Alta Médico</title>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 90%;
+                }
+                .ui-widget-header{
+                    background-color: #e7e8e9 !important;
+                    border-color: #cacaca !important;
+                    font-weight: bold !important;
+                    color: black !important;
+                    text-align: left !important;
+                }
+                .titulo{
+                    font-weight: bold !important;
+                }
+            </style>
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+    
+        </h:head>
+
+        <h:body>
+<i class="far fa-save"></i>
+            <h:form id="frmAltaMedico">
+                <p:growl id="msgAltaMed" showDetail="true" />
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+
+                            <center>
+                                <h2>
+                                    <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
+                                </h2>
+                            </center>
+                            <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
+
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="3" class="ui-widget-header">Datos Personales</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <table width="100%" border="0">
+
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel for="apPat" value="Apellido Paterno:" /> </td>
+                                                <td><p:outputLabel for="apMat" value="Apellido Materno:" /> </td>
+                                                <td><p:outputLabel for="nomPers" value="Nombre(s):" /> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:inputText id="apPat" value="#{gestionMedicoMB.datPersona.primerApellido}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="apMat" value="#{gestionMedicoMB.datPersona.segundoApellido}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="nomPers" value="#{gestionMedicoMB.datPersona.nombre}" required="true" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:message for="apPat" /></td>
+                                                <td><p:message for="apMat" /></td>
+                                                <td><p:message for="nomPers" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:outputLabel for="curp" value="CURP:" /> </td>
+                                                <td><p:outputLabel for="genMenu" value="Género:" /> </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" />
+
+                                                </td>
+                                                <td>
+                                                    <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" dynamic="true">
+                                                        <f:selectItems value="#{gestionMedicoMB.catGenero}" var="genero" 
+                                                                       itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                                    </p:selectOneMenu>                                                
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:message for="curp" /></td>
+                                                <td><p:message for="genMenu" /></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3" class="ui-widget-header">Datos de Sesión</p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+
+                                        <table width="100%" border="0">
+                                            <tr>
+                                                <td><p:outputLabel for="idUsr" value="Usuario:" /> </td>
+                                                <td><p:outputLabel for="contra" value="Contraseña:"/></td>
+                                                <td><p:outputLabel for="estado" value="Estado:"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:inputText id="idUsr" value="#{gestionMedicoMB.datUsuario.idUsuario}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="contra" value="#{gestionMedicoMB.datUsuario.contrasenia}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:selectBooleanCheckbox id="estado" value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:message for="idUsr" /></td>
+                                                <td><p:message for="contra" /></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Medico</p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <table width="100%" border="0">
+
+                                            <tr>
+                                                <td><p:outputLabel for="hCedula" value="Cedula Profesional:" /></td>
+                                                <td><p:outputLabel for="hEmail" value="Correo Electronico:" /></td>
+                                                <td><p:outputLabel for="hCelular" value="Telefono Celular:" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:inputText id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:message for="hCedula" /></td>
+                                                <td><p:message for="hEmail" /></td>
+                                                <td><p:message for="hCelular" /></td>
+                                            </tr>
+                                        </table>
+                                    </p:column>
+                                </p:row>
+
+
+                                <p:row>
+                                    <p:column colspan="3" style="text-align: right">
+                                        <p:commandButton icon="fas fa-save" value="Guardar" 
+                                                         actionListener="#{gestionMedicoMB.guardarMedico()}"
+                                                         update="@all"/>
+                                        <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo}"  />    
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </h:form>
+<!--            <h:form>
+                <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}"  />    
+            </h:form>
+            -->
+        </h:body>
+    </f:view>
+</html>
