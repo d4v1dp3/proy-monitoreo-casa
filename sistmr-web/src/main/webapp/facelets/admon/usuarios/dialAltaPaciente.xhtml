@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Alta Paciente</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+            .ui-widget-header{
+                background-color: #e7e8e9 !important;
+                border-color: #cacaca !important;
+                font-weight: bold !important;
+                color: black !important;
+                text-align: left !important;
+            }
+            .titulo{
+                font-weight: bold !important;
+            }
+        </style>
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+    </h:head>
+
+    <h:body>
+        <i id="customheader" class="fas fa-bed" style="display:none"></i>
+
+        <h:form id="frmAltaPaciente">
+            <p:growl id="msgAltaPas" showDetail="true" />
+
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
+
+
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN PACIENTE" class="titulo"></p:outputLabel>
+                            </h2>
+                        </center>
+                        <p>Llene los siguientes campos para registrar un Paciente en el sistema. </p>
+
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="apPat" value="Apellido Paterno:" /> </td>
+                                            <td><p:outputLabel for="apMat" value="Apellido Materno:" /> </td>
+                                            <td><p:outputLabel for="nomPers" value="Nombre(s):" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="apPat" value="#{gestionPacienteMB.datPersona.primerApellido}" required="true" /></td>
+                                            <td><p:inputText id="apMat" value="#{gestionPacienteMB.datPersona.segundoApellido}" required="true" /></td>
+                                            <td><p:inputText id="nomPers" value="#{gestionPacienteMB.datPersona.nombre}" required="true" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="apPat" /></td>
+                                            <td><p:message for="apMat" /></td>
+                                            <td><p:message for="nomPers" /></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel for="curp" value="CURP:" /> </td>
+                                            <td><p:outputLabel for="genMenu" value="Género:" /> </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="curp" value="#{gestionPacienteMB.datPersona.curp}" required="true" /></td>
+                                            <td><p:selectOneMenu id="genMenu" value="#{gestionPacienteMB.datPersona.idGenero}" dynamic="true">
+                                                    <f:selectItems value="#{gestionPacienteMB.catGenero}" var="genero" 
+                                                                   itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                                </p:selectOneMenu>  </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="curp" /></td>
+                                            <td><p:message for="genMenu" /></td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><p:outputLabel for="dirCalle" value="Calle:" /> </td>
+                                            <td><p:outputLabel for="numExt" value="Num. Exterior:" /> </td>
+                                            <td><p:outputLabel for="numInt" value="Num. Interior:" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="dirCalle" value="#{gestionPacienteMB.datPaciente.dirCalle}" required="true" /></td>
+                                            <td><p:inputText id="numExt" value="#{gestionPacienteMB.datPaciente.dirNumero}" required="true" /></td>
+                                            <td><p:inputText id="numInt" value="#{gestionPacienteMB.datPaciente.dirInterior}" required="true" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="dirCalle" /></td>
+                                            <td><p:message for="numExt" /></td>
+                                            <td><p:message for="numInt" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel for="telFijo" value="Teléfono fijo:" /> </td>
+                                            <td><p:outputLabel for="telCel" value="Teléfono Celular:" /> </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="telFijo" value="#{gestionPacienteMB.datPaciente.telFijo}" required="true" /></td>
+                                            <td><p:inputText id="telCel" value="#{gestionPacienteMB.datPaciente.telCel}" required="true" /></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="telFijo" /></td>
+                                            <td><p:message for="telCel" /></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Paciente</p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="idHosp" value="Hospital:" /> </td>
+                                            <td><p:outputLabel for="idCareta" value="Careta:" /> </td>
+                                            <td><p:outputLabel for="estMenu" value="Estado del Paciente:" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true" /></td>
+                                            <td><p:inputText id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true" /></td>
+                                            <td>
+                                                <p:selectOneMenu id="estMenu" value="#{gestionPacienteMB.datPaciente.idEstadopaciente}" dynamic="true">
+                                                    <f:selectItems value="#{gestionPacienteMB.catEstado}" var="estado" 
+                                                                   itemLabel="#{estado.descripcion}" itemValue="#{estado.idEstadopaciente}"/>
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="idHosp" /></td>
+                                            <td><p:message for="idCareta" /></td>
+                                            <td><p:message for="estMenu" /></td>
+                                        </tr>   
+                                        <tr>
+                                            <td><p:outputLabel for="idMed" value="Médico:" /> </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idMed" value="#{gestionPacienteMB.datPaciente.idMedico}" required="true" /></td>
+                                            <td><p:message for="idMed" /></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="idUsr" value="Usuario:" /> </td>
+                                            <td><p:outputLabel for="contra" value="Contraseña:" /> </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idUsr" value="#{gestionPacienteMB.datUsuario.idUsuario}" required="true" /></td>
+                                            <td><p:inputText id="contra" value="#{gestionPacienteMB.datUsuario.contrasenia}" required="true" /></td>
+                                            <td>
+                                                <p:selectBooleanCheckbox id="estado" value="#{gestionPacienteMB.datUsuario.activo}" itemLabel="Activo"/>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="idUsr" /></td>
+                                            <td><p:message for="contra" /></td>
+                                            <td></td>
+                                        </tr>
+
+
+                                    </table>
+
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <p:commandButton value="Guardar" actionListener="#{gestionPacienteMB.guardarPaciente()}"
+                                                     icon="fas fa-save" update="@all"/>
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+
+        <h:form>
+            <p:commandButton value="Cerrar" action="#{gestionPacienteMB.cerrarDialogo}" />  
+        </h:form>
+    </h:body>
+
+</html>

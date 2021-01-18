@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EntMedidas.findByIdPaciente", query = "SELECT e FROM EntMedidas e WHERE e.entMedidasPK.idPaciente = :idPaciente"),
     @NamedQuery(name = "EntMedidas.findByIdCareta", query = "SELECT e FROM EntMedidas e WHERE e.entMedidasPK.idCareta = :idCareta"),
     @NamedQuery(name = "EntMedidas.findByIdMedicion", query = "SELECT e FROM EntMedidas e WHERE e.entMedidasPK.idMedicion = :idMedicion"),
-    @NamedQuery(name = "EntMedidas.findByAlerta", query = "SELECT e FROM EntMedidas e WHERE e.alerta = :alerta")})
+    @NamedQuery(name = "EntMedidas.findByAlerta", query = "SELECT e FROM EntMedidas e WHERE e.alerta = :alerta"),
+    @NamedQuery(name = "EntMedidas.findByPreArtSistolica", query = "SELECT e FROM EntMedidas e WHERE e.preArtSistolica = :preArtSistolica"),
+    @NamedQuery(name = "EntMedidas.findByPreArtDiastolica", query = "SELECT e FROM EntMedidas e WHERE e.preArtDiastolica = :preArtDiastolica")})
 public class EntMedidas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,6 +78,14 @@ public class EntMedidas implements Serializable {
     @NotNull
     @Column(name = "ALERTA")
     private boolean alerta;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_SISTOLICA")
+    private int preArtSistolica;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA")
+    private int preArtDiastolica;
     @JoinColumn(name = "ID_CARETA", referencedColumnName = "ID_CARETA", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EntCareta entCareta;
@@ -183,6 +193,22 @@ public class EntMedidas implements Serializable {
 
     public void setEntPaciente(EntPaciente entPaciente) {
         this.entPaciente = entPaciente;
+    }
+    
+    public int getPreArtSistolica() {
+        return preArtSistolica;
+    }
+
+    public void setPreArtSistolica(int preArtSistolica) {
+        this.preArtSistolica = preArtSistolica;
+    }
+
+    public int getPreArtDiastolica() {
+        return preArtDiastolica;
+    }
+
+    public void setPreArtDiastolica(int preArtDiastolica) {
+        this.preArtDiastolica = preArtDiastolica;
     }
 
     @Override

@@ -4,7 +4,7 @@ Instituto Politécnico Nacional
 Centro de Investigación en Computación (CIC-IPN)
 Laboratorio de Robótica y Mecatrónica
 Todos los derechos reservados
-    Document   : gestionUsuarios
+    Document   : gestionHospital
     Created on : Septiembre 2020
     Author     : Iliac Huerta Trujillo
 
@@ -16,7 +16,8 @@ Todos los derechos reservados
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">    
+      xmlns:p="http://primefaces.org/ui">  
+    
     <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
         <ui:define name="nombrePagina">
             Gestión_Hospital
@@ -26,7 +27,7 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
-            <h:form>
+            <h:form id="frmGuardaHosp" rendered="#{!gestionHospitalMB.existeHosp}" >
                 <p:growl id="msgs" showDetail="true" />
                 <div>
 
@@ -35,11 +36,12 @@ Todos los derechos reservados
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
-                                Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>"
+                                Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>
                             </p>
+                            <h3>ALTA DE HOSPITAL</h3>
                         </div>
                         <div class="p-col" style="align-content: center;">
-                            <p:panel header="Datos de Hospital">
+                            <p:panel id="hpDatos" header="Datos de Hospital">
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column><p:outputLabel for="nomHosp" value="Nombre hospital:" /> </p:column>
@@ -72,8 +74,18 @@ Todos los derechos reservados
                                         <p:column><p:inputText id="hMun" value="#{gestionHospitalMB.hospEnt.municipio}" required="true" /></p:column>
                                         <p:column><p:inputText id="hEst" value="#{gestionHospitalMB.hospEnt.estado}" required="true" /></p:column>
                                     </p:row>
-
-
+                                    <p:row>
+                                        <p:column><p:message for="hMun" /></p:column>
+                                        <p:column><p:message for="hEst" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align: center" class="ui-widget-header">Contacto</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="hTel" value="Tel Emergencia:" /></p:column>
+                                        <p:column><p:inputText id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column><p:message for="hTel" /></p:column>
+                                    </p:row>
                                 </p:panelGrid>
                                 <p:panelGrid >
                                     <f:facet name="header">
@@ -83,21 +95,122 @@ Todos los derechos reservados
                                     </f:facet>
                                     <p:row>
                                         <p:column><p:outputLabel for="lat" value="Latitud:" /></p:column>
-                                        <p:column><p:inputText id="lat" /></p:column>
+                                        <p:column><p:inputText id="lat" value="#{gestionHospitalMB.lat}" /></p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="lng" value="Longitud:" /></p:column>
-                                        <p:column><p:inputText id="lng" /></p:column>
+                                        <p:column><p:inputText id="lng" value="#{gestionHospitalMB.lon}" /></p:column>
                                     </p:row>
                                 </p:panelGrid>
                                 <p:gmap id="geoGmap" widgetVar="geoMap" center="41.381542, 2.122893" zoom="8" 
                                         type="ROADMAP" style="width:50%;height:200px" />
                             </p:panel>
                         </div>
+                        <div class="p-grid p-justify-end" >
+                            <div class="p-col-1">
+                                <p:commandButton value="Guardar" id="guardaHosp" action="#{gestionHospitalMB.guardaHospital()}" 
+                                                 update="msgs hpDatos" icon="pi pi-save" />
+                            </div>
+                            <div class="p-col-2">
+                            </div>
+                        </div>
                     </div>
-
                 </p:panel>
             </h:form>
+            
+            
+            
+            <h:form id="frmExisteHosp" rendered="#{gestionHospitalMB.existeHosp}">  
+                
+                <p:growl id="msgsEH" showDetail="true" />
+                
+                <p:panel id="pnEHospital" header="Gestión de Hospital" footer="" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>     
+                            <h3>ACTUALIZACION DE DATOS DE HOSPITAL</h3>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
+                            
+                            <p:panel id="ehpDatos" header="Datos de Hospital">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="enomHosp" value="Nombre hospital:" /> </p:column>
+                                        <p:column><p:inputText id="enomHosp" value="#{gestionHospitalMB.hospEnt.nombre}" required="true" /></p:column>
+                                        <p:column><p:message for="enomHosp" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align: center" class="ui-widget-header">Dirección</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="ehCalle" value="Calle:" /></p:column>
+                                        <p:column><p:outputLabel for="ehNum" value="Numero:" /></p:column>
+                                        <p:column><p:outputLabel for="ehCol" value="Colonia:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="ehCalle" value="#{gestionHospitalMB.hospEnt.dirCalle}" required="true" /></p:column>
+                                        <p:column><p:inputText id="ehNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" /></p:column>
+                                        <p:column><p:inputText id="ehCol" value="#{gestionHospitalMB.hospEnt.colonia}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="ehCalle" /></p:column>
+                                        <p:column><p:message for="ehNum" /></p:column>
+                                        <p:column><p:message for="ehCol" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="ehMun" value="Municipio:" /></p:column>
+                                        <p:column><p:outputLabel for="ehEst" value="Estado:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="ehMun" value="#{gestionHospitalMB.hospEnt.municipio}" required="true" /></p:column>
+                                        <p:column><p:inputText id="ehEst" value="#{gestionHospitalMB.hospEnt.estado}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="ehMun" /></p:column>
+                                        <p:column><p:message for="ehEst" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align: center" class="ui-widget-header">Contacto</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="ehTel" value="Tel Emergencia:" /></p:column>
+                                        <p:column><p:inputText id="ehTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column><p:message for="ehTel" /></p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <p:panelGrid >
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="2" >Ubicación geográfica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="elat" value="Latitud:" /></p:column>
+                                        <p:column><p:inputText id="elat" value="#{gestionHospitalMB.lat}" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="elng" value="Longitud:" /></p:column>
+                                        <p:column><p:inputText id="elng" value="#{gestionHospitalMB.lon}" /></p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <p:gmap id="geoGmap" widgetVar="geoMap" center="41.381542, 2.122893" zoom="8" 
+                                        type="ROADMAP" style="width:50%;height:200px" />
+                            </p:panel>
+                        </div>
+                        <div class="p-grid p-justify-end" >
+                            <div class="p-col-1">
+                                <p:commandButton value="Guardar Cambios" id="updateHosp" action="#{gestionHospitalMB.updateHospital()}" 
+                                                 update="msgsEH ehpDatos" icon="pi pi-save" />
+                            </div>
+                            <div class="p-col-2">
+                            </div>
+                        </div>
+                    </div>
+                </p:panel>
+            </h:form>
+            
         </ui:define>    
     </ui:composition>
 </html>

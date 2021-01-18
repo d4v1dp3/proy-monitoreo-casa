@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : gestionHospital
+    Created on : Septiembre 2020
+    Author     : Iliac Huerta Trujillo
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Listado_Pacientes
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            <h:form id="frGestPacientes">
+                <p:growl id="msgsGP" showDetail="true"  > 
+                    <p:autoUpdate />
+                </p:growl>
+
+                <p:panel id="pnGPacientes" header="Listado de Pacientes" footer="" style="margin-bottom:20px">
+                    <!--Panel para presentar el listado de pacientes asociados a un Médico.-->
+                    
+                    
+                    
+                    <p:dataTable var="paciente" value="#{listadoPacientesMB.pacientesComp}" rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                 rowsPerPageTemplate="10,20,30">
+                        <p:column headerText="Id Paciente">
+                            <h:outputText value="#{paciente.idPaciente}" />
+                        </p:column>
+
+                        <p:column headerText="Primer Ap." filterBy="#{paciente.idPersona.primerApellido}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.primerApellido}" />
+                        </p:column>
+                        <p:column headerText="Segundo Ap." filterBy="#{paciente.idPersona.segundoApellido}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.segundoApellido}" />
+                        </p:column>
+                        <p:column headerText="Nombre" filterBy="#{paciente.idPersona.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Id Careta">
+                            <h:outputText value="#{paciente.idCareta.idCareta}" />
+                        </p:column>
+
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
+                        </p:column>
+
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.mostrarDashboard()}">
+                                <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
+                                <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>
+
+
+
+
