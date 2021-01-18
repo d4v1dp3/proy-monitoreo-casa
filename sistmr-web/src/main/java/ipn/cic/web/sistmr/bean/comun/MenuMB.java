@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -36,6 +37,7 @@ import org.primefaces.model.menu.MenuModel;
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 @Named(value="menuMB")
+@SessionScoped
 public class MenuMB implements Serializable{
     private static final Logger logger = Logger.getLogger(MenuMB.class.getName());
     private static final long serialVersionUID = 1L;
@@ -114,13 +116,13 @@ public class MenuMB implements Serializable{
             for (EntMenu menuPrincipal : menuRol) {
                 if ((menuPrincipal.getIdMenu()== idMenuGeneral) && (contadorGeneral == 0)) {
                     DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                    menuModel.addElement(dropDownMenu);
+                    menuModel.getElements().add(dropDownMenu);
                     cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     contadorGeneral++;
                 } else {
                     if (menuPrincipal.getIdMenu() != idMenuGeneral) {
                         DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                        menuModel.addElement(dropDownMenu);
+                        menuModel.getElements().add(dropDownMenu);
                         cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     }
                 }
@@ -162,13 +164,13 @@ public class MenuMB implements Serializable{
             for (EntMenu menuPrincipal : menuRol) {
                 if ((menuPrincipal.getIdMenu() == idMenuGeneral) && (contadorGeneral == 0)) {
                     DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                    menuModel.addElement(dropDownMenu);
+                    menuModel.getElements().add(dropDownMenu);
                     cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     contadorGeneral++;
                 } else {
                     if (menuPrincipal.getIdMenu() != idMenuGeneral) {
                         DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                        menuModel.addElement(dropDownMenu);
+                        menuModel.getElements().add(dropDownMenu);
                         cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     }
                 }
@@ -189,7 +191,7 @@ public class MenuMB implements Serializable{
         menuModel = new DefaultMenuModel();
         ExternalContext exc = fc.getExternalContext();
 
-        menuModel.addElement(createMenuItem("Inicio",
+        menuModel.getElements().add(createMenuItem("Inicio",
                 "fa fa-home",
                 "/faces/facelets/comun/Bienvenida.xhtml",exc));
         // Obtener los roles del usuario autenticado
@@ -215,13 +217,13 @@ public class MenuMB implements Serializable{
             for (EntMenu menuPrincipal : menuRol) {
                 if ((menuPrincipal.getIdMenu() == idMenuGeneral) && (contadorGeneral == 0)) {
                     DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                    menuModel.addElement(dropDownMenu);
+                    menuModel.getElements().add(dropDownMenu);
                     cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     contadorGeneral++;
                 } else {
                     if (menuPrincipal.getIdMenu() != idMenuGeneral) {
                         DefaultSubMenu dropDownMenu = createSubMenu(menuPrincipal.getDescripcion(), menuPrincipal.getRutaIcono());
-                        menuModel.addElement(dropDownMenu);
+                        menuModel.getElements().add(dropDownMenu);
                         cargarMenuBD(menuPrincipal.getIdMenu(), dropDownMenu, fc);
                     }
                 }
@@ -258,13 +260,13 @@ public class MenuMB implements Serializable{
         for (EntMenuOpcion opcion : opciones) {
             // ¿Es una accion?
             if (opcion.getIdOpcion() != null) {
-                padre.addElement(createMenuItem(opcion.getIdOpcion().getDescripcion(),
+                padre.getElements().add(createMenuItem(opcion.getIdOpcion().getDescripcion(),
                         opcion.getIdOpcion().getRutaIcono(),
                         opcion.getIdOpcion().getAccion(),exc));
             } else if (opcion.getIdSubMenu() != null) {
                 DefaultSubMenu subMenu = createSubMenu(opcion.getIdSubMenu().getDescripcion(),
                         opcion.getIdSubMenu().getRutaIcono());
-                padre.addElement(subMenu);
+                padre.getElements().add(subMenu);
                 cargarMenuBD(opcion.getIdSubMenu().getIdMenu(), subMenu, fc);
             }
         }
