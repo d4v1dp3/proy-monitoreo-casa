@@ -34,6 +34,8 @@ INSERT INTO RM_ESTADOPACIENTE (ID_ESTADOPACIENTE, DESCRIPCION) VALUES(2, 'Grave'
 /*---- Definiciones de menus*/
 INSERT INTO RM_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (1,'General','fa fa-cog',999);
 INSERT INTO RM_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (2,'Administrador','fas fa-user-ninja',1);
+INSERT INTO RM_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (3,'Médico','fas fa-user-md',2);
+INSERT INTO RM_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (4,'Paciente','fas fa-bed',2);
 
 /*-- Definición de Opciones*/
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (1, 'Salir', 'ui-icon-close', '#{sesionMB.cerrarSesion}');
@@ -42,6 +44,8 @@ Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'G
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'fas fa-clipboard', '/faces/facelets/paciente/inicioPaciente.xhtml');
+
+select * from RM_OPCION;
 
 /*--Asociación de Rol con Menu*/
 INSERT INTO RM_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,1); /*--Todos los roles tienen el menú general*/
@@ -52,8 +56,6 @@ INSERT INTO RM_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,4);
 INSERT INTO RM_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,5);
 INSERT INTO RM_ROL_MENU (ID_MENU, ID_ROL) VALUES (3,3);
 INSERT INTO RM_ROL_MENU (ID_MENU, ID_ROL) VALUES (4,4);
-select * from RM_ROL_MENU;
-select * from RM_MENU_OPCION;
 
 /*Definición de opciones para cada menú*/
 INSERT INTO RM_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (1,1,1,null,999);
@@ -128,7 +130,7 @@ VALUES (1,(SELECT ID_MEDICO FROM RM_MEDICO WHERE CEDULA_PROF = 123456));
 
 /*usuario médico de pruebas y rol de médico*/
 INSERT INTO RM_USUARIO (ID_USUARIO, CONTRASENIA, ACTIVO, ID_PERSONA)
-VALUES ('medico1','medico1',1,(SELECT ID_PERSONA FROM RM_PERSONA WHERE CURP = 'MOMA80202020'));
+VALUES ('medico1','medico1',1,(SELECT ID_PERSONA FROM RM_PERSONA WHERE CURP = 'MOMA80202021'));
 
 INSERT INTO RM_USUARIO_ROL (ID_USUARIO, ID_ROL)
 VALUES ('medico1', 3);

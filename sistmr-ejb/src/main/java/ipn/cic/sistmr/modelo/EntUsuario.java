@@ -7,6 +7,7 @@
 package ipn.cic.sistmr.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -60,6 +61,7 @@ public class EntUsuario implements Serializable {
     private List<EntBitacora> entBitacoraList;
 
     public EntUsuario() {
+        entRolList = new ArrayList<>();
     }
 
     public EntUsuario(String idUsuario) {

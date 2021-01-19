@@ -29,6 +29,7 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
     
     @Override
     public EntPaciente guardaPaciente(EntPaciente paciente) throws PacienteException {
+        logger.log(Level.INFO,"Guardando datos paciente en SB");
         try {
             return (EntPaciente)saveEntity(paciente);
         } catch (SaveEntityException ex) {

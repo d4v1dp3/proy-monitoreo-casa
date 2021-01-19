@@ -56,7 +56,8 @@ public class GestionPacienteMB implements Serializable{
     
     @PostConstruct
     public void iniciaVO(){
-        setDatUsuario(new UsuarioVO());
+        //setDatUsuario(new UsuarioVO());
+        datUsuario = new UsuarioVO();
         datPaciente = new PacienteVO();
         datPersona = new PersonaVO();
         pacGuardado = null;

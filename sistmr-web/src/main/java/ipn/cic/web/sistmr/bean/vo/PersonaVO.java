@@ -7,7 +7,6 @@
 package ipn.cic.web.sistmr.bean.vo;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *

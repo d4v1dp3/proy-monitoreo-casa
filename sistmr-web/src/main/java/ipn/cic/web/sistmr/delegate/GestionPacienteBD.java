@@ -119,7 +119,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             throw new PacienteException("Error al consultar datos de hospital ", ex);
         }
 
-        
+        logger.log(Level.INFO,"Invocando GuardaPaciente en BD");
         entPac = pacienteSB.guardaPaciente(entPac);
         
         return entPac;
