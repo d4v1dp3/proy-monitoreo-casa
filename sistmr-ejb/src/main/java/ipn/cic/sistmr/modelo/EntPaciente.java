@@ -7,6 +7,7 @@
 package ipn.cic.sistmr.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -85,6 +86,7 @@ public class EntPaciente implements Serializable {
     private List<EntSintomas> entSintomasList;
 
     public EntPaciente() {
+        entSintomasList = new ArrayList<>();
     }
 
     public EntPaciente(Long idPaciente) {

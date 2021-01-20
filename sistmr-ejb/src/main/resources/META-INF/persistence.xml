@@ -7,6 +7,8 @@
          can find it in the source at ear/src/main/application/META-INF/sistmr-ds.xml -->
     <jta-data-source>java:jboss/sismrDS</jta-data-source>
     <class>ipn.cic.sistmr.modelo.EntBitacora</class>
+    <class>ipn.cic.sistmr.modelo.EntAntecedentes</class>
+    <class>ipn.cic.sistmr.modelo.EntSintomas</class>
     <class>ipn.cic.sistmr.modelo.EntCareta</class>
     <class>ipn.cic.sistmr.modelo.EntCaretaHospital</class>
     <class>ipn.cic.sistmr.modelo.EntEstadopaciente</class>
