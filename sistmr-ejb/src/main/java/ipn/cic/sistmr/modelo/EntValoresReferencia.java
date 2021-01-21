@@ -36,7 +36,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaMax = :frecCardiacaMax"),
     @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMin = :frecRespiratoriaMin"),
     @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMax = :frecRespiratoriaMax"),
-    @NamedQuery(name = "EntValoresReferencia.findByIdValref", query = "SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValref")})
+    @NamedQuery(name = "EntValoresReferencia.findByIdValref", query = "SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValref"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMin = :preArtSistolicaMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMax = :preArtSistolicaMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMin = :preArtDiastolicaMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMax = :preArtDiastolicaMax")})
 public class EntValoresReferencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -85,7 +89,23 @@ public class EntValoresReferencia implements Serializable {
     @NotNull
     @Column(name = "ID_VALREF")
     private Short idValref;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_SISTOLICA_MIN")
+    private int preArtSistolicaMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_SISTOLICA_MAX")
+    private int preArtSistolicaMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_MIN")
+    private int preArtDiastolicaMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_MAX")
+    private int preArtDiastolicaMax;
+    
     public EntValoresReferencia() {
     }
 
@@ -93,7 +113,7 @@ public class EntValoresReferencia implements Serializable {
         this.idValref = idValref;
     }
 
-    public EntValoresReferencia(Short idValref, float satOxigenoMin, float satOxigenoMax, float temperaturaMin, float temperaturaMax, short capnografiaMin, short capnografiaMax, short frecCardiacaMin, short frecCardiacaMax, short frecRespiratoriaMin, short frecRespiratoriaMax) {
+    public EntValoresReferencia(Short idValref, float satOxigenoMin, float satOxigenoMax, float temperaturaMin, float temperaturaMax, short capnografiaMin, short capnografiaMax, short frecCardiacaMin, short frecCardiacaMax, short frecRespiratoriaMin, short frecRespiratoriaMax, int preArtSistolicaMin, int preArtSistolicaMax, int preArtDiastolicaMin, int preArtDiastolicaMax) {
         this.idValref = idValref;
         this.satOxigenoMin = satOxigenoMin;
         this.satOxigenoMax = satOxigenoMax;
@@ -105,6 +125,10 @@ public class EntValoresReferencia implements Serializable {
         this.frecCardiacaMax = frecCardiacaMax;
         this.frecRespiratoriaMin = frecRespiratoriaMin;
         this.frecRespiratoriaMax = frecRespiratoriaMax;
+        this.preArtSistolicaMin = preArtSistolicaMin;
+        this.preArtSistolicaMax = preArtSistolicaMax;
+        this.preArtDiastolicaMin = preArtDiastolicaMin;
+        this.preArtDiastolicaMax = preArtDiastolicaMax;
     }
 
     public float getSatOxigenoMin() {
@@ -195,6 +219,38 @@ public class EntValoresReferencia implements Serializable {
         this.idValref = idValref;
     }
 
+    public int getPreArtSistolicaMin() {
+        return preArtSistolicaMin;
+    }
+
+    public void setPreArtSistolicaMin(int preArtSistolicaMin) {
+        this.preArtSistolicaMin = preArtSistolicaMin;
+    }
+
+    public int getPreArtSistolicaMax() {
+        return preArtSistolicaMax;
+    }
+
+    public void setPreArtSistolicaMax(int preArtSistolicaMax) {
+        this.preArtSistolicaMax = preArtSistolicaMax;
+    }
+
+    public int getPreArtDiastolicaMin() {
+        return preArtDiastolicaMin;
+    }
+
+    public void setPreArtDiastolicaMin(int preArtDiastolicaMin) {
+        this.preArtDiastolicaMin = preArtDiastolicaMin;
+    }
+
+    public int getPreArtDiastolicaMax() {
+        return preArtDiastolicaMax;
+    }
+
+    public void setPreArtDiastolicaMax(int preArtDiastolicaMax) {
+        this.preArtDiastolicaMax = preArtDiastolicaMax;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
