@@ -9,86 +9,365 @@ Todos los derechos reservados
     Created on : 17 sep. 2020, 19:19:20
     Author     : Iliac Huerta Trujillo <ihuertat@ipn.mx>
 */
-form {border: 3px solid #f1f1f1;}
 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+/**{
+    border: 1px solid #ccc;
+}*/
+
+* {
+    margin: 0;
+    padding: 0;
+    /*border: 1px solid gray;*/
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
+
+/*------------GRID-----------------*/
+
+.contenedorprincipal {
+    display: grid; 
+    grid-gap: 20px;/*Espaciado*/
+    height: 100%;
+    width: 90%;
+    /*max-width: 1000px;*/   
+    margin: auto;/*Para centrarlo*/
+    text-align: center;
+
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows: start start start;
+    
+    grid-template-areas:    "header    header  header" 
+                            "contenido     contenido    contenido" 
+                            "footer    footer  footer";
 }
 
-button:hover {
-  opacity: 0.8;
+.contenedorprincipal .header {
+    grid-area: header;
 }
 
-.cancelbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
+.contenedorprincipal .contenido {
+    grid-area: contenido;
+}
+
+.contenedorprincipal .footer {
+    grid-area: footer;
+}
+
+
+/*-------------Estilos Generales --------------*/
+
+body {
+    background: #eeeeee;
+}
+
+.contenedorprincipal {
+    max-width: 1100px;
+    /*Ancho maximo*/
+    margin: auto;
+    /*Centrar elementos header cont y footer*/
+}
+
+.header {
+    padding: 20px 0;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contenido {
+    padding: 20px;
+}
+
+.footer {
+    padding-bottom: 10px;
+    /*box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);*/
+}
+
+
+/*-------BarraTitulo-----------------*/
+
+.barraTitulo {
+    padding: 0px 30;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /*Alineacion horizontal*/
+    justify-content: center;
+    /*Alineacion vertical*/
+    align-items: center;
 }
 
 .imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 20%;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*Alineacion horizontal*/
+    justify-content: center;
 }
 
-img.avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
-}
-
-.foot_ley{
-   background-color: #333333;
-   color: white;
-   text-align: center;
-   padding-top:5px;
-   line-height:15px;
-   font-size:10px;
-   color: #e6e6e6;
-   clear:both;
-}
-
-.tituloNomLogin{
-    background: #fff;
-    font-size:15px;
+.titulocontainer {
+    flex: 1 1 70%;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 26px;
     font-family: sans-serif;
+    /*font-weight: bold;*/
+    /*padding-left: 26px;*/
     color: #00b140;
 }
 
-.errorLogin{
-    background: #ccc;
-    font-size:15px;
-    font-family: sans-serif;
-    color: #f44336;
+.titulocontainer>div {
+    text-align: left;
+}
+
+
+/*--------------Footer------------*/
+
+.footer {
+    padding: 20px 20px;
+    display: flex;
+    max-width: 1180px;
+    background-color: #333333;
+    color: white;
     text-align: center;
+    flex-direction: column;
+    /*Alineacion horizontal*/
+    justify-content: center;
+    /*Alineacion vertical*/
+    align-items: center;
+    /*padding-top:5px;
+    padding-bottom: 10px;*/
+    line-height: 15px;
+    font-size: 10px;
+    color: #e6e6e6;
+    clear: both;
+}
+
+.inferior {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /*Alineacion horizontal*/
+    justify-content: center;
+    /*Alineacion vertical*/
+    align-items: flex-start;
+}
+
+.izquierda {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 10%;
+    /*Alineacion horizontal*/
+    justify-content: center;
+}
+
+.centrado {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 60%;
+    padding: 0 30px;
+    /*Alineacion horizontal*/
+    justify-content: center;
+}
+
+.derecha {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 10%;
+    flex-direction: column;
+    /*Alineacion horizontal*/
+    justify-content: center;
+    /*Alineacion vertical*/
+    align-items: center;
+}
+
+
+/*------LOGIN--------*/
+
+.contenido,
+.login,
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#formContent {
+    display: block;
+    padding: 30px;
+    border: 2px solid #f1f1f1;
+    border-radius: 5px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+input[type=text],
+input[type=password] {
+    background-color: #f6f6f6;
+    color: #0d0d0d;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 3px;
+    /*box-sizing: border-box;*/
+    width: 85%;
+}
+
+input:focus {
+    background-color: #fff;
+    border-bottom: 2px solid #5fbae9;
+}
+
+input:placeholder {
+    color: #cccccc;
+}
+
+button[type=submit] {
+    /*background-color: #56baed;*/
+    border: none;
+    color: white;
+    padding: 13px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: sans-serif;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
+    margin: 10px 20px 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #4CAF50;
+    font-size: 16px;
+    cursor: pointer;
+    width: 85%;
+}
+
+button[type=submit]:hover {
+    opacity: 0.8;
+    
+}
+
+img.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+
+/* Change styles for span and cancel button on extra small screens */
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+
+/*------Animacion Fade-in login--------------- */
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+.fadeIn.first {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.fadeIn.second {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}
+
+.fadeIn.third {
+    -webkit-animation-delay: 0.8s;
+    -moz-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+}
+
+.fadeIn.fourth {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    animation-delay: 1s;
 }
