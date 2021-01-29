@@ -12,6 +12,7 @@ import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntGenero;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
+import ipn.cic.web.sistmr.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmr.bean.vo.PacienteVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.bean.vo.UsuarioVO;
@@ -19,6 +20,8 @@ import ipn.cic.web.sistmr.delegate.GestionPacienteBDLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,11 +44,14 @@ public class GestionPacienteMB implements Serializable{
     
     private PersonaVO datPersona;
     private UsuarioVO datUsuario;
-    private PacienteVO datPaciente;    
+    private PacienteVO datPaciente;
+    
     private EntPaciente pacGuardado;
     
     private List<EntGenero> catGenero;
     private List<EntEstadopaciente> catEstado;
+    private List<String> antecedentes;
+    private String[] antecedentesSeleccionados;
     
     @EJB
     GestionPacienteBDLocal gstPac;
@@ -56,12 +62,22 @@ public class GestionPacienteMB implements Serializable{
     
     @PostConstruct
     public void iniciaVO(){
-        //setDatUsuario(new UsuarioVO());
-        datUsuario = new UsuarioVO();
+        setDatUsuario(new UsuarioVO());
         datPaciente = new PacienteVO();
         datPersona = new PersonaVO();
         pacGuardado = null;
        
+        antecedentes = new ArrayList<>();
+        antecedentes.add("Diabetes");
+        antecedentes.add("Cancer");
+        antecedentes.add("Asma");
+        antecedentes.add("VIH");
+        antecedentes.add("HAS");
+        antecedentes.add("EPOC");
+        antecedentes.add("Embarazo");
+        antecedentes.add("Artritis");
+        antecedentes.add("Enf autoinmune");
+                 
         try {
             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
         } catch (CatalogoException ex) {
@@ -85,9 +101,15 @@ public class GestionPacienteMB implements Serializable{
     }
     
     public void guardarPaciente(){
-        logger.log(Level.INFO,"Entrando a Guardar Paciente[1]");
-        try{            
-            pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, getDatUsuario());
+        
+        List<String> aList = Arrays.asList(antecedentesSeleccionados);
+        
+        AntecedentesVO datAntecedentes = new AntecedentesVO(aList.contains("Diabetes"),aList.contains("Cancer"),
+        aList.contains("Asma"),aList.contains("VIH"),aList.contains("HAS"),aList.contains("EPOC"),aList.contains("Embarazo"),
+        aList.contains("Artritis"),aList.contains("Enf autoinmune"));
+       
+        try{              
+            pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, datAntecedentes, getDatUsuario());
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
@@ -107,7 +129,7 @@ public class GestionPacienteMB implements Serializable{
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Exíto",
                                                 "El registro de paciente se realizó correctamente : id="+this.pacGuardado.getIdPaciente(), 
-                                                FacesMessage.SEVERITY_INFO);
+                                                FacesMessage.SEVERITY_INFO);        
         }
         
         cerrarDialogo(msg);
@@ -177,4 +199,25 @@ public class GestionPacienteMB implements Serializable{
     public void setCatGenero(List<EntGenero> catGenero) {
         this.catGenero = catGenero;
     } 
+
+    public List<String> getAntecedentes() {
+        return antecedentes;
+    }
+
+    public void setAntecedentes(List<String> antecedentes) {
+        this.antecedentes = antecedentes;
+    }
+
+    public String[] getAntecedentesSeleccionados() {
+        return antecedentesSeleccionados;
+    }
+
+    public void setAntecedentesSeleccionados(String[] antecedentesSeleccionados) {
+        this.antecedentesSeleccionados = antecedentesSeleccionados;
+    }
+
+
+    
+    
+   
 }
