@@ -19,6 +19,7 @@ public class MedidasVO implements Serializable{
     private Date fechaMedicion;
     private float saturacionOxigeno;
     private float temperatura;
+    private int capnografia;
     private short frecCardiaca;
     private short frecRespiratoria;
     private boolean alerta;
@@ -28,13 +29,14 @@ public class MedidasVO implements Serializable{
     
     public MedidasVO(){}
         
-    public MedidasVO(Long idPaciente, Date fechaMedicion, float saturacionOxigeno, float temperatura, 
+    public MedidasVO(Long idPaciente, Date fechaMedicion, float saturacionOxigeno, float temperatura, int capnografia, 
                      short frecCardiaca, short frecRespiratoria, boolean alerta, 
                      int preArtSistolica, int preArtDiastolica) {
         this.idPaciente = idPaciente;
         this.fechaMedicion = fechaMedicion;
         this.saturacionOxigeno = saturacionOxigeno;
         this.temperatura = temperatura;
+        this.capnografia = capnografia;
         this.frecCardiaca = frecCardiaca;
         this.frecRespiratoria = frecRespiratoria;
         this.alerta = alerta;
@@ -121,4 +123,13 @@ public class MedidasVO implements Serializable{
         this.idPaciente = idPaciente;
     }
 
+    public int getCapnografia() {
+        return capnografia;
+    }
+
+    public void setCapnografia(int capnografia) {
+        this.capnografia = capnografia;
+    }
+
+    
 }

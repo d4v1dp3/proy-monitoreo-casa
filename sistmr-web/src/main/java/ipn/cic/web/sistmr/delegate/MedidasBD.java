@@ -66,6 +66,7 @@ public class MedidasBD implements MedidasBDLocal {
             medidas.setFechaMedicion(med.getFechaMedicion());
             medidas.setSaturacionOxigeno(med.getSaturacionOxigeno());
             medidas.setTemperatura(med.getTemperatura());
+            medidas.setCapnografia((short) med.getCapnografia());
             medidas.setFrecCardiaca(med.getFrecCardiaca());
             medidas.setFrecRespiratoria(med.getFrecRespiratoria());
             medidas.setAlerta(med.getAlerta());
@@ -73,6 +74,7 @@ public class MedidasBD implements MedidasBDLocal {
         //    medidas.setPreArtDiastolica(med.getPreArtDiastolica());
 
             medidas = medidasSB.guardaMedidas(medidas);
+            
             logger.log(Level.INFO, "Medidas guardadas.");
 
             respuesta = Json.createObjectBuilder()

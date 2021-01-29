@@ -44,6 +44,7 @@ public class ServiciosMovilWS {
             "idPaciente": 20178,
             "saturacionOxigeno": 98.0,
             "temperatura": 26.0,
+            "capnografia": 23.0,
             "frecCardiaca": 62, 
             "frecRespiratoria": 19,
             "alerta": 0, 
@@ -59,6 +60,7 @@ public class ServiciosMovilWS {
             med.setFechaMedicion(Calendar.getInstance().getTime());
             
             respuesta = medidasDB.guardarMedidas(med);
+            
         }catch(NoExistePacienteException ex){
             respuesta = Json.createObjectBuilder()
             .add("Respuesta", "1")
@@ -90,16 +92,3 @@ public class ServiciosMovilWS {
     
     
 }
-
-        /*RESPUESTA EN JSON
-        JsonObject respuesta = Json.createObjectBuilder()
-        .add("IDPaciente", med.getIdPaciente())
-        //.add("Fecha", med.getFechaMedicion().toString())
-        .add("Oxigeno", med.getSaturacionOxigeno())   
-        .add("temperatura", med.getTemperatura())  
-        .add("FCardiaca", med.getFrecCardiaca())  
-        .add("FRespiratoria", med.getFrecRespiratoria())  
-        .add("Alerta", med.isAlerta())  
-        .add("preArtSistolica", med.getPreArtSistolica())  
-        .add("preArtDiastolic", med.getPreArtDiastolica()) 
-        .build();*/ 

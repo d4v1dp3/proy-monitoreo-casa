@@ -84,7 +84,7 @@ body {
 /*-------BarraTitulo-----------------*/
 
 .barraTitulo {
-    padding: 0px 30;
+    padding: 0px 10px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;

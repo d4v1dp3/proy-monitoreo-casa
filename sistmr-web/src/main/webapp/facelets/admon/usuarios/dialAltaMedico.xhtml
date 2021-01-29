@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <f:view>
         <h:head>
 
@@ -26,26 +26,27 @@
             </style>
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-    
+
         </h:head>
 
         <h:body>
-<i class="far fa-save"></i>
-            <h:form id="frmAltaMedico">
-                <p:growl id="msgAltaMed" showDetail="true" />
+            <i class="far fa-save"></i>
 
-                <p:panelGrid>
-                    <p:row>
-                        <p:column>
+            <p:growl id="msgAltaMed" showDetail="true" />
 
-                            <center>
-                                <h2>
-                                    <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
-                                </h2>
-                            </center>
-                            <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
 
-                            <p:panelGrid>
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
+                            </h2>
+                        </center>
+                        <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
+
+                        <p:panelGrid>
+                            <h:form id="frmAltaMedico">
                                 <p:row>
                                     <p:column colspan="3" class="ui-widget-header">Datos Personales</p:column>
                                 </p:row>
@@ -174,19 +175,25 @@
                                         <p:commandButton icon="fas fa-save" value="Guardar" 
                                                          actionListener="#{gestionMedicoMB.guardarMedico()}"
                                                          update="@all"/>
-                                        <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo}"  />    
                                     </p:column>
                                 </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                            </h:form>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: right">
+                                    <h:form>
+                                        <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}" 
+                                                         icon="pi pi-times"/>    
+                                    </h:form>
 
-            </h:form>
-<!--            <h:form>
-                <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}"  />    
-            </h:form>
-            -->
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+
+
         </h:body>
     </f:view>
 </html>

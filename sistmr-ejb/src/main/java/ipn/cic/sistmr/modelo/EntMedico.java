@@ -67,7 +67,7 @@ public class EntMedico implements Serializable {
     private String celular;
     @ManyToMany(mappedBy = "entMedicoList", fetch = FetchType.LAZY)
     private List<EntHospital> entHospitalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entMedico", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entMedico", fetch = FetchType.EAGER)
     private List<EntPacienteMedico> entPacienteMedicoList;
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
