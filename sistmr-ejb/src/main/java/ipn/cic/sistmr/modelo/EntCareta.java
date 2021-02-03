@@ -7,6 +7,8 @@
 package ipn.cic.sistmr.modelo;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -51,6 +53,10 @@ public class EntCareta implements Serializable {
     @Column(name = "FECHA_MANUFACTURA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaManufactura;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NO_SERIE")
+    private long noSerie;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entCareta", fetch = FetchType.LAZY)
     private List<EntCaretaHospital> entCaretaHospitalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entCareta", fetch = FetchType.LAZY)
@@ -84,6 +90,13 @@ public class EntCareta implements Serializable {
 
     public void setFechaManufactura(Date fechaManufactura) {
         this.fechaManufactura = fechaManufactura;
+    }
+    
+    public void setFechaManufactura(String fechaManufactura){
+        try {
+            this.fechaManufactura = new SimpleDateFormat("yyyy-MM-dd").parse(fechaManufactura);
+        } catch (ParseException e) {
+        }
     }
 
     @XmlTransient
@@ -137,5 +150,14 @@ public class EntCareta implements Serializable {
     public String toString() {
         return "ipn.cic.sistmr.modelo.EntCareta[ idCareta=" + idCareta + " ]";
     }
+
+    public long getNoSerie() {
+        return noSerie;
+    }
+
+    public void setNoSerie(long noSerie) {
+        this.noSerie = noSerie;
+    }
+    
     
 }
