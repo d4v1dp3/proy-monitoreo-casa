@@ -194,4 +194,9 @@ select SLEEP(1);
 insert into rm_medidas (FECHA_MEDICION,SATURACION_OXIGENO,TEMPERATURA,CAPNOGRAFIA,FREC_CARDIACA,FREC_RESPIRATORIA,ID_PACIENTE,ID_CARETA,ALERTA,PRE_ART_SISTOLICA,PRE_ART_DIASTOLICA)
 values(now(),97.4,37.5,40,100,17,2,(select ID_CARETA from rm_paciente where ID_PACIENTE=2),1,115,75);
 
+#Correo para recibir mensajes
+update rm_medico
+set email='marcosleonrs@gmail.com'
+where id_medico=1;
+
 commit;

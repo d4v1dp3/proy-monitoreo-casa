@@ -14,6 +14,7 @@ import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntMedidas;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntValoresReferencia;
+import ipn.cic.sistmr.sesion.ValoresReferenciaSBLocal;
 import ipn.cic.sistmr.sesion.dashboard.DashboardBDLocal;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -48,6 +49,9 @@ public class DashboardPacienteMB implements Serializable{
     @EJB
     private DashboardBDLocal dashboardBD;
 
+    @EJB
+    private ValoresReferenciaSBLocal valoresSB;
+    
     private EntPaciente paciente;
     private List<EntMedidas> medidasComp;
     private EntValoresReferencia valoresRef; 
@@ -93,7 +97,7 @@ public class DashboardPacienteMB implements Serializable{
         try{
             paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
             medidasComp = dashboardBD.getListaMedidas(paciente);
-            valoresRef = dashboardBD.getValoresRef(new Short("1"));
+            valoresRef = valoresSB.getValoresReferenciaId(new Short("1"));
             estadoPaciente = dashboardBD.getEstadoPac(Long.parseLong(pacienteId));
             
             if(medidasComp.isEmpty()){
@@ -115,7 +119,7 @@ public class DashboardPacienteMB implements Serializable{
                 showFcardWarning = pacFrecCardiaca<valoresRef.getFrecCardiacaMin() || pacFrecCardiaca>valoresRef.getFrecCardiacaMax();
                 pSistWarning = pacPreArtSistolica<valoresRef.getPreArtSistolicaMin() || pacPreArtSistolica>valoresRef.getPreArtSistolicaMax();
                 pDiasWarning = pacPreArtDiastolica<valoresRef.getPreArtDiastolicaMin() || pacPreArtDiastolica>valoresRef.getPreArtDiastolicaMax();
-                showPartWarning = pSistWarning || showPartWarning;  
+                showPartWarning = pSistWarning || pDiasWarning;  
                         
                 LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
 
