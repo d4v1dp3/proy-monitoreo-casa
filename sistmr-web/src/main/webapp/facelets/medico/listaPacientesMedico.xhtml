@@ -63,8 +63,15 @@ Todos los derechos reservados
                             <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
                         </p:column>
 
-                        <p:column style="width:32px;text-align: center">
-                            <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.mostrarDashboard()}">
+                        <p:column headerText="Antecedentes" style="width:32px;text-align: center">
+                            <p:commandButton icon="fas fa-clipboard" title="Antecedentes" action="#{listadoPacientesMB.mostrarAntecedentes()}">
+                                <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
+                                <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMostrarAntecedentes}" update="@all"/>
+                            </p:commandButton>
+                        </p:column>
+                        
+                         <p:column headerText="Signos y Sintomas" style="width:32px;text-align: center">
+                            <p:commandButton icon="fas fa-heartbeat" title="Signos" action="#{listadoPacientesMB.mostrarDashboard()}">
                                 <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
                                 <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
                             </p:commandButton>

@@ -83,8 +83,8 @@ public class ListadoPacientesMB implements Serializable {
                             "Pacientes cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-//        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
-//        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
     }
 
     
@@ -133,17 +133,124 @@ public class ListadoPacientesMB implements Serializable {
 
     public void retornoMuestraDashboard(SelectEvent event) {
         FacesMessage msg = null;
-
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
-
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
-                            "Diálogo cerrado sin aplicar cambios",
+                            "Diálogo cerrado sin aplicar cambios.",
                             FacesMessage.SEVERITY_INFO);
         }
-//        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+    }
+    
+    public void mostrarAntecedentes() {
+        logger.log(Level.INFO,"Abre antecedentes del paciente.");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 340);
+        options.put("height", 500);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+        
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+        
+        List<String> valNombre = new ArrayList<>();
+        valNombre.add(pacienteMostrar.getIdPersona().getNombre());
+        
+        List<String> valPrimerAp = new ArrayList<>();
+        valPrimerAp.add(pacienteMostrar.getIdPersona().getPrimerApellido());
+        
+        List<String> valSegundoAp = new ArrayList<>();
+        valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
+            
+
+        List<String> diabetes = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getDiabetes())
+            diabetes.add("true");
+        else
+            diabetes.add("false");
+        
+        List<String> cancer = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getCancer())
+            cancer.add("true");
+        else
+            cancer.add("false");
+        
+        List<String> asma = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getAsma())
+            asma.add("true");
+        else
+            asma.add("false");
+        
+        List<String> vih = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getVih())
+            vih.add("true");
+        else
+            vih.add("false");
+            
+        List<String> has = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getHas())
+            has.add("true");
+        else
+            has.add("false");
+        
+        List<String> epoc = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getEpoc())
+            epoc.add("true");
+        else
+            epoc.add("false");
+        
+        List<String> embarazo = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getEmbarazo())
+            embarazo.add("true");
+        else
+            embarazo.add("false");
+        
+        List<String> artritis = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getArtritis())
+            artritis.add("true");
+        else
+            artritis.add("false");
+        
+        List<String> enfau = new ArrayList<>();
+        if(pacienteMostrar.getEntAntecedentes().getEnfautoinmune())
+            enfau.add("true");
+        else
+            enfau.add("false");
+                
+        logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
+        logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
+        
+        parametros.put("pacNombre", valNombre);
+        parametros.put("pacPrimerAp", valPrimerAp);
+        parametros.put("pacSegundoAp", valSegundoAp);
+        parametros.put("diab", diabetes);
+        parametros.put("canc", cancer);
+        parametros.put("asma", asma);
+        parametros.put("vih", vih);
+        parametros.put("has", has);
+        parametros.put("epoc", epoc);
+        parametros.put("emba", embarazo);
+        parametros.put("artr", artritis);
+        parametros.put("enfa", enfau);
+                
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialAntecedentesPaciente", options, parametros);
+    }
+    
+    public void retornoMostrarAntecedentes(SelectEvent event) {
+        FacesMessage msg = null;
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo ",
+                            "Diálogo cerrado sin aplicar cambios.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
 
     /**

@@ -109,10 +109,6 @@ public class AntecedentesVO implements Serializable{
     public void setEnfautoinmune(Boolean enfautoinmune) {
         this.enfautoinmune = enfautoinmune;
     }
-
-    
-    
-    
     
 }
 
