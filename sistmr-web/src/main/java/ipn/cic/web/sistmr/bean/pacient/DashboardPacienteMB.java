@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -93,6 +94,8 @@ public class DashboardPacienteMB implements Serializable{
     
     private LocalDate fechaCalendario;
     
+    private TimeZone tz = TimeZone.getDefault();
+    
     public void cargaInicial(){
         try{
             paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
@@ -121,7 +124,7 @@ public class DashboardPacienteMB implements Serializable{
                 pDiasWarning = pacPreArtDiastolica<valoresRef.getPreArtDiastolicaMin() || pacPreArtDiastolica>valoresRef.getPreArtDiastolicaMax();
                 showPartWarning = pSistWarning || pDiasWarning;  
                         
-                LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+                LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
                 fechaUltMedicion=fechaMedicion.format(formatoFecha);
                 horaUltMedicion=fechaMedicion.format(formatoHora);
@@ -167,7 +170,7 @@ public class DashboardPacienteMB implements Serializable{
         soxigeno.setLabel("Saturacion de oxígeno");
 
         for(EntMedidas medida:medidasComp){       
-            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
          
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
                 soxigeno.set(fechaMedicion.format(formatoHora), medida.getSaturacionOxigeno());
@@ -195,7 +198,7 @@ public class DashboardPacienteMB implements Serializable{
         
         for(EntMedidas medida:medidasComp){
             
-            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
          
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
                 temperatura.set(fechaMedicion.format(formatoHora), medida.getTemperatura());
@@ -223,7 +226,7 @@ public class DashboardPacienteMB implements Serializable{
                 
         for(EntMedidas medida:medidasComp){
             
-            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
          
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
                 p1.set(fechaMedicion.format(formatoHora), medida.getFrecCardiaca());
@@ -250,7 +253,7 @@ public class DashboardPacienteMB implements Serializable{
         
         for(EntMedidas medida:medidasComp){
             
-            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
          
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
                 p1.set(fechaMedicion.format(formatoHora), medida.getFrecRespiratoria());
@@ -280,7 +283,7 @@ public class DashboardPacienteMB implements Serializable{
         
         for(EntMedidas medida:medidasComp){
             
-            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
          
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
                 sistolica.set(fechaMedicion.format(formatoHora), medida.getPreArtSistolica());
