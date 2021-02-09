@@ -7,6 +7,7 @@
 package ipn.cic.web.sistmr.bean.admon;
 
 import ipn.cic.sistmr.exception.CatalogoException;
+import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.modelo.EntGenero;
 import ipn.cic.sistmr.modelo.EntMedico;
@@ -72,6 +73,7 @@ public class GestionMedicoMB implements Serializable{
     }
     
     public void guardarMedico(){
+        medGuardado=null;
         try{
             medGuardado = gstMed.guardarMedicoNuevo(datMedico, datPersona, datUsuario);
         } catch (MedicoException ex) {
@@ -81,7 +83,16 @@ public class GestionMedicoMB implements Serializable{
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
+        }catch (IDUsuarioException ex) {
+            logger.log(Level.INFO, "Error al guardar médico: {0}",ex.getMessage());
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "El ID de USUARIO ya existe, CAMBIARLO", 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaMedico:idUsrMess", msg);
+            return;
         }
+        
         FacesMessage msg=null;
         if (medGuardado == null){
             msg = Mensaje.getInstance()
@@ -102,10 +113,10 @@ public class GestionMedicoMB implements Serializable{
     
     public void cerrarDialogo(){
         logger.log(Level.INFO,"Invocando cerrar dialogo.");
-        FacesMessage mensaje = Mensaje.getInstance()
-                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                                                   FacesMessage.SEVERITY_INFO);
-        cerrarDialogo(mensaje);
+        //FacesMessage mensaje = Mensaje.getInstance()
+          //                            .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+            //                                       FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(null);
     }
     
     private void cerrarDialogo(FacesMessage mensaje){

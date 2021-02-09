@@ -31,22 +31,20 @@
 
         <h:body>
             <i class="far fa-save"></i>
+            <h:form id="frmAltaMedico">
+                <p:growl id="msgAltaMed" showDetail="true" />
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
 
-            <p:growl id="msgAltaMed" showDetail="true" />
+                            <center>
+                                <h2>
+                                    <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
+                                </h2>
+                            </center>
+                            <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
 
-            <p:panelGrid>
-                <p:row>
-                    <p:column>
-
-                        <center>
-                            <h2>
-                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
-                            </h2>
-                        </center>
-                        <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
-
-                        <p:panelGrid>
-                            <h:form id="frmAltaMedico">
+                            <p:panelGrid>
                                 <p:row>
                                     <p:column colspan="3" class="ui-widget-header">Datos Personales</p:column>
                                 </p:row>
@@ -87,9 +85,10 @@
 
                                                 </td>
                                                 <td>
-                                                    <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" dynamic="true">
+                                                    <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" required="true">
                                                         <f:selectItems value="#{gestionMedicoMB.catGenero}" var="genero" 
                                                                        itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                                        <p:ajax />
                                                     </p:selectOneMenu>                                                
                                                 </td>
                                                 <td></td>
@@ -127,7 +126,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><p:message for="idUsr" /></td>
+                                                <td><p:message id="idUsrMess" for="idUsr" /></td>
                                                 <td><p:message for="contra" /></td>
                                                 <td></td>
                                             </tr>
@@ -173,25 +172,27 @@
                                 <p:row>
                                     <p:column colspan="3" style="text-align: right">
                                         <p:commandButton icon="fas fa-save" value="Guardar" 
-                                                         actionListener="#{gestionMedicoMB.guardarMedico()}"
+                                                         action="#{gestionMedicoMB.guardarMedico()}"
                                                          update="@all"/>
                                     </p:column>
                                 </p:row>
-                            </h:form>
-                            <p:row>
-                                <p:column colspan="3" style="text-align: right">
-                                    <h:form>
-                                        <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}" 
-                                                         icon="pi pi-times"/>    
-                                    </h:form>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+            <h:form>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column colspan="3" style="text-align: right">
 
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
+                            <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}" 
+                                             icon="pi pi-times"/>    
 
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
 
 
         </h:body>

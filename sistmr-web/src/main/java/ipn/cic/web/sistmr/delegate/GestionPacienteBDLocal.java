@@ -5,6 +5,7 @@
  */
 package ipn.cic.web.sistmr.delegate;
 
+import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.PacienteException;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.web.sistmr.bean.vo.AntecedentesVO;
@@ -20,5 +21,5 @@ import javax.ejb.Local;
 @Local
 public interface GestionPacienteBDLocal {
      public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, AntecedentesVO antecedentes, 
-                                        UsuarioVO usuario) throws PacienteException;
+                                        UsuarioVO usuario) throws PacienteException, IDUsuarioException;
 }

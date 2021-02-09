@@ -7,6 +7,7 @@
 package ipn.cic.web.sistmr.bean.admon;
 
 import ipn.cic.sistmr.exception.CatalogoException;
+import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.PacienteException;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntGenero;
@@ -115,6 +116,13 @@ public class GestionPacienteMB implements Serializable{
                                      .getMensajeAdaptado("Error",
                                                 "Error al intentar guardar médico :"+ex.getMessage(), 
                                                 FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            return;
+        }catch (IDUsuarioException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "El ID de Paciente Existe. CAMBIARLO",
+                            FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
             return;
         }

@@ -81,8 +81,8 @@ public class GestionUsuariosMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaMedico", options, null);
     }
     
-    public void retornoAltaMedico(){
-        
+    public void retornoAltaMedico(SelectEvent event){
+        retornoEditaUsuario(event);        
     }
     
     

@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmr.sesion;
 
+import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
 import ipn.cic.sistmr.modelo.EntRol;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -83,8 +85,24 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     }
 
     @Override
-    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException {
+    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException, IDUsuarioException{
+        if(existeIdUsiario(eu.getIdUsuario())){
+            throw new IDUsuarioException();
+        }
         eu = (EntUsuario) this.saveEntity(eu);
         return eu;
+    }
+    
+    @Override
+    public boolean existeIdUsiario(String idUsuario){
+        try{
+            query = em.createNamedQuery("EntUsuario.findByIdUsuario");
+            query.setParameter("idUsuario",idUsuario.trim());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();
+            
+            return usuario!=null;            
+        }catch(NoResultException e){
+            return false;
+        }
     }
 }

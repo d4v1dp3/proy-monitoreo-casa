@@ -7,6 +7,7 @@
 package ipn.cic.web.sistmr.delegate;
 
 import ipn.cic.sistmr.exception.GeneroException;
+import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.exception.NoExisteHospitalException;
 import ipn.cic.sistmr.exception.RolException;
@@ -62,7 +63,7 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona,
-                                        UsuarioVO usuario) throws MedicoException {
+                                        UsuarioVO usuario) throws MedicoException,  IDUsuarioException{
         // Aquí hay que preparar los datos para almacenar la información
         // primero los datos de persona para persistirlos
         EntPersona entPersona = new EntPersona();
@@ -80,6 +81,9 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             throw new MedicoException("Imposible asignar genero ", ex);
         } catch (SaveEntityException ex) {
             logger.log(Level.SEVERE,"Error al persistir EnPersona : {0}",ex.getMessage());
+            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE,"Error Desconocido : {0}",ex.getMessage());
             throw new MedicoException("Imposible salvar Persona para Médico ", ex);
         }
         

@@ -27,25 +27,24 @@
 
     <h:body>
         <i id="customheader" class="fas fa-bed" style="display:none"></i>
+        <h:form id="frmAltaPaciente">
+            <p:growl id="msgAltaPas" showDetail="true" />
+
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
 
 
-        <p:growl id="msgAltaPas" showDetail="true" />
-
-        <p:panelGrid>
-            <p:row>
-                <p:column>
-
-
-                    <center>
-                        <h2>
-                            <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN PACIENTE" class="titulo"></p:outputLabel>
-                        </h2>
-                    </center>
-                    <p>Llene los siguientes campos para registrar un Paciente en el sistema. </p>
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN PACIENTE" class="titulo"></p:outputLabel>
+                            </h2>
+                        </center>
+                        <p>Llene los siguientes campos para registrar un Paciente en el sistema. </p>
 
 
-                    <p:panelGrid>
-                        <h:form id="frmAltaPaciente">
+                        <p:panelGrid>
+
                             <p:row>
                                 <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
                             </p:row>
@@ -212,25 +211,22 @@
                                                      icon="fas fa-save" update="@all"/>
                                 </p:column>
                             </p:row>
-
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+        <h:form>
+            <p:panelGrid>
+                <p:row>
+                    <p:column colspan="3">
+                        <h:form>
+                            <p:commandButton value="Cerrar" action="#{gestionPacienteMB.cerrarDialogo}"
+                                             icon="pi pi-times"/>  
                         </h:form>
-
-                        <p:row>
-                            <p:column colspan="3">
-                                <h:form>
-                                    <p:commandButton value="Cerrar" action="#{gestionPacienteMB.cerrarDialogo}"
-                                                     icon="pi pi-times"/>  
-                                </h:form>
-                            </p:column>
-                        </p:row>
-
-                    </p:panelGrid>
-                </p:column>
-            </p:row>
-        </p:panelGrid>
-
-
-
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
     </h:body>
-
 </html>
