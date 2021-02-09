@@ -63,7 +63,7 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
     @EJB
     private ValoresReferenciaSBLocal valoresSB;
         
-    @Resource(name = "java:jboss/mail/gmailSalida")
+    @Resource(name = "java:jboss/mail/sisMCasaMail")
     private Session mailSesion;
             
     private EntPaciente cargarPaciente(long idPaciente) throws NoExistePacienteException {
