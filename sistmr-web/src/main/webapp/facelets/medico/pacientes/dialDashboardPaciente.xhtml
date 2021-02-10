@@ -48,7 +48,12 @@
                     background: crimson !important;
                     text-align: center !important;
                     font-weight: bold !important;
-                }                
+                }
+                .yellowBackground .ui-panel-content{
+                    background: yellow !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }                 
             </style>
             
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
@@ -87,13 +92,13 @@
 
                     <p:row>     
                         <p:column>
-                            <p:panel id="panelOxigeno" header="Saturación de Oxígeno" styleClass="#{dashboardPacienteMB.showOxgWarning ? 'redBackground':'greenBackground'}">
+                            <p:panel id="panelOxigeno" header="Saturación de Oxígeno" styleClass="#{dashboardPacienteMB.satOxgColor}">
                                 <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxg}" style="font-size: 50px;"/>
                                 <h:outputText value="%"  style="font-size: 15px;"/>
                             </p:panel>
                         </p:column>
                         <p:column>
-                            <p:panel id="panelTemperatura" header="Temperatura" styleClass="#{dashboardPacienteMB.showTempWarning ? 'redBackground':'greenBackground'}">
+                            <p:panel id="panelTemperatura" header="Temperatura" styleClass="#{dashboardPacienteMB.tempColor}">
                                 <h:outputText value="#{dashboardPacienteMB.pacTemperatura}"  style="font-size: 50px;"/>
                                 <h:outputText value="°C"  style="font-size: 15px;"/>
                             </p:panel>
@@ -102,28 +107,28 @@
                             <p:panel id="panelEstadoPac" header="Pre-Diagnóstico" style="text-align: center;">
                                 <h:outputText value="#{dashboardPacienteMB.pacEstado}" style="font-weight: bold; font-size: 30px;"/>
                             </p:panel>
-                        </p:column>                 
+                        </p:column>                   
                     </p:row>
-                    <p:row>
+                    <p:row> 
                         <p:column>
-                            <p:panel id="panelfRespiratoria" header="Frecuencia Respiratoria" styleClass="#{dashboardPacienteMB.showFrespWarning ? 'redBackground':'greenBackground'}" >  
+                            <p:panel id="panelfRespiratoria" header="Frecuencia Respiratoria" styleClass="#{dashboardPacienteMB.frespColor}" >  
                                 <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoria}"  style="font-size: 50px"/>
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
                             </p:panel>
                         </p:column>
                         <p:column>
-                            <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.showFcardWarning ? 'redBackground':'greenBackground'}">
+                            <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.fcardColor}">
                                 <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-size: 50px"/>
                                 <h:outputText value="LPM" style="font-size: 15px"/>
                             </p:panel>
-                        </p:column>    
-                        <p:column>         
-                            <p:panel id="panelfArt" header="Presión Arterial" styleClass="#{dashboardPacienteMB.showPartWarning ? 'redBackground':'greenBackground'}">
+                        </p:column>
+                        <p:column> 
+                            <p:panel id="panelPArt" header="Presión Arterial" styleClass="#{dashboardPacienteMB.pArtColor}">
                                 <h:outputText value="#{dashboardPacienteMB.pacPreArtSistolica}"  style="font-size: 50px"/>
                                 <h:outputText value="/"  style="font-size: 50px"/>
                                 <h:outputText value="#{dashboardPacienteMB.pacPreArtDiastolica}"  style="font-size: 50px"/>
                                 <h:outputText value="mmHg"  style="font-size: 15px"/>
-                            </p:panel>      
+                            </p:panel> 
                         </p:column>
                     </p:row>
                     <p:row>
