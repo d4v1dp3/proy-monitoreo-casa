@@ -25,126 +25,175 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "RM_VALORES_REFERENCIA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EntValoresReferencia.findAll", query = "SELECT e FROM EntValoresReferencia e"),
-    
-    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoMin = :satOxigenoMin"),
-    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoMinInter = :satOxigenoMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoMaxInter = :satOxigenoMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoMax = :satOxigenoMax"),
-    
-    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaMin = :temperaturaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaMinInter = :temperaturaMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaMaxInter = :temperaturaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaMax = :temperaturaMax"),
-
-    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaMin = :capnografiaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaMinInter = :capnografiaMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaMaxInter = :capnografiaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaMax = :capnografiaMax"),
-    
-    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaMin = :frecCardiacaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaMinInter = :frecCardiacaMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaMaxInter = :frecCardiacaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaMax = :frecCardiacaMax"),
-    
-    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMin = :frecRespiratoriaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMinInter = :frecRespiratoriaMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMaxInter = :frecRespiratoriaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaMax = :frecRespiratoriaMax"),
- 
+    @NamedQuery(name = "EntValoresReferencia.findAll", query = "SELECT e FROM EntValoresReferencia e"), 
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoNormalMin = :satOxigenoNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoNormalMax = :satOxigenoNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoWarningMin = :satOxigenoWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoWarningMax = :satOxigenoWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoAlertMin = :satOxigenoAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findBySatOxigenoAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.satOxigenoAlertMax = :satOxigenoAlertMax"), 
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaNormalMin = :temperaturaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaNormalMax = :temperaturaNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaWarningMin = :temperaturaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaWarningMax = :temperaturaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaAlertMin = :temperaturaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByTemperaturaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.temperaturaAlertMax = :temperaturaAlertMax"),  
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaNormalMin = :capnografiaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaNormalMax = :capnografiaNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaWarningMin = :capnografiaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaWarningMax = :capnografiaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaAlertMin = :capnografiaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByCapnografiaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.capnografiaAlertMax = :capnografiaAlertMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaNormalMin = :frecCardiacaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaNormalMax = :frecCardiacaNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaWarningMin = :frecCardiacaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaWarningMax = :frecCardiacaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaAlertMin = :frecCardiacaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecCardiacaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecCardiacaAlertMax = :frecCardiacaAlertMax"),  
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaNormalMin = :frecRespiratoriaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaNormalMax = :frecRespiratoriaNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaWarningMin = :frecRespiratoriaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaWarningMax = :frecRespiratoriaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaAlertMin = :frecRespiratoriaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByFrecRespiratoriaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.frecRespiratoriaAlertMax = :frecRespiratoriaAlertMax"),
     @NamedQuery(name = "EntValoresReferencia.findByIdValref", query = "SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValref"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMin = :preArtSistolicaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMinInter = :preArtSistolicaMinInter"),   
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMaxInter = :preArtSistolicaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaMax = :preArtSistolicaMax"),
-    
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMin = :preArtDiastolicaMin"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMinInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMinInter = :preArtDiastolicaMinInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMaxInter", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMaxInter = :preArtDiastolicaMaxInter"),
-    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaMax = :preArtDiastolicaMax")})
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaNormalMin = :preArtSistolicaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaNormalMax = :preArtSistolicaNormalMax"),   
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaWarningMin = :preArtSistolicaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaWarningMax = :preArtSistolicaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaAlertMin = :preArtSistolicaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtSistolicaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtSistolicaAlertMax = :preArtSistolicaAlertMax"),    
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaNormalMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaNormalMin = :preArtDiastolicaNormalMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaNormalMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaNormalMax = :preArtDiastolicaNormalMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaWarningMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaWarningMin = :preArtDiastolicaWarningMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaWarningMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaWarningMax = :preArtDiastolicaWarningMax"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaAlertMin", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaAlertMin = :preArtDiastolicaAlertMin"),
+    @NamedQuery(name = "EntValoresReferencia.findByPreArtDiastolicaAlertMax", query = "SELECT e FROM EntValoresReferencia e WHERE e.preArtDiastolicaAlertMax = :preArtDiastolicaAlertMax")})
+
 public class EntValoresReferencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SAT_OXIGENO_MIN")
-    private float satOxigenoMin;
+    @Column(name = "SAT_OXIGENO_NORMAL_MIN")
+    private float satOxigenoNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SAT_OXIGENO_MIN_INTER")
-    private float satOxigenoMinInter;
+    @Column(name = "SAT_OXIGENO_NORMAL_MAX")
+    private float satOxigenoNormalMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SAT_OXIGENO_MAX_INTER")
-    private float satOxigenoMaxInter;
+    @Column(name = "SAT_OXIGENO_WARNING_MIN")
+    private float satOxigenoWarningMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SAT_OXIGENO_MAX")
-    private float satOxigenoMax;
+    @Column(name = "SAT_OXIGENO_WARNING_MAX")
+    private float satOxigenoWarningMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TEMPERATURA_MIN")
-    private float temperaturaMin;
+    @Column(name = "SAT_OXIGENO_ALERT_MIN")
+    private float satOxigenoAlertMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TEMPERATURA_MIN_INTER")
-    private float temperaturaMinInter;
+    @Column(name = "SAT_OXIGENO_ALERT_MAX")
+    private float satOxigenoAlertMax;  
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TEMPERATURA_MAX_INTER")
-    private float temperaturaMaxInter;
+    @Column(name = "TEMPERATURA_NORMAL_MIN")
+    private float temperaturaNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TEMPERATURA_MAX")
-    private float temperaturaMax;
+    @Column(name = "TEMPERATURA_NORMAL_MAX")
+    private float temperaturaNormalMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CAPNOGRAFIA_MIN")
-    private short capnografiaMin;
+    @Column(name = "TEMPERATURA_WARNING_MIN")
+    private float temperaturaWarningMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CAPNOGRAFIA_MIN_INTER")
-    private short capnografiaMinInter;
+    @Column(name = "TEMPERATURA_WARNING_MAX")
+    private float temperaturaWarningMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CAPNOGRAFIA_MAX_INTER")
-    private short capnografiaMaxInter;
+    @Column(name = "TEMPERATURA_ALERT_MIN")
+    private float temperaturaAlertMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CAPNOGRAFIA_MAX")
-    private short capnografiaMax;
+    @Column(name = "TEMPERATURA_ALERT_MAX")
+    private float temperaturaAlertMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_CARDIACA_MIN")
-    private short frecCardiacaMin;
+    @Column(name = "CAPNOGRAFIA_NORMAL_MIN")
+    private short capnografiaNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_CARDIACA_MIN_INTER")
-    private short frecCardiacaMinInter;
+    @Column(name = "CAPNOGRAFIA_NORMAL_MAX")
+    private short capnografiaNormalMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_CARDIACA_MAX_INTER")
-    private short frecCardiacaMaxInter;
+    @Column(name = "CAPNOGRAFIA_WARNING_MIN")
+    private short capnografiaWarningMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_CARDIACA_MAX")
-    private short frecCardiacaMax;
+    @Column(name = "CAPNOGRAFIA_WARNING_MAX")
+    private short capnografiaWarningMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_RESPIRATORIA_MIN")
-    private short frecRespiratoriaMin;
+    @Column(name = "CAPNOGRAFIA_ALERT_MIN")
+    private short capnografiaAlertMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_RESPIRATORIA_MIN_INTER")
-    private short frecRespiratoriaMinInter;
+    @Column(name = "CAPNOGRAFIA_ALERT_MAX")
+    private short capnografiaAlertMax;    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_RESPIRATORIA_MAX_INTER")
-    private short frecRespiratoriaMaxInter;
+    @Column(name = "FREC_CARDIACA_NORMAL_MIN")
+    private short frecCardiacaNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FREC_RESPIRATORIA_MAX")
-    private short frecRespiratoriaMax;
+    @Column(name = "FREC_CARDIACA_NORMAL_MAX")
+    private short frecCardiacaNormalMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_CARDIACA_WARNING_MIN")
+    private short frecCardiacaWarningMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_CARDIACA_WARNING_MAX")
+    private short frecCardiacaWarningMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_CARDIACA_ALERT_MIN")
+    private short frecCardiacaAlertMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_CARDIACA_ALERT_MAX")
+    private short frecCardiacaAlertMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_NORMAL_MIN")
+    private short frecRespiratoriaNormalMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_NORMAL_MAX")
+    private short frecRespiratoriaNormalMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_WARNING_MIN")
+    private short frecRespiratoriaWarningMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_WARNING_MAX")
+    private short frecRespiratoriaWarningMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_ALERT_MIN")
+    private short frecRespiratoriaAlertMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FREC_RESPIRATORIA_ALERT_MAX")
+    private short frecRespiratoriaAlertMax;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -152,36 +201,52 @@ public class EntValoresReferencia implements Serializable {
     private Short idValref;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_SISTOLICA_MIN")
-    private int preArtSistolicaMin;
+    @Column(name = "PRE_ART_SISTOLICA_NORMAL_MIN")
+    private int preArtSistolicaNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_SISTOLICA_MIN_INTER")
-    private int preArtSistolicaMinInter;
+    @Column(name = "PRE_ART_SISTOLICA_NORMAL_MAX")
+    private int preArtSistolicaNormalMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_SISTOLICA_MAX_INTER")
-    private int preArtSistolicaMaxInter;
+    @Column(name = "PRE_ART_SISTOLICA_WARNING_MIN")
+    private int preArtSistolicaWarningMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_SISTOLICA_MAX")
-    private int preArtSistolicaMax;
+    @Column(name = "PRE_ART_SISTOLICA_WARNING_MAX")
+    private int preArtSistolicaWarningMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_DIASTOLICA_MIN")
-    private int preArtDiastolicaMin;
+    @Column(name = "PRE_ART_SISTOLICA_ALERT_MIN")
+    private int preArtSistolicaAlertMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_DIASTOLICA_MIN_INTER")
-    private int preArtDiastolicaMinInter;
+    @Column(name = "PRE_ART_SISTOLICA_ALERT_MAX")
+    private int preArtSistolicaAlertMax;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_DIASTOLICA_MAX_INTER")
-    private int preArtDiastolicaMaxInter;
+    @Column(name = "PRE_ART_DIASTOLICA_NORMAL_MIN")
+    private int preArtDiastolicaNormalMin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRE_ART_DIASTOLICA_MAX")
-    private int preArtDiastolicaMax;
+    @Column(name = "PRE_ART_DIASTOLICA_NORMAL_MAX")
+    private int preArtDiastolicaNormalMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_WARNING_MIN")
+    private int preArtDiastolicaWarningMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_WARNING_MAX")
+    private int preArtDiastolicaWarningMax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_ALERT_MIN")
+    private int preArtDiastolicaAlertMin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_ART_DIASTOLICA_ALERT_MAX")
+    private int preArtDiastolicaAlertMax;
     
     public EntValoresReferencia() {
     }
@@ -190,196 +255,290 @@ public class EntValoresReferencia implements Serializable {
         this.idValref = idValref;
     }
 
-     public EntValoresReferencia(float satOxigenoMin, float satOxigenoMinInter, float satOxigenoMaxInter, float satOxigenoMax, float temperaturaMin, float temperaturaMinInter, float temperaturaMaxInter, float temperaturaMax, short capnografiaMin, short capnografiaMinInter, short capnografiaMaxInter, short capnografiaMax, short frecCardiacaMin, short frecCardiacaMinInter, short frecCardiacaMaxInter, short frecCardiacaMax, short frecRespiratoriaMin, short frecRespiratoriaMinInter, short frecRespiratoriaMaxInter, short frecRespiratoriaMax, Short idValref, int preArtSistolicaMin, int preArtSistolicaMinInter, int preArtSistolicaMaxInter, int preArtSistolicaMax, int preArtDiastolicaMin, int preArtDiastolicaMinInter, int preArtDiastolicaMaxInter, int preArtDiastolicaMax) {
-        this.satOxigenoMin = satOxigenoMin;
-        this.satOxigenoMinInter = satOxigenoMinInter;
-        this.satOxigenoMaxInter = satOxigenoMaxInter;
-        this.satOxigenoMax = satOxigenoMax;
-        this.temperaturaMin = temperaturaMin;
-        this.temperaturaMinInter = temperaturaMinInter;
-        this.temperaturaMaxInter = temperaturaMaxInter;
-        this.temperaturaMax = temperaturaMax;
-        this.capnografiaMin = capnografiaMin;
-        this.capnografiaMinInter = capnografiaMinInter;
-        this.capnografiaMaxInter = capnografiaMaxInter;
-        this.capnografiaMax = capnografiaMax;
-        this.frecCardiacaMin = frecCardiacaMin;
-        this.frecCardiacaMinInter = frecCardiacaMinInter;
-        this.frecCardiacaMaxInter = frecCardiacaMaxInter;
-        this.frecCardiacaMax = frecCardiacaMax;
-        this.frecRespiratoriaMin = frecRespiratoriaMin;
-        this.frecRespiratoriaMinInter = frecRespiratoriaMinInter;
-        this.frecRespiratoriaMaxInter = frecRespiratoriaMaxInter;
-        this.frecRespiratoriaMax = frecRespiratoriaMax;
+    public EntValoresReferencia(float satOxigenoNormalMin, float satOxigenoNormalMax, float satOxigenoWarningMin, float satOxigenoWarningMax, float satOxigenoAlertMin, float satOxigenoAlertMax, float temperaturaNormalMin, float temperaturaNormalMax, float temperaturaWarningMin, float temperaturaWarningMax, float temperaturaAlertMin, float temperaturaAlertMax, short capnografiaNormalMin, short capnografiaNormalMax, short capnografiaWarningMin, short capnografiaWarningMax, short capnografiaAlertMin, short capnografiaAlertMax, short frecCardiacaNormalMin, short frecCardiacaNormalMax, short frecCardiacaWarningMin, short frecCardiacaWarningMax, short frecCardiacaAlertMin, short frecCardiacaAlertMax, short frecRespiratoriaNormalMin, short frecRespiratoriaNormalMax, short frecRespiratoriaWarningMin, short frecRespiratoriaWarningMax, short frecRespiratoriaAlertMin, short frecRespiratoriaAlertMax, Short idValref, int preArtSistolicaNormalMin, int preArtSistolicaNormalMax, int preArtSistolicaWarningMin, int preArtSistolicaWarningMax, int preArtSistolicaAlertMin, int preArtSistolicaAlertMax, int preArtDiastolicaNormalMin, int preArtDiastolicaNormalMax, int preArtDiastolicaWarningMin, int preArtDiastolicaWarningMax, int preArtDiastolicaAlertMin, int preArtDiastolicaAlertMax) {
+        this.satOxigenoNormalMin = satOxigenoNormalMin;
+        this.satOxigenoNormalMax = satOxigenoNormalMax;
+        this.satOxigenoWarningMin = satOxigenoWarningMin;
+        this.satOxigenoWarningMax = satOxigenoWarningMax;
+        this.satOxigenoAlertMin = satOxigenoAlertMin;
+        this.satOxigenoAlertMax = satOxigenoAlertMax;
+        this.temperaturaNormalMin = temperaturaNormalMin;
+        this.temperaturaNormalMax = temperaturaNormalMax;
+        this.temperaturaWarningMin = temperaturaWarningMin;
+        this.temperaturaWarningMax = temperaturaWarningMax;
+        this.temperaturaAlertMin = temperaturaAlertMin;
+        this.temperaturaAlertMax = temperaturaAlertMax;
+        this.capnografiaNormalMin = capnografiaNormalMin;
+        this.capnografiaNormalMax = capnografiaNormalMax;
+        this.capnografiaWarningMin = capnografiaWarningMin;
+        this.capnografiaWarningMax = capnografiaWarningMax;
+        this.capnografiaAlertMin = capnografiaAlertMin;
+        this.capnografiaAlertMax = capnografiaAlertMax;
+        this.frecCardiacaNormalMin = frecCardiacaNormalMin;
+        this.frecCardiacaNormalMax = frecCardiacaNormalMax;
+        this.frecCardiacaWarningMin = frecCardiacaWarningMin;
+        this.frecCardiacaWarningMax = frecCardiacaWarningMax;
+        this.frecCardiacaAlertMin = frecCardiacaAlertMin;
+        this.frecCardiacaAlertMax = frecCardiacaAlertMax;
+        this.frecRespiratoriaNormalMin = frecRespiratoriaNormalMin;
+        this.frecRespiratoriaNormalMax = frecRespiratoriaNormalMax;
+        this.frecRespiratoriaWarningMin = frecRespiratoriaWarningMin;
+        this.frecRespiratoriaWarningMax = frecRespiratoriaWarningMax;
+        this.frecRespiratoriaAlertMin = frecRespiratoriaAlertMin;
+        this.frecRespiratoriaAlertMax = frecRespiratoriaAlertMax;
         this.idValref = idValref;
-        this.preArtSistolicaMin = preArtSistolicaMin;
-        this.preArtSistolicaMinInter = preArtSistolicaMinInter;
-        this.preArtSistolicaMaxInter = preArtSistolicaMaxInter;
-        this.preArtSistolicaMax = preArtSistolicaMax;
-        this.preArtDiastolicaMin = preArtDiastolicaMin;
-        this.preArtDiastolicaMinInter = preArtDiastolicaMinInter;
-        this.preArtDiastolicaMaxInter = preArtDiastolicaMaxInter;
-        this.preArtDiastolicaMax = preArtDiastolicaMax;
+        this.preArtSistolicaNormalMin = preArtSistolicaNormalMin;
+        this.preArtSistolicaNormalMax = preArtSistolicaNormalMax;
+        this.preArtSistolicaWarningMin = preArtSistolicaWarningMin;
+        this.preArtSistolicaWarningMax = preArtSistolicaWarningMax;
+        this.preArtSistolicaAlertMin = preArtSistolicaAlertMin;
+        this.preArtSistolicaAlertMax = preArtSistolicaAlertMax;
+        this.preArtDiastolicaNormalMin = preArtDiastolicaNormalMin;
+        this.preArtDiastolicaNormalMax = preArtDiastolicaNormalMax;
+        this.preArtDiastolicaWarningMin = preArtDiastolicaWarningMin;
+        this.preArtDiastolicaWarningMax = preArtDiastolicaWarningMax;
+        this.preArtDiastolicaAlertMin = preArtDiastolicaAlertMin;
+        this.preArtDiastolicaAlertMax = preArtDiastolicaAlertMax;
     }
 
-    public float getSatOxigenoMin() {
-        return satOxigenoMin;
+    public float getSatOxigenoNormalMin() {
+        return satOxigenoNormalMin;
     }
 
-    public void setSatOxigenoMin(float satOxigenoMin) {
-        this.satOxigenoMin = satOxigenoMin;
+    public void setSatOxigenoNormalMin(float satOxigenoNormalMin) {
+        this.satOxigenoNormalMin = satOxigenoNormalMin;
     }
 
-    public float getSatOxigenoMinInter() {
-        return satOxigenoMinInter;
+    public float getSatOxigenoNormalMax() {
+        return satOxigenoNormalMax;
     }
 
-    public void setSatOxigenoMinInter(float satOxigenoMinInter) {
-        this.satOxigenoMinInter = satOxigenoMinInter;
+    public void setSatOxigenoNormalMax(float satOxigenoNormalMax) {
+        this.satOxigenoNormalMax = satOxigenoNormalMax;
     }
 
-    public float getSatOxigenoMaxInter() {
-        return satOxigenoMaxInter;
+    public float getSatOxigenoWarningMin() {
+        return satOxigenoWarningMin;
     }
 
-    public void setSatOxigenoMaxInter(float satOxigenoMaxInter) {
-        this.satOxigenoMaxInter = satOxigenoMaxInter;
+    public void setSatOxigenoWarningMin(float satOxigenoWarningMin) {
+        this.satOxigenoWarningMin = satOxigenoWarningMin;
     }
 
-    public float getSatOxigenoMax() {
-        return satOxigenoMax;
+    public float getSatOxigenoWarningMax() {
+        return satOxigenoWarningMax;
     }
 
-    public void setSatOxigenoMax(float satOxigenoMax) {
-        this.satOxigenoMax = satOxigenoMax;
+    public void setSatOxigenoWarningMax(float satOxigenoWarningMax) {
+        this.satOxigenoWarningMax = satOxigenoWarningMax;
     }
 
-    public float getTemperaturaMin() {
-        return temperaturaMin;
+    public float getSatOxigenoAlertMin() {
+        return satOxigenoAlertMin;
     }
 
-    public void setTemperaturaMin(float temperaturaMin) {
-        this.temperaturaMin = temperaturaMin;
+    public void setSatOxigenoAlertMin(float satOxigenoAlertMin) {
+        this.satOxigenoAlertMin = satOxigenoAlertMin;
     }
 
-    public float getTemperaturaMinInter() {
-        return temperaturaMinInter;
+    public float getSatOxigenoAlertMax() {
+        return satOxigenoAlertMax;
     }
 
-    public void setTemperaturaMinInter(float temperaturaMinInter) {
-        this.temperaturaMinInter = temperaturaMinInter;
+    public void setSatOxigenoAlertMax(float satOxigenoAlertMax) {
+        this.satOxigenoAlertMax = satOxigenoAlertMax;
     }
 
-    public float getTemperaturaMaxInter() {
-        return temperaturaMaxInter;
+    public float getTemperaturaNormalMin() {
+        return temperaturaNormalMin;
     }
 
-    public void setTemperaturaMaxInter(float temperaturaMaxInter) {
-        this.temperaturaMaxInter = temperaturaMaxInter;
+    public void setTemperaturaNormalMin(float temperaturaNormalMin) {
+        this.temperaturaNormalMin = temperaturaNormalMin;
     }
 
-    public float getTemperaturaMax() {
-        return temperaturaMax;
+    public float getTemperaturaNormalMax() {
+        return temperaturaNormalMax;
     }
 
-    public void setTemperaturaMax(float temperaturaMax) {
-        this.temperaturaMax = temperaturaMax;
+    public void setTemperaturaNormalMax(float temperaturaNormalMax) {
+        this.temperaturaNormalMax = temperaturaNormalMax;
     }
 
-    public short getCapnografiaMin() {
-        return capnografiaMin;
+    public float getTemperaturaWarningMin() {
+        return temperaturaWarningMin;
     }
 
-    public void setCapnografiaMin(short capnografiaMin) {
-        this.capnografiaMin = capnografiaMin;
+    public void setTemperaturaWarningMin(float temperaturaWarningMin) {
+        this.temperaturaWarningMin = temperaturaWarningMin;
     }
 
-    public short getCapnografiaMinInter() {
-        return capnografiaMinInter;
+    public float getTemperaturaWarningMax() {
+        return temperaturaWarningMax;
     }
 
-    public void setCapnografiaMinInter(short capnografiaMinInter) {
-        this.capnografiaMinInter = capnografiaMinInter;
+    public void setTemperaturaWarningMax(float temperaturaWarningMax) {
+        this.temperaturaWarningMax = temperaturaWarningMax;
     }
 
-    public short getCapnografiaMaxInter() {
-        return capnografiaMaxInter;
+    public float getTemperaturaAlertMin() {
+        return temperaturaAlertMin;
     }
 
-    public void setCapnografiaMaxInter(short capnografiaMaxInter) {
-        this.capnografiaMaxInter = capnografiaMaxInter;
+    public void setTemperaturaAlertMin(float temperaturaAlertMin) {
+        this.temperaturaAlertMin = temperaturaAlertMin;
     }
 
-    public short getCapnografiaMax() {
-        return capnografiaMax;
+    public float getTemperaturaAlertMax() {
+        return temperaturaAlertMax;
     }
 
-    public void setCapnografiaMax(short capnografiaMax) {
-        this.capnografiaMax = capnografiaMax;
+    public void setTemperaturaAlertMax(float temperaturaAlertMax) {
+        this.temperaturaAlertMax = temperaturaAlertMax;
     }
 
-    public short getFrecCardiacaMin() {
-        return frecCardiacaMin;
+    public short getCapnografiaNormalMin() {
+        return capnografiaNormalMin;
     }
 
-    public void setFrecCardiacaMin(short frecCardiacaMin) {
-        this.frecCardiacaMin = frecCardiacaMin;
+    public void setCapnografiaNormalMin(short capnografiaNormalMin) {
+        this.capnografiaNormalMin = capnografiaNormalMin;
     }
 
-    public short getFrecCardiacaMinInter() {
-        return frecCardiacaMinInter;
+    public short getCapnografiaNormalMax() {
+        return capnografiaNormalMax;
     }
 
-    public void setFrecCardiacaMinInter(short frecCardiacaMinInter) {
-        this.frecCardiacaMinInter = frecCardiacaMinInter;
+    public void setCapnografiaNormalMax(short capnografiaNormalMax) {
+        this.capnografiaNormalMax = capnografiaNormalMax;
     }
 
-    public short getFrecCardiacaMaxInter() {
-        return frecCardiacaMaxInter;
+    public short getCapnografiaWarningMin() {
+        return capnografiaWarningMin;
     }
 
-    public void setFrecCardiacaMaxInter(short frecCardiacaMaxInter) {
-        this.frecCardiacaMaxInter = frecCardiacaMaxInter;
+    public void setCapnografiaWarningMin(short capnografiaWarningMin) {
+        this.capnografiaWarningMin = capnografiaWarningMin;
     }
 
-    public short getFrecCardiacaMax() {
-        return frecCardiacaMax;
+    public short getCapnografiaWarningMax() {
+        return capnografiaWarningMax;
     }
 
-    public void setFrecCardiacaMax(short frecCardiacaMax) {
-        this.frecCardiacaMax = frecCardiacaMax;
+    public void setCapnografiaWarningMax(short capnografiaWarningMax) {
+        this.capnografiaWarningMax = capnografiaWarningMax;
     }
 
-    public short getFrecRespiratoriaMin() {
-        return frecRespiratoriaMin;
+    public short getCapnografiaAlertMin() {
+        return capnografiaAlertMin;
     }
 
-    public void setFrecRespiratoriaMin(short frecRespiratoriaMin) {
-        this.frecRespiratoriaMin = frecRespiratoriaMin;
+    public void setCapnografiaAlertMin(short capnografiaAlertMin) {
+        this.capnografiaAlertMin = capnografiaAlertMin;
     }
 
-    public short getFrecRespiratoriaMinInter() {
-        return frecRespiratoriaMinInter;
+    public short getCapnografiaAlertMax() {
+        return capnografiaAlertMax;
     }
 
-    public void setFrecRespiratoriaMinInter(short frecRespiratoriaMinInter) {
-        this.frecRespiratoriaMinInter = frecRespiratoriaMinInter;
+    public void setCapnografiaAlertMax(short capnografiaAlertMax) {
+        this.capnografiaAlertMax = capnografiaAlertMax;
     }
 
-    public short getFrecRespiratoriaMaxInter() {
-        return frecRespiratoriaMaxInter;
+    public short getFrecCardiacaNormalMin() {
+        return frecCardiacaNormalMin;
     }
 
-    public void setFrecRespiratoriaMaxInter(short frecRespiratoriaMaxInter) {
-        this.frecRespiratoriaMaxInter = frecRespiratoriaMaxInter;
+    public void setFrecCardiacaNormalMin(short frecCardiacaNormalMin) {
+        this.frecCardiacaNormalMin = frecCardiacaNormalMin;
     }
 
-    public short getFrecRespiratoriaMax() {
-        return frecRespiratoriaMax;
+    public short getFrecCardiacaNormalMax() {
+        return frecCardiacaNormalMax;
     }
 
-    public void setFrecRespiratoriaMax(short frecRespiratoriaMax) {
-        this.frecRespiratoriaMax = frecRespiratoriaMax;
+    public void setFrecCardiacaNormalMax(short frecCardiacaNormalMax) {
+        this.frecCardiacaNormalMax = frecCardiacaNormalMax;
+    }
+
+    public short getFrecCardiacaWarningMin() {
+        return frecCardiacaWarningMin;
+    }
+
+    public void setFrecCardiacaWarningMin(short frecCardiacaWarningMin) {
+        this.frecCardiacaWarningMin = frecCardiacaWarningMin;
+    }
+
+    public short getFrecCardiacaWarningMax() {
+        return frecCardiacaWarningMax;
+    }
+
+    public void setFrecCardiacaWarningMax(short frecCardiacaWarningMax) {
+        this.frecCardiacaWarningMax = frecCardiacaWarningMax;
+    }
+
+    public short getFrecCardiacaAlertMin() {
+        return frecCardiacaAlertMin;
+    }
+
+    public void setFrecCardiacaAlertMin(short frecCardiacaAlertMin) {
+        this.frecCardiacaAlertMin = frecCardiacaAlertMin;
+    }
+
+    public short getFrecCardiacaAlertMax() {
+        return frecCardiacaAlertMax;
+    }
+
+    public void setFrecCardiacaAlertMax(short frecCardiacaAlertMax) {
+        this.frecCardiacaAlertMax = frecCardiacaAlertMax;
+    }
+
+    public short getFrecRespiratoriaNormalMin() {
+        return frecRespiratoriaNormalMin;
+    }
+
+    public void setFrecRespiratoriaNormalMin(short frecRespiratoriaNormalMin) {
+        this.frecRespiratoriaNormalMin = frecRespiratoriaNormalMin;
+    }
+
+    public short getFrecRespiratoriaNormalMax() {
+        return frecRespiratoriaNormalMax;
+    }
+
+    public void setFrecRespiratoriaNormalMax(short frecRespiratoriaNormalMax) {
+        this.frecRespiratoriaNormalMax = frecRespiratoriaNormalMax;
+    }
+
+    public short getFrecRespiratoriaWarningMin() {
+        return frecRespiratoriaWarningMin;
+    }
+
+    public void setFrecRespiratoriaWarningMin(short frecRespiratoriaWarningMin) {
+        this.frecRespiratoriaWarningMin = frecRespiratoriaWarningMin;
+    }
+
+    public short getFrecRespiratoriaWarningMax() {
+        return frecRespiratoriaWarningMax;
+    }
+
+    public void setFrecRespiratoriaWarningMax(short frecRespiratoriaWarningMax) {
+        this.frecRespiratoriaWarningMax = frecRespiratoriaWarningMax;
+    }
+
+    public short getFrecRespiratoriaAlertMin() {
+        return frecRespiratoriaAlertMin;
+    }
+
+    public void setFrecRespiratoriaAlertMin(short frecRespiratoriaAlertMin) {
+        this.frecRespiratoriaAlertMin = frecRespiratoriaAlertMin;
+    }
+
+    public short getFrecRespiratoriaAlertMax() {
+        return frecRespiratoriaAlertMax;
+    }
+
+    public void setFrecRespiratoriaAlertMax(short frecRespiratoriaAlertMax) {
+        this.frecRespiratoriaAlertMax = frecRespiratoriaAlertMax;
     }
 
     public Short getIdValref() {
@@ -390,68 +549,100 @@ public class EntValoresReferencia implements Serializable {
         this.idValref = idValref;
     }
 
-    public int getPreArtSistolicaMin() {
-        return preArtSistolicaMin;
+    public int getPreArtSistolicaNormalMin() {
+        return preArtSistolicaNormalMin;
     }
 
-    public void setPreArtSistolicaMin(int preArtSistolicaMin) {
-        this.preArtSistolicaMin = preArtSistolicaMin;
+    public void setPreArtSistolicaNormalMin(int preArtSistolicaNormalMin) {
+        this.preArtSistolicaNormalMin = preArtSistolicaNormalMin;
     }
 
-    public int getPreArtSistolicaMinInter() {
-        return preArtSistolicaMinInter;
+    public int getPreArtSistolicaNormalMax() {
+        return preArtSistolicaNormalMax;
     }
 
-    public void setPreArtSistolicaMinInter(int preArtSistolicaMinInter) {
-        this.preArtSistolicaMinInter = preArtSistolicaMinInter;
+    public void setPreArtSistolicaNormalMax(int preArtSistolicaNormalMax) {
+        this.preArtSistolicaNormalMax = preArtSistolicaNormalMax;
     }
 
-    public int getPreArtSistolicaMaxInter() {
-        return preArtSistolicaMaxInter;
+    public int getPreArtSistolicaWarningMin() {
+        return preArtSistolicaWarningMin;
     }
 
-    public void setPreArtSistolicaMaxInter(int preArtSistolicaMaxInter) {
-        this.preArtSistolicaMaxInter = preArtSistolicaMaxInter;
+    public void setPreArtSistolicaWarningMin(int preArtSistolicaWarningMin) {
+        this.preArtSistolicaWarningMin = preArtSistolicaWarningMin;
     }
 
-    public int getPreArtSistolicaMax() {
-        return preArtSistolicaMax;
+    public int getPreArtSistolicaWarningMax() {
+        return preArtSistolicaWarningMax;
     }
 
-    public void setPreArtSistolicaMax(int preArtSistolicaMax) {
-        this.preArtSistolicaMax = preArtSistolicaMax;
+    public void setPreArtSistolicaWarningMax(int preArtSistolicaWarningMax) {
+        this.preArtSistolicaWarningMax = preArtSistolicaWarningMax;
     }
 
-    public int getPreArtDiastolicaMin() {
-        return preArtDiastolicaMin;
+    public int getPreArtSistolicaAlertMin() {
+        return preArtSistolicaAlertMin;
     }
 
-    public void setPreArtDiastolicaMin(int preArtDiastolicaMin) {
-        this.preArtDiastolicaMin = preArtDiastolicaMin;
+    public void setPreArtSistolicaAlertMin(int preArtSistolicaAlertMin) {
+        this.preArtSistolicaAlertMin = preArtSistolicaAlertMin;
     }
 
-    public int getPreArtDiastolicaMinInter() {
-        return preArtDiastolicaMinInter;
+    public int getPreArtSistolicaAlertMax() {
+        return preArtSistolicaAlertMax;
     }
 
-    public void setPreArtDiastolicaMinInter(int preArtDiastolicaMinInter) {
-        this.preArtDiastolicaMinInter = preArtDiastolicaMinInter;
+    public void setPreArtSistolicaAlertMax(int preArtSistolicaAlertMax) {
+        this.preArtSistolicaAlertMax = preArtSistolicaAlertMax;
     }
 
-    public int getPreArtDiastolicaMaxInter() {
-        return preArtDiastolicaMaxInter;
+    public int getPreArtDiastolicaNormalMin() {
+        return preArtDiastolicaNormalMin;
     }
 
-    public void setPreArtDiastolicaMaxInter(int preArtDiastolicaMaxInter) {
-        this.preArtDiastolicaMaxInter = preArtDiastolicaMaxInter;
+    public void setPreArtDiastolicaNormalMin(int preArtDiastolicaNormalMin) {
+        this.preArtDiastolicaNormalMin = preArtDiastolicaNormalMin;
     }
 
-    public int getPreArtDiastolicaMax() {
-        return preArtDiastolicaMax;
+    public int getPreArtDiastolicaNormalMax() {
+        return preArtDiastolicaNormalMax;
     }
 
-    public void setPreArtDiastolicaMax(int preArtDiastolicaMax) {
-        this.preArtDiastolicaMax = preArtDiastolicaMax;
+    public void setPreArtDiastolicaNormalMax(int preArtDiastolicaNormalMax) {
+        this.preArtDiastolicaNormalMax = preArtDiastolicaNormalMax;
+    }
+
+    public int getPreArtDiastolicaWarningMin() {
+        return preArtDiastolicaWarningMin;
+    }
+
+    public void setPreArtDiastolicaWarningMin(int preArtDiastolicaWarningMin) {
+        this.preArtDiastolicaWarningMin = preArtDiastolicaWarningMin;
+    }
+
+    public int getPreArtDiastolicaWarningMax() {
+        return preArtDiastolicaWarningMax;
+    }
+
+    public void setPreArtDiastolicaWarningMax(int preArtDiastolicaWarningMax) {
+        this.preArtDiastolicaWarningMax = preArtDiastolicaWarningMax;
+    }
+
+    public int getPreArtDiastolicaAlertMin() {
+        return preArtDiastolicaAlertMin;
+    }
+
+    public void setPreArtDiastolicaAlertMin(int preArtDiastolicaAlertMin) {
+        this.preArtDiastolicaAlertMin = preArtDiastolicaAlertMin;
+    }
+
+    public int getPreArtDiastolicaAlertMax() {
+        return preArtDiastolicaAlertMax;
+    }
+
+    public void setPreArtDiastolicaAlertMax(int preArtDiastolicaAlertMax) {
+        this.preArtDiastolicaAlertMax = preArtDiastolicaAlertMax;
     } 
     
     @Override

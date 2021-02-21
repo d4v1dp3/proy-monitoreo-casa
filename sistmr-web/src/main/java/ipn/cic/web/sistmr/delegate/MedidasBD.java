@@ -162,22 +162,22 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
             valoresRef = valoresSB.getValoresReferenciaId(new Short("1"));
             String medidaStr="";
             
-            if(medidas.getSaturacionOxigeno()<valoresRef.getSatOxigenoMin() || medidas.getSaturacionOxigeno()>valoresRef.getSatOxigenoMax()){
+            if(medidas.getSaturacionOxigeno()>=valoresRef.getSatOxigenoAlertMin() && medidas.getSaturacionOxigeno()<valoresRef.getSatOxigenoAlertMax()){
                 medidaStr += " \nSaturacion de Oxigeno: "+Float.toString(medidas.getSaturacionOxigeno());
             }
-            if(medidas.getTemperatura()<valoresRef.getTemperaturaMin() || medidas.getTemperatura()>valoresRef.getTemperaturaMax()){
+            if(medidas.getTemperatura()>=valoresRef.getTemperaturaAlertMin() && medidas.getTemperatura()<valoresRef.getTemperaturaAlertMax()){
                 medidaStr += " \nTemperatura: "+Float.toString(medidas.getTemperatura());
             }
-            if(medidas.getFrecRespiratoria()<valoresRef.getFrecRespiratoriaMin() || medidas.getFrecRespiratoria()>valoresRef.getFrecRespiratoriaMax()){
+            if(medidas.getFrecRespiratoria()>=valoresRef.getFrecRespiratoriaAlertMin() && medidas.getFrecRespiratoria()<=valoresRef.getFrecRespiratoriaAlertMax()){
                 medidaStr += " \nFrecuencia respiratoria: "+ Short.toString(medidas.getFrecRespiratoria());
             }
-            if(medidas.getFrecCardiaca()<valoresRef.getFrecCardiacaMin() || medidas.getFrecCardiaca()>valoresRef.getFrecCardiacaMax()){
+            if(medidas.getFrecCardiaca()>=valoresRef.getFrecCardiacaAlertMin() && medidas.getFrecCardiaca()<=valoresRef.getFrecCardiacaAlertMax()){
                 medidaStr += " \nFrecuencia cardiaca: "+ Short.toString(medidas.getFrecCardiaca());
             }
-            if(medidas.getPreArtSistolica()<valoresRef.getPreArtSistolicaMin() || medidas.getPreArtSistolica()>valoresRef.getPreArtSistolicaMax()){
+            if(medidas.getPreArtSistolica()>=valoresRef.getPreArtSistolicaAlertMin() && medidas.getPreArtSistolica()<=valoresRef.getPreArtSistolicaAlertMax()){
                 medidaStr += " \nPresion Arterial Sistolica: "+ Integer.toString(medidas.getPreArtSistolica());
             }
-            if(medidas.getPreArtDiastolica()<valoresRef.getPreArtDiastolicaMin() || medidas.getPreArtDiastolica()>valoresRef.getPreArtDiastolicaMax()){
+            if(medidas.getPreArtDiastolica()>=valoresRef.getPreArtDiastolicaAlertMin() && medidas.getPreArtDiastolica()<=valoresRef.getPreArtDiastolicaAlertMax()){
                 medidaStr += " \nPresion Arterial Diastolica: "+Integer.toString(medidas.getPreArtDiastolica());
             }
              
