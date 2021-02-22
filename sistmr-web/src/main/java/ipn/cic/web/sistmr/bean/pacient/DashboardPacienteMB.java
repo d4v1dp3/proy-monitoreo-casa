@@ -115,8 +115,10 @@ public class DashboardPacienteMB implements Serializable{
                 if(pacSaturacionOxg>=valoresRef.getSatOxigenoNormalMin() && pacSaturacionOxg<valoresRef.getSatOxigenoNormalMax()){
                     satOxgColor="greenBackground";     
                 }else if(pacSaturacionOxg>=valoresRef.getSatOxigenoWarningMin() && pacSaturacionOxg<valoresRef.getSatOxigenoWarningMax()){
-                     satOxgColor="yellowBackground"; 
+                    satOxgColor="yellowBackground"; 
                 }else if(pacSaturacionOxg>=valoresRef.getSatOxigenoAlertMin() && pacSaturacionOxg<valoresRef.getSatOxigenoAlertMax()){
+                    satOxgColor="redBackground";
+                }else{
                     satOxgColor="redBackground";
                 }
     
@@ -126,6 +128,8 @@ public class DashboardPacienteMB implements Serializable{
                     tempColor="yellowBackground";
                 }else if(pacTemperatura>=valoresRef.getTemperaturaAlertMin() && pacTemperatura<valoresRef.getTemperaturaAlertMax()){
                     tempColor="redBackground";
+                }else{
+                    tempColor="redBackground";
                 }
                  
                 if(pacFrecRespiratoria>=valoresRef.getFrecRespiratoriaNormalMin() && pacFrecRespiratoria<=valoresRef.getFrecRespiratoriaNormalMax()){
@@ -134,6 +138,8 @@ public class DashboardPacienteMB implements Serializable{
                     frespColor="yellowBackground";
                 }else if(pacFrecRespiratoria>=valoresRef.getFrecRespiratoriaAlertMin() && pacFrecRespiratoria<=valoresRef.getFrecRespiratoriaAlertMax()){
                     frespColor="redBackground";
+                }else{
+                    frespColor="redBackground";
                 }
                  
                 if(pacFrecCardiaca>=valoresRef.getFrecCardiacaNormalMin() && pacFrecCardiaca<=valoresRef.getFrecCardiacaNormalMax()){
@@ -141,6 +147,8 @@ public class DashboardPacienteMB implements Serializable{
                 }else if(pacFrecCardiaca>=valoresRef.getFrecCardiacaWarningMin() && pacFrecCardiaca<=valoresRef.getFrecCardiacaWarningMax()){
                     fcardColor="yellowBackground";  
                 }else if(pacFrecCardiaca>=valoresRef.getFrecCardiacaAlertMin() && pacFrecCardiaca<=valoresRef.getFrecCardiacaAlertMax()){
+                    fcardColor="redBackground";
+                }else{
                     fcardColor="redBackground";
                 }
                     
@@ -152,6 +160,8 @@ public class DashboardPacienteMB implements Serializable{
                     pArtColor="yellowBackground"; 
                 }else if((pacPreArtSistolica>=valoresRef.getPreArtSistolicaAlertMin() && pacPreArtSistolica<=valoresRef.getPreArtSistolicaAlertMax())
                         ||(pacPreArtDiastolica>=valoresRef.getPreArtDiastolicaAlertMin() && pacPreArtDiastolica<=valoresRef.getPreArtDiastolicaAlertMax())){
+                    pArtColor="redBackground";
+                }else{
                     pArtColor="redBackground";
                 }
                 
@@ -196,12 +206,18 @@ public class DashboardPacienteMB implements Serializable{
     
     public void cargaHistoricoSOxigeno() {
         
+        float sOxgMin=300;
+        float sOxgMax=0;
+        float sOxgRefMin=valoresRef.getSatOxigenoNormalMin();
+        float sOxgRefMax=valoresRef.getSatOxigenoNormalMax();
+        float sOxg;
+        
         historicoSOxigeno.clear();
         
         ChartSeries minVal = new ChartSeries();
-        minVal.setLabel("Valor mínimo");
+        minVal.setLabel("Mínimo");
         ChartSeries maxVal = new ChartSeries();
-        maxVal.setLabel("Valor máximo");
+        maxVal.setLabel("Máximo");
         ChartSeries soxigeno = new ChartSeries();
         soxigeno.setLabel("Saturacion de oxígeno");
         
@@ -209,38 +225,53 @@ public class DashboardPacienteMB implements Serializable{
             LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                soxigeno.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getSaturacionOxigeno()); 
+                
+                sOxg = medidasComp.get(i).getSaturacionOxigeno();
+                
+                sOxgMin = sOxg < sOxgMin ? sOxg : sOxgMin; 
+                sOxgMax = sOxg > sOxgMax ? sOxg : sOxgMax; 
+                
+                soxigeno.set(fechaMedicion.format(formatoHora), sOxg); 
                 if(i==0 || i==(medidasComp.size()-1)){
-                    minVal.set(fechaMedicion.format(formatoHora), valoresRef.getSatOxigenoNormalMin());
-                    maxVal.set(fechaMedicion.format(formatoHora), valoresRef.getSatOxigenoNormalMax());
+                    minVal.set(fechaMedicion.format(formatoHora),sOxgRefMin);
+                    maxVal.set(fechaMedicion.format(formatoHora),sOxgRefMax);
                 }
             }
         }
-               
+                
         historicoSOxigeno.addSeries(soxigeno);
-        historicoSOxigeno.addSeries(minVal);
         historicoSOxigeno.addSeries(maxVal);
+        historicoSOxigeno.addSeries(minVal);
         historicoSOxigeno.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoSOxigeno.setTitle("Saturación de Oxígeno");
         historicoSOxigeno.setLegendPosition("se");
         historicoSOxigeno.setShowPointLabels(true);
         historicoSOxigeno.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
-                
+            
+        sOxgMin = sOxgMin < sOxgRefMin ? sOxgMin : sOxgRefMin;
+        sOxgMax = sOxgMax > sOxgRefMax ? sOxgMax : sOxgRefMax;
+        
         Axis yAxis = historicoSOxigeno.getAxis(AxisType.Y);
         yAxis.setLabel("Porcentaje (%)");
         yAxis.setTickFormat("%.1f");
-        yAxis.setMin(50);
-        yAxis.setMax(110);
+        yAxis.setMin(sOxgMin-2);
+        yAxis.setMax(sOxgMax+2);
     }
     
     public void cargaHistoricoTemperatura() {
         
+        float tempMin=60;
+        float tempMax=0;
+        float tempRefMin=valoresRef.getTemperaturaNormalMin();
+        float tempRefMax=valoresRef.getTemperaturaNormalMax();
+        float temp;
+        
         historicoTemperatura.clear();
     
         ChartSeries minVal = new ChartSeries();
-        minVal.setLabel("Valor mínimo");
+        minVal.setLabel("Mínimo");
         ChartSeries maxVal = new ChartSeries();
-        maxVal.setLabel("Valor máximo");
+        maxVal.setLabel("Máximo");
         ChartSeries temperatura = new ChartSeries();
         temperatura.setLabel("Temperatura");
         
@@ -248,36 +279,53 @@ public class DashboardPacienteMB implements Serializable{
             LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                temperatura.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getTemperatura());
+                
+                temp = medidasComp.get(i).getTemperatura();
+                
+                tempMin = temp < tempMin ? temp : tempMin; 
+                tempMax = temp > tempMax ? temp : tempMax; 
+                
+                temperatura.set(fechaMedicion.format(formatoHora), temp);
                 if(i==0 || i==(medidasComp.size()-1)){
-                    minVal.set(fechaMedicion.format(formatoHora), valoresRef.getTemperaturaNormalMin());
-                    maxVal.set(fechaMedicion.format(formatoHora), valoresRef.getTemperaturaNormalMax());
+                    minVal.set(fechaMedicion.format(formatoHora), tempRefMin);
+                    maxVal.set(fechaMedicion.format(formatoHora), tempRefMax);
                 }
             }
         }
+   
         historicoTemperatura.addSeries(temperatura);
-        historicoTemperatura.addSeries(minVal);
         historicoTemperatura.addSeries(maxVal);
+        historicoTemperatura.addSeries(minVal);
         historicoTemperatura.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoTemperatura.setTitle("Temperatura");
         historicoTemperatura.setLegendPosition("se");
         historicoTemperatura.setShowPointLabels(true);
         historicoTemperatura.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
 
+        tempMin = tempMin < tempRefMin ? tempMin : tempRefMin;
+        tempMax = tempMax > tempRefMax ? tempMax : tempRefMax;
+        
         Axis yAxis = historicoTemperatura.getAxis(AxisType.Y);
         yAxis.setLabel("Grados (°C)");
         yAxis.setTickFormat("%.1f");
-        yAxis.setMin(30);
-        yAxis.setMax(45);
+        yAxis.setMin(tempMin-2);
+        yAxis.setMax(tempMax+2);
     }
 
     public void cargaHistoricoFCardiaca() {
+        
+        short fCardMin=300;
+        short fCardMax=0;
+        short fCardRefMin=valoresRef.getFrecCardiacaNormalMin();
+        short fCardRefMax=valoresRef.getFrecCardiacaNormalMax();
+        short fCard;
+        
         historicoFrecCardiaca.clear();
         
         ChartSeries minVal = new ChartSeries();
-        minVal.setLabel("Valor mínimo");
+        minVal.setLabel("Mínimo");
         ChartSeries maxVal = new ChartSeries();
-        maxVal.setLabel("Valor máximo");
+        maxVal.setLabel("Máximo");
         ChartSeries frecuenciaC = new ChartSeries();
         frecuenciaC.setLabel("Frecuencia cardiaca");
                 
@@ -285,36 +333,51 @@ public class DashboardPacienteMB implements Serializable{
             LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                frecuenciaC.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getFrecCardiaca());
+                
+                fCard = medidasComp.get(i).getFrecCardiaca();
+                
+                fCardMin = fCard < fCardMin ? fCard : fCardMin; 
+                fCardMax = fCard > fCardMax ? fCard : fCardMax; 
+                
+                frecuenciaC.set(fechaMedicion.format(formatoHora), fCard);
                 if(i==0 || i==(medidasComp.size()-1)){
-                    minVal.set(fechaMedicion.format(formatoHora), valoresRef.getFrecCardiacaNormalMin());
-                    maxVal.set(fechaMedicion.format(formatoHora), valoresRef.getFrecCardiacaNormalMax());
+                    minVal.set(fechaMedicion.format(formatoHora), fCardRefMin);
+                    maxVal.set(fechaMedicion.format(formatoHora), fCardRefMax);
                 }
             }
         }
         historicoFrecCardiaca.addSeries(frecuenciaC);
-        historicoFrecCardiaca.addSeries(minVal);
         historicoFrecCardiaca.addSeries(maxVal);
+        historicoFrecCardiaca.addSeries(minVal);
         historicoFrecCardiaca.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoFrecCardiaca.setTitle("Frecuencia Cardíaca");
         historicoFrecCardiaca.setLegendPosition("se");
         historicoFrecCardiaca.setShowPointLabels(true); 
         historicoFrecCardiaca.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
         
+        fCardMin = fCardMin < fCardRefMin ? fCardMin : fCardRefMin;
+        fCardMax = fCardMax > fCardRefMax ? fCardMax : fCardRefMax;
+        
         Axis yAxis = historicoFrecCardiaca.getAxis(AxisType.Y);
         yAxis.setLabel("Frecuencia (LPM)");
-        yAxis.setMin(50);
-        yAxis.setMax(120);
+        yAxis.setMin(fCardMin-2);
+        yAxis.setMax(fCardMax+2);
     }
     
     public void cargaHistoricoFRespiratoria() {
         
+        short fRespMin=100;
+        short fRespMax=0;
+        short fRespRefMin=valoresRef.getFrecRespiratoriaNormalMin();
+        short fRespRefMax=valoresRef.getFrecRespiratoriaNormalMax();
+        short fResp;
+                
         historicoFrecRespiratoria.clear();
         
         ChartSeries minVal = new ChartSeries();
-        minVal.setLabel("Valor mínimo");
+        minVal.setLabel("Mínimo");
         ChartSeries maxVal = new ChartSeries();
-        maxVal.setLabel("Valor máximo");
+        maxVal.setLabel("Máximo");
         ChartSeries frecuenciaR = new ChartSeries();
         frecuenciaR.setLabel("Frecuencia Respiratoria");
         
@@ -322,42 +385,57 @@ public class DashboardPacienteMB implements Serializable{
             LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                frecuenciaR.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getFrecRespiratoria());
+                
+                fResp = medidasComp.get(i).getFrecRespiratoria();
+                
+                fRespMin = fResp < fRespMin ? fResp : fRespMin; 
+                fRespMax = fResp > fRespMax ? fResp : fRespMax; 
+               
+                frecuenciaR.set(fechaMedicion.format(formatoHora), fResp);
                 if(i==0 || i==(medidasComp.size()-1)){
-                    minVal.set(fechaMedicion.format(formatoHora), valoresRef.getFrecRespiratoriaNormalMin());
-                    maxVal.set(fechaMedicion.format(formatoHora), valoresRef.getFrecRespiratoriaNormalMax());
+                    minVal.set(fechaMedicion.format(formatoHora), fRespRefMin);
+                    maxVal.set(fechaMedicion.format(formatoHora), fRespRefMax);
                 }
             }
         }
 
         historicoFrecRespiratoria.addSeries(frecuenciaR);
-        historicoFrecRespiratoria.addSeries(minVal);
         historicoFrecRespiratoria.addSeries(maxVal);
+        historicoFrecRespiratoria.addSeries(minVal);
         historicoFrecRespiratoria.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoFrecRespiratoria.setTitle("Frecuencia Respiratoria");
-        historicoFrecRespiratoria.setLegendPosition("ne");
+        historicoFrecRespiratoria.setLegendPosition("se");
         historicoFrecRespiratoria.setShowPointLabels(true);     
         historicoFrecRespiratoria.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
+       
+        fRespMin = fRespMin < fRespRefMin ? fRespMin : fRespRefMin;
+        fRespMax = fRespMax > fRespRefMax ? fRespMax : fRespRefMax;
+        
         Axis yAxis = historicoFrecRespiratoria.getAxis(AxisType.Y);
         yAxis.setLabel("Frecuencia (RPM)");
-        yAxis.setMin(0);
-        yAxis.setMax(30);
+        yAxis.setMin(fRespMin-2);
+        yAxis.setMax(fRespMax+2);
     }
     
     public void cargaHistoricoPArterial() {
+        
+        int diasMin=200;
+        int sisMax=0;
+        int diasRefMin=valoresRef.getPreArtDiastolicaNormalMin();
+        int sisRefMax=valoresRef.getPreArtSistolicaNormalMax();
+        int sis;
+        int dias;
+        
         historicoPreArterial.clear();
         
-        ChartSeries sismin = new ChartSeries();
-        sismin.setLabel("Valor mínimo P. Sis.");
         ChartSeries sismax = new ChartSeries();
-        sismax.setLabel("Valor máximo P. Dias.");
+        sismax.setLabel("Máximo P. Sis.");
         ChartSeries sistolica = new ChartSeries();
         sistolica.setLabel("Presión Arterial Sistólica");
         
         ChartSeries diasmin = new ChartSeries();
-        diasmin.setLabel("Valor mínimo P. Dias.");
-        ChartSeries diasmax = new ChartSeries();
-        diasmax.setLabel("Valor máximo P. Dias.");
+        diasmin.setLabel("Mínimo P. Dias.");
+
         ChartSeries diastolica = new ChartSeries();
         diastolica.setLabel("Presión Arterial Diastólica");
         
@@ -365,34 +443,40 @@ public class DashboardPacienteMB implements Serializable{
             LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
             if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                sistolica.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getPreArtSistolica());
-                diastolica.set(fechaMedicion.format(formatoHora), medidasComp.get(i).getPreArtDiastolica());
+                
+                dias = medidasComp.get(i).getPreArtDiastolica();
+                sis = medidasComp.get(i).getPreArtSistolica(); 
+                
+                diasMin = dias < diasMin ? dias : diasMin; 
+                sisMax = sis > sisMax ? sis : sisMax; 
+                
+                diastolica.set(fechaMedicion.format(formatoHora),dias);
+                sistolica.set(fechaMedicion.format(formatoHora), sis);
+                
                 if(i==0 || i==(medidasComp.size()-1)){
-                    sismin.set(fechaMedicion.format(formatoHora), valoresRef.getPreArtSistolicaNormalMin());
-                    sismax.set(fechaMedicion.format(formatoHora), valoresRef.getPreArtSistolicaNormalMax());
-                    diasmin.set(fechaMedicion.format(formatoHora), valoresRef.getPreArtDiastolicaNormalMin());
-                    diasmax.set(fechaMedicion.format(formatoHora), valoresRef.getPreArtDiastolicaNormalMax());
-                    
+                    diasmin.set(fechaMedicion.format(formatoHora), diasRefMin); 
+                    sismax.set(fechaMedicion.format(formatoHora), sisRefMax);                   
                 }
             }
         }
                
         historicoPreArterial.addSeries(sistolica);
         historicoPreArterial.addSeries(diastolica);
-        historicoPreArterial.addSeries(sismin);
         historicoPreArterial.addSeries(sismax);
         historicoPreArterial.addSeries(diasmin);
-        historicoPreArterial.addSeries(diasmax);
-        historicoPreArterial.setSeriesColors("42cef5,425af5,ff8a7d,ff8a7d,f5b642,f5b642");
+        historicoPreArterial.setSeriesColors("42cef5,425af5,ff8a7d,f5b642");
         historicoPreArterial.setTitle("Presión Arterial Sistólica y Diastólica");
         historicoPreArterial.setLegendPosition("se");
         historicoPreArterial.setShowPointLabels(true);
         historicoPreArterial.getAxes().put(AxisType.X, new CategoryAxis("Tiempo(Horas)"));
         
+        diasMin = diasMin < diasRefMin ? diasMin : diasRefMin;
+        sisMax = sisMax > sisRefMax ? sisMax : sisRefMax;
+        
         Axis yAxis = historicoPreArterial.getAxis(AxisType.Y);
         yAxis.setLabel("mmHg");
-        yAxis.setMin(0);
-        yAxis.setMax(220);
+        yAxis.setMin(diasMin-2);
+        yAxis.setMax(sisMax+2);
     }
 
     
