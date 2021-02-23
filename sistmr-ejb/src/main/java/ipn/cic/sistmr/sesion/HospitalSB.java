@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -61,5 +62,17 @@ public class HospitalSB extends BaseSB implements HospitalSBLocal {
         return (EntHospital)this.updateEntity(eh);   
     }
    
-    
+    @Override
+    public EntHospital getHospital(Integer idHospital) throws NoExisteHospitalException {          
+        Query qry = em.createQuery("SELECT e FROM EntHospital e WHERE e.idHospital = :idHospital");
+        qry.setParameter("idHospital", idHospital);
+        try{
+            EntHospital res = (EntHospital)qry.getSingleResult();
+            logger.log(Level.SEVERE, "Hospital {0} encontrado.", res.getIdHospital());
+            return res;
+        }catch(NoResultException ex){
+            logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
+            throw new NoExisteHospitalException("No se encontro el hospital SB.");
+        }
+    }
 }

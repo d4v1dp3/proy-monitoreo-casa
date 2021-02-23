@@ -22,9 +22,8 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
-
             <h:form id="frmValRef" rendered="true">  
-                <p:panel id="pnVRef" header="Valores de Referencia" footer="" style="margin-bottom:20px">
+                <p:panel id="pnVRef" header="Valores de Referencia" style="margin-bottom:20px">
                     <style type="text/css">
                         .ui-widget-headerM{
                             background-color: #e7e8e9 !important;
@@ -43,12 +42,17 @@ Todos los derechos reservados
                                 <p> 
                                     Valores de referencia máximos y mínimos para los signos de pacientes. Administrado por  <b>#{gestionHospitalMB.nomSistema}</b>
                                 </p>     
-                                <h3>ACTUALIZACIÓN DE VALORES DE REFERENCIA</h3>
                             </div>
                             <div class="p-col" style="align-content: center;">
-                                <p:panelGrid>
-                                    <p:row>
-                                        <p:column class="sinborde">
+
+                                <p:panel id="pnAct" header="ACTUALIZACIÓN DE VALORES DE REFERENCIA" style="max-width: 800px">
+                                    <p:panelGrid columns="2"
+                                                 columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+
+                                        <p:column style="background-color: lightcoral">
                                             <p:panelGrid>
                                                 <p:row>
                                                     <p:column colspan="2" style="text-align: center" class="ui-widget-headerM">Saturación de Oxígeno</p:column>
@@ -56,10 +60,10 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrSOMin" value="Mínima:" />
-                                                        <p:inputText id="evrSOMin" value="#{valoresReferenciaMB.valrefEnt.satOxigenoMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrSOMin" value="#{valoresReferenciaMB.valrefEnt.satOxigenoNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrSOMax" value="Máxima:" />
-                                                        <p:inputText id="evrSOMax" value="#{valoresReferenciaMB.valrefEnt.satOxigenoMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrSOMax" value="#{valoresReferenciaMB.valrefEnt.satOxigenoNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
 
                                                 <p:row>
@@ -68,10 +72,10 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrTempMin" value="Mínima:" />
-                                                        <p:inputText id="evrTempMin" value="#{valoresReferenciaMB.valrefEnt.temperaturaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrTempMin" value="#{valoresReferenciaMB.valrefEnt.temperaturaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrTempMax" value="Máxima:" />
-                                                        <p:inputText id="evrTempMax" value="#{valoresReferenciaMB.valrefEnt.temperaturaMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrTempMax" value="#{valoresReferenciaMB.valrefEnt.temperaturaNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column colspan="2" style="text-align: center" class="ui-widget-headerM">Capnografía</p:column>
@@ -79,10 +83,10 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrCapMin" value="Mínima:" />
-                                                        <p:inputText id="evrCapMin" value="#{valoresReferenciaMB.valrefEnt.capnografiaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrCapMin" value="#{valoresReferenciaMB.valrefEnt.capnografiaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrCapMax" value="Máxima:" />
-                                                        <p:inputText id="evrCapMax" value="#{valoresReferenciaMB.valrefEnt.capnografiaMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrCapMax" value="#{valoresReferenciaMB.valrefEnt.capnografiaNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
 
                                                 <p:row>
@@ -91,15 +95,15 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrFrecCMin" value="Mínima:" />
-                                                        <p:inputText id="evrFrecCMin" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrFrecCMin" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrFrecCMax" value="Máxima:" />
-                                                        <p:inputText id="evrFrecCMax" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrFrecCMax" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
-
                                             </p:panelGrid>
                                         </p:column>
-                                        <p:column class="sinborde">
+
+                                        <p:column style="background-color: lightcoral">
                                             <p:panelGrid>
 
                                                 <p:row>
@@ -108,10 +112,10 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrFrecRMin" value="Mínima:" />
-                                                        <p:inputText id="evrFrecRMin" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrFrecRMin" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrFrecRMax" value="Máxima:" />
-                                                        <p:inputText id="evrFrecRMax" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaMax}" required="true" size="8" /></p:column>
+                                                        <p:inputText id="evrFrecRMax" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaNormalMax}" required="true" size="8" /></p:column>
                                                 </p:row>
 
                                                 <p:row>
@@ -120,10 +124,10 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrPASMin" value="Mínima:" />
-                                                        <p:inputText id="evrPASMin" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrPASMin" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrPASMax" value="Máxima:" />
-                                                        <p:inputText id="evrPASMax" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrPASMax" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
 
                                                 <p:row>
@@ -132,12 +136,12 @@ Todos los derechos reservados
                                                 <p:row>
                                                     <p:column>
                                                         <p:outputLabel for="evrPADMin" value="Mínima:" />
-                                                        <p:inputText id="evrPADMin" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaMin}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrPADMin" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaNormalMin}" required="true" size="8"/></p:column>
                                                     <p:column>
                                                         <p:outputLabel for="evrPADMax" value="Máxima:" />
-                                                        <p:inputText id="evrPADMax" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaMax}" required="true" size="8"/></p:column>
+                                                        <p:inputText id="evrPADMax" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaNormalMax}" required="true" size="8"/></p:column>
                                                 </p:row>
-                                                
+
                                                 <p:row>
                                                     <p:column colspan="2">
                                                         <p:growl id="msgsVR" showDetail="true" />
@@ -152,17 +156,14 @@ Todos los derechos reservados
                                                     </p:column>
                                                 </p:row>
                                             </p:panelGrid>
-                                        </p:column>                                    
-                                    </p:row>
-                                </p:panelGrid>
+                                        </p:column>
 
-
+                                    </p:panelGrid>
+                                </p:panel>
                             </div>
                         </center>
                     </div>
-
                 </p:panel>
-
             </h:form>
         </ui:define>    
     </ui:composition>

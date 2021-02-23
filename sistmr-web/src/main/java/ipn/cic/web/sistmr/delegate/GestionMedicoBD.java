@@ -63,14 +63,17 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona,
-                                        UsuarioVO usuario) throws MedicoException,  IDUsuarioException{
+                                        UsuarioVO usuario) throws MedicoException, IDUsuarioException {
         // Aquí hay que preparar los datos para almacenar la información
         // primero los datos de persona para persistirlos
+        logger.log(Level.INFO, "Inicia Delegate guardar medico nuevo ");
         EntPersona entPersona = new EntPersona();
         entPersona.setNombre(persona.getNombre().toUpperCase());
         entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
         entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
         entPersona.setCurp(persona.getCurp().toUpperCase());
+        entPersona.setEdad(persona.getEdad());
+        
         try {
             EntGenero genero = generoSB.getGeneroID(persona.getIdGenero().shortValue());
             entPersona.setIdGenero(genero);
@@ -94,7 +97,6 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         entUsuario.setIdPersona(entPersona);
         entUsuario.setActivo(usuario.getActivo());
         Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
-        
         
         try {
             EntRol rolMedico = rolSB.getRolId(medRol);

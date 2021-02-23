@@ -7,7 +7,11 @@
 package ipn.cic.sistmr.sesion;
 
 import ipn.cic.sistmr.exception.CaretaHospitalException;
+import ipn.cic.sistmr.exception.RemoveEntityException;
+import ipn.cic.sistmr.modelo.EntCareta;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
+import ipn.cic.sistmr.modelo.EntHospital;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -17,4 +21,10 @@ import javax.ejb.Local;
 @Local
 public interface CaretaHospitalSBLocal {
     EntCaretaHospital guardaCaretaHospital(EntCaretaHospital caretahospital) throws CaretaHospitalException;
+    EntCaretaHospital getCaretaHospital(EntCareta careta) throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasNoAsignadas(EntHospital entHospital) throws CaretaHospitalException;
+    boolean borrarCaretaHospital(EntCaretaHospital caretahospital) throws RemoveEntityException;
+    
 }

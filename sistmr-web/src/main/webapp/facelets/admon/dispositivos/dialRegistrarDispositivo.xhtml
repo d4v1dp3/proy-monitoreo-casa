@@ -25,8 +25,22 @@ Todos los derechos reservados
                 color: black !important;
                 text-align: left !important;
             }
+            .sinborde{
+                border-color: white !important;
+            }
             .titulo{
                 font-weight: bold !important;
+            }
+
+            /* reset on the showcase style*/
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            /* example use of styles for your form */
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
             }
         </style>
         <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
@@ -34,73 +48,96 @@ Todos los derechos reservados
     </h:head>
 
     <h:body>
-        <i class="pi pi-plus"></i>
-
-        <p:panelGrid>
-
+        <i class="pi pi-plus" id="customheader" style="display:none"></i>
+        <h:form id="frmRegDispositivo">
             <p:growl id="msgRegDisp" showDetail="true" />
-            <center>
-
+            <p:panelGrid>
                 <p:row>
                     <p:column>
-
                         <center>
                             <h2>
-                                <p:outputLabel value="FORMULARIO PARA EL REGISTRO DE DISPOSITIVOS" class="titulo"></p:outputLabel>
+                                <p:outputLabel value="FORMULARIO PARA EL REGISTRO DE DISPOSITIVO" class="titulo"></p:outputLabel>
                             </h2>
+                            <p>Llene los siguientes campos para registrar un dispositivo. </p>
                         </center>
-                        <p>Llene los siguientes campos para registrar un dispositivo. </p>
-
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Datos del Dispositivo</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
                         <p:panelGrid>
-                            <h:form id="frmRegDispositivo">
-                                <p:row>
-                                    <p:column colspan="4" style="text-align: center" class="ui-widget-header">Datos del Dispositivo</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="2">
-                                        <p:outputLabel for="nSerie" value="No. Serie:" />
-                                        <p:inputText id="nSerie" value="#{gestionDispositivosMB.noSerie}" required="true" />
-                                        <p:message for="nSerie"/>
-                                    </p:column>
-                                    <p:column colspan="2">
-                                        <p:outputLabel for="apDate" value="Fecha de Manufactura:" />
-                                        <p:inputText id="apDate" value="#{gestionDispositivosMB.fechaManufactura}" required="true" />
-                                        <p:message for="apDate"/>
-
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="4" style="text-align: center" class="ui-widget-header">Asignación de Hospital</p:column>
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="4">
-                                        <p:outputLabel for="idHosp" value="Hospital:" />
-                                        <p:inputText id="idHosp" value="1" required="true" />
-                                        <p:message for="idHosp" />
-
-                                    </p:column>
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="4" style="text-align: right">
-                                        <p:commandButton value="Guardar" actionListener="#{gestionDispositivosMB.guardarDispositivo()}"
-                                                         icon="fas fa-save" update="@all"/>
-                                    </p:column>
-                                </p:row>
-                            </h:form>
                             <p:row>
-                                <p:column colspan="4" style="text-align: right">
-                                    <h:form>
-                                        <p:commandButton value="Cerrar" action="#{gestionDispositivosMB.cerrarDialogo}"
-                                                         icon="pi pi-times" />  
-                                    </h:form>
-                                </p:column>
+                                <p:column colspan="2" class="sinborde"></p:column>
                             </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2"
+                                     columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="nSerie" value="No. Serie:" />
+                                <p:inputText id="nSerie" value="#{gestionDispositivosMB.noSerie}" required="true" />
+                                <p:message for="nSerie"/>
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="apDate" value="Fecha de Manufactura:" />
+                                <p:inputText id="apDate" value="#{gestionDispositivosMB.fechaManufactura}" required="true" />
+                                <p:message for="apDate"/>
+                            </p:column>
+
+                        </p:panelGrid>
+
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Asignación de Hospital</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:panelGrid columns="1"
+                                     columnClasses="ui-grid-col-12"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="idHosp" value="Hospital:" />
+                                <p:selectOneMenu id="idHosp" value="#{gestionDispositivosMB.idHosp}" required="true">
+                                    <f:selectItems value="#{gestionDispositivosMB.listHospital}" var="hospital" 
+                                                   itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
+                                <p:message for="idHosp" />
+                            </p:column>
+
                         </p:panelGrid>
                     </p:column>
                 </p:row>
-            </center>
-        </p:panelGrid>
+                <p:row>
+                    <p:column style="text-align: right">
+                        <p:commandButton value="Guardar" actionListener="#{gestionDispositivosMB.guardarDispositivo()}"
+                                         icon="fas fa-save" update="@all"/>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+        </h:form>
+        <h:form>
+            <p:panelGrid>
+                <p:row>
+                    <p:column style="text-align: right" width="100%">
+                        <p:commandButton value="Cerrar" action="#{gestionDispositivosMB.cerrarDialogo}"
+                                         icon="pi pi-times" />  
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+        </h:form>
     </h:body>
 </html>

@@ -7,17 +7,21 @@
 package ipn.cic.web.sistmr.bean.pacient;
 
 import ipn.cic.sistmr.exception.MedicoException;
+import ipn.cic.sistmr.exception.NoExisteHospitalException;
 import ipn.cic.sistmr.exception.NoExistePacienteException;
-import ipn.cic.sistmr.exception.PacienteException;
+import ipn.cic.sistmr.modelo.EntHospital;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntMedidas;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntUsuario;
+import ipn.cic.sistmr.sesion.HospitalSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.sistmr.sesion.PacienteSBLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,11 +55,14 @@ public class InicioPacienteMB implements Serializable {
     private MedicoSBLocal medicoSB;
     @EJB
     private UtilWebSBLocal utilWebSB;
+    @EJB
+    private HospitalSBLocal hospitalSB;
 
     private EntPaciente paciente;
     
     private List<EntMedidas> medidas;
     private EntMedico medicoPac;
+    private EntHospital hospital;
     
 
     @PostConstruct
@@ -75,11 +82,15 @@ public class InicioPacienteMB implements Serializable {
             medicoPac = medicoSB.getMedicoDePaciente(paciente);
             logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
             
+            hospital = hospitalSB.getPrimerHospital();
+            
             
         } catch (NoExistePacienteException ex) {
             logger.log(Level.SEVERE,"Error al cargar paciente.");
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar medico del paciente.");
+        } catch (NoExisteHospitalException ex) {
+            logger.log(Level.SEVERE,"Error al cargar hospital.");
         }
         
         
@@ -96,7 +107,7 @@ public class InicioPacienteMB implements Serializable {
     
     
     public void mostrarDashboard() {
-        logger.log(Level.INFO,"Abre dashboard paciente.");
+        logger.log(Level.INFO,"Paciente: Abre dashboard.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 890);
@@ -104,29 +115,36 @@ public class InicioPacienteMB implements Serializable {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
-       
+        
         //Envio de Parametros
         Map<String, List<String>> parametros = new HashMap<>();
         
         List<String> valNombre = new ArrayList<>();
         valNombre.add(paciente.getIdPersona().getNombre());
         
-         List<String> valPrimerAp = new ArrayList<>();
+        List<String> valPrimerAp = new ArrayList<>();
         valPrimerAp.add(paciente.getIdPersona().getPrimerApellido());
         
-         List<String> valSegundoAp = new ArrayList<>();
+        List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(paciente.getIdPersona().getSegundoApellido());
             
         List<String> valId = new ArrayList<>();
         valId.add(paciente.getIdPaciente().toString());
-        
+            
+        DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<String> valFechaHist = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        valFechaHist.add(fechaActual.format(formatoFecha));
+                
         logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
         logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
+        logger.log(Level.INFO,"Fecha Actual: {0}",valFechaHist.get(0));
         
         parametros.put("pacNombre", valNombre);
         parametros.put("pacPrimerAp", valPrimerAp);
         parametros.put("pacSegundoAp", valSegundoAp);
         parametros.put("pacId", valId);
+        parametros.put("pacfechaHist",valFechaHist);
                 
         PrimeFaces.current().dialog().openDynamic("dialDashboardPaciente", options, parametros);
     }
@@ -193,6 +211,30 @@ public class InicioPacienteMB implements Serializable {
     private void cerrarDialogo(FacesMessage mensaje){
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
-    
 
+    public EntPaciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(EntPaciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public EntMedico getMedicoPac() {
+        return medicoPac;
+    }
+
+    public void setMedicoPac(EntMedico medicoPac) {
+        this.medicoPac = medicoPac;
+    }
+
+    public EntHospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(EntHospital hospital) {
+        this.hospital = hospital;
+    }
+
+    
 }
