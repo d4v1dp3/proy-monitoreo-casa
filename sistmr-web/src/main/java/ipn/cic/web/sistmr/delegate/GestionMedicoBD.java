@@ -13,6 +13,7 @@ import ipn.cic.sistmr.exception.NoExisteHospitalException;
 import ipn.cic.sistmr.exception.RolException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.modelo.EntGenero;
+import ipn.cic.sistmr.modelo.EntHospital;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
@@ -27,6 +28,7 @@ import ipn.cic.sistmr.util.Constantes;
 import ipn.cic.web.sistmr.bean.vo.MedicoVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.bean.vo.UsuarioVO;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -76,17 +78,22 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         // primero los datos de persona para persistirlos
         try {
             logger.log(Level.INFO, "Inicia Delegate guardar medico nuevo ");
+            logger.log(Level.INFO, "Persona para medico ... ");
             EntPersona entPersona = new EntPersona();
             entPersona.setNombre(persona.getNombre().toUpperCase());
             entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
             entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
             entPersona.setCurp(persona.getCurp().toUpperCase());
             entPersona.setEdad(persona.getEdad());
+            
 
             EntGenero genero = generoSB.getGeneroID(persona.getIdGenero().shortValue());
             entPersona.setIdGenero(genero);
             entPersona = personaSB.savePersona(entPersona);
+            logger.log(Level.INFO, "{0}", entPersona.getIdPersona());
+            
             // Creando la Entidad USUARIO
+            logger.log(Level.INFO, "Usuario para medico ... ");
             EntUsuario entUsuario = new EntUsuario();
             entUsuario.setIdUsuario(usuario.getIdUsuario());
             entUsuario.setContrasenia(usuario.getContrasenia());
@@ -97,6 +104,7 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             EntRol rolMedico = rolSB.getRolId(medRol);
             entUsuario.getEntRolList().add(rolMedico);
             entUsuario = usuarioSB.saveUsuario(entUsuario);
+            logger.log(Level.INFO, "{0}", entUsuario.getIdUsuario());
 
             EntMedico entMed = new EntMedico();
             entMed.setCedulaProf(medico.getCedulaProf());
@@ -104,6 +112,7 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             entMed.setEmail(medico.getEmail());
             entMed.setIdPersona(entPersona);
 
+            entMed.setEntHospitalList(new ArrayList<EntHospital>());
             entMed.getEntHospitalList().add(hospitalSB.getPrimerHospital());
 
             entMed = medicoSB.saveMedico(entMed);
