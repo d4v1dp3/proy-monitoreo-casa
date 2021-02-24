@@ -28,42 +28,46 @@ Todos los derechos reservados
     </head>
     <body>
 
-
-        <div class="contenedorprincipal">
-
-            <div class="header">
+        <div>
+            <nav class="navbar navbar-dark">
                 <div class="barraTitulo">
-                    <div class="imgcontainer">
+                    <div class="imgcontainer navbar-brand">
                         <img class="img-responsive" height="60" src="/sistmr-web/resources/images/logoCDMX.png">
                     </div>
-                    <div class="titulocontainer">
+                    <div class="titulocontainer navbar-nav ml-auto">
                         <div>Sistema para el monitoreo remoto del estado general de salud de personas desde su hogar</div>
                     </div>
-
                 </div>
-            </div>
+            </nav>
+        </div>
 
+        <div>
+            <section class="contenedorprincipal">
+                <div class="contenido">
+                    <div class="login">
+                        <div class="wrapper fadeInDown">
+                            <div id="formContent">
+                                <div class="imgcontainer">
+                                    <img src="/sistmr-web/resources/images/img_avatar2.png" alt="Avatar" class="avatar">
+                                </div>
+                                <div class="errorLogin">
+                                    <br/>
+                                    <br/>
+                                    ERROR Usuario o contrase&ntilde;a no reconocido.
+                                    <br/>
+                                    <br/>
+                                    <button type="submit" onclick="history.back()">Regresar</button>
+                                </div>
 
-            <div class="contenido">
-
-                <div class="login">
-                    <div class="wrapper fadeInDown">
-                        <div id="formContent">
-                            <div class="imgcontainer">
-                                <img src="/sistmr-web/resources/images/img_avatar2.png" alt="Avatar" class="avatar">
                             </div>
-                            <div class="errorLogin">
-                                Error : Usuario o contrase&ntilde;a no reconocido.
-                            </div>
-
                         </div>
                     </div>
-
                 </div>
-            </div>
+            </section>
+        </div>
 
-
-            <div class="footer">
+        <div>
+            <footer class="footer">
                 <div class="superior">
                     <div>
                         <p style="text-align:center; font-size: 12px">
@@ -75,7 +79,7 @@ Todos los derechos reservados
 
                 <div class="inferior">
                     <div class="izquierda">
-                        <img class="img-responsive" src="/sistmr-web/resources/images/logo-blanco.png" width="170">
+                        <img class="img-responsive" src="/sistmr-web/resources/images/logo-blanco.png" width="250">
                     </div>
                     <div class="centrado">
                         <p id="poli">
@@ -95,15 +99,15 @@ Todos los derechos reservados
                     </div>
                     <div class="derecha">
                         <div>
-                            <img class="img-responsive" src="/sistmr-web/resources/images/cicLogo.jpg" width="70" height="50">
+                            <img class="img-responsive" src="/sistmr-web/resources/images/cicLogo.jpg" width="80">
                         </div>
                         <div>
                             <img class="img-responsive" src="/sistmr-web/resources/images/logo-ipn.png" height="100">
                         </div>
                     </div>
                 </div>
-
-            </div>
+            </footer>
         </div>
+
     </body>
 </html>

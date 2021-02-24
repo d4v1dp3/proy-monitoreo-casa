@@ -30,19 +30,87 @@ Todos los derechos reservados
                 <p:growl id="msgsIP" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
+                <p:panel id="pnGIPaciente" header="Inicio Paciente" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la gestión de los datos de paciente que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
+                            <div>
 
-                <div>
-                    <p:panel>
-                        <p:commandButton icon="fas fa-heartbeat" value="Mi Estado" title="Dashboard" actionListener="#{inicioPacienteMB.mostrarDashboard()}">
-                            <p:ajax event="dialogReturn" listener="#{inicioPacienteMB.mostrarDashboard()}" update="@all"/>
-                        </p:commandButton>
-                        <p:commandButton icon="fas fa-user-md" value="Mi Médico" title="Medico" actionListener="#{inicioPacienteMB.mostrarDatosMedico()}">
-                            <p:ajax event="dialogReturn" listener="#{inicioPacienteMB.retornoMostrarDatosMedico()}" update="@all"/>
-                        </p:commandButton>
-                    </p:panel>    
-                </div>
-                <p:panel id="pnGIPaciente" header="Inicio Paciente" footer="" style="margin-bottom:20px">
-                    HOLA MUNDO
+                                <p:commandButton icon="fas fa-heartbeat" value="Mis Signos y Sintomas" title="Dashboard" actionListener="#{inicioPacienteMB.mostrarDashboard()}">
+                                    <p:ajax event="dialogReturn" listener="#{inicioPacienteMB.mostrarDashboard()}" update="@all"/>
+                                </p:commandButton>
+<!--                                <p:commandButton icon="fas fa-user-md" value="Mi Médico" title="Medico" actionListener="#{inicioPacienteMB.mostrarDatosMedico()}">
+                                    <p:ajax event="dialogReturn" listener="#{inicioPacienteMB.retornoMostrarDatosMedico()}" update="@all"/>
+                                </p:commandButton>-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black;" class="ui-widget-header">Mis Datos</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column colspan="4" style="border-color: white;"></p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
+                                    <p:panelGrid columns="4"
+                                                 columnClasses="ui-grid-col-6,ui-grid-col-6,ui-grid-col-6,ui-grid-col-6"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel value="NOMBRE:" />
+                                        </p:column>
+                                        
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.nombre}" style="font-weight: bold"/>
+                                        </p:column>
+                                        
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.primerApellido}" style="font-weight: bold"/>
+                                        </p:column>
+                                        
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.segundoApellido}" style="font-weight: bold"/>
+                                        </p:column>
+
+                                    </p:panelGrid>
+
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+
+                    <p:panel header="Hospital Asignado" style="background-color: #e7e8e9 !important;">
+                        <i class="fas fa-building-o"></i>
+                        <p:outputLabel value="    " />
+                        <p:outputLabel value="#{inicioPacienteMB.hospital.nombre}" style="font-weight: bold"> </p:outputLabel>
+                        <p:outputLabel value=" " />
+                    </p:panel>
+
+                    <p:panel header="Medico Asignado">
+                        <i class="fas fa-user-md"></i>
+                        <p:outputLabel value="    " />
+                        <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.nombre}" style="font-weight: bold"> </p:outputLabel>
+                        <p:outputLabel value=" " />
+                        <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.primerApellido}" style="font-weight: bold"> </p:outputLabel>
+                        <p:outputLabel value=" " />
+                        <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.segundoApellido}" style="font-weight: bold"> </p:outputLabel>
+                        
+                    </p:panel>
+
+
                 </p:panel>
             </h:form>
         </ui:define>    

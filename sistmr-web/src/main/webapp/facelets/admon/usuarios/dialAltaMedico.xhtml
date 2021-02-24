@@ -5,196 +5,200 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <f:view>
-        <h:head>
+  <h:head>
+    <title>Alta Médico</title>
+    <style type="text/css">
+      .ui-widget {
+          font-size: 90%;
+      }
+      .ui-widget-header{
+          background-color: #e7e8e9 !important;
+          border-color: #cacaca !important;
+          font-weight: bold !important;
+          color: black !important;
+          text-align: left !important;
+      }
+      .sinborde{
+          border-color: white !important;
+      }
+      .titulo{
+          font-weight: bold !important;
+      }
 
-            <title>Alta Médico</title>
-            <style type="text/css">
-                .ui-widget {
-                    font-size: 90%;
-                }
-                .ui-widget-header{
-                    background-color: #e7e8e9 !important;
-                    border-color: #cacaca !important;
-                    font-weight: bold !important;
-                    color: black !important;
-                    text-align: left !important;
-                }
-                .titulo{
-                    font-weight: bold !important;
-                }
-            </style>
-            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
-            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+      /* reset on the showcase style*/
+      body .ui-panelgrid .ui-panelgrid-cell {
+          background-color: transparent;
+      }
 
-        </h:head>
+      /* example use of styles for your form */
+      .my-heading-row {
+          background-color: var(--surface-c);
+          font-weight: bold;
+      }
+    </style>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+    <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 
-        <h:body>
-            <i class="far fa-save"></i>
-            <h:form id="frmAltaMedico">
-                <p:growl id="msgAltaMed" showDetail="true" />
-                <p:panelGrid>
-                    <p:row>
-                        <p:column>
+  </h:head>
 
-                            <center>
-                                <h2>
-                                    <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
-                                </h2>
-                            </center>
-                            <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
+  <h:body>
+    <i class="far fa-save"></i>
+    <h:form id="frmAltaMedico">
+      <p:growl id="msgAltaMed" showDetail="true" />
+      <p:panelGrid>
+        <p:row>
+          <p:column>
+            <center>
+              <h2>
+                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
+              </h2>
+              <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
+            </center>
+          </p:column>
+        </p:row>
+        <p:row>
+          <p:column style="text-align: center" class="ui-widget-header">Datos Personales</p:column>
+        </p:row>
+        <p:row>
+          <p:column>
+            <p:panelGrid>
+              <p:row>
+                <p:column colspan="3" class="sinborde"></p:column>
+              </p:row>
+            </p:panelGrid>
+            <p:panelGrid columns="3"
+                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                         layout="grid"
+                         styleClass="ui-panelgrid-blank ui-fluid"
+                         style="border:0px none; background-color:transparent;">
 
-                            <p:panelGrid>
-                                <p:row>
-                                    <p:column colspan="3" class="ui-widget-header">Datos Personales</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="3">
-                                        <table width="100%" border="0">
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="apPat" value="Apellido Paterno:" />
+                <p:inputText id="apPat" value="#{gestionMedicoMB.datPersona.primerApellido}" required="true" />
+                <p:message for="apPat" />
+              </p:column>
 
-                                            <tr>
-                                                <td>
-                                                    <p:outputLabel for="apPat" value="Apellido Paterno:" /> </td>
-                                                <td><p:outputLabel for="apMat" value="Apellido Materno:" /> </td>
-                                                <td><p:outputLabel for="nomPers" value="Nombre(s):" /> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p:inputText id="apPat" value="#{gestionMedicoMB.datPersona.primerApellido}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:inputText id="apMat" value="#{gestionMedicoMB.datPersona.segundoApellido}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:inputText id="nomPers" value="#{gestionMedicoMB.datPersona.nombre}" required="true" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><p:message for="apPat" /></td>
-                                                <td><p:message for="apMat" /></td>
-                                                <td><p:message for="nomPers" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p:outputLabel for="curp" value="CURP:" /> </td>
-                                                <td><p:outputLabel for="genMenu" value="Género:" /> </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" />
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="apMat" value="Apellido Materno:" />
+                <p:inputText id="apMat" value="#{gestionMedicoMB.datPersona.segundoApellido}" required="true" />
+                <p:message for="apMat" />
+              </p:column>
 
-                                                </td>
-                                                <td>
-                                                    <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" required="true">
-                                                        <f:selectItems value="#{gestionMedicoMB.catGenero}" var="genero" 
-                                                                       itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
-                                                        <p:ajax />
-                                                    </p:selectOneMenu>                                                
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p:message for="curp" /></td>
-                                                <td><p:message for="genMenu" /></td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="3" class="ui-widget-header">Datos de Sesión</p:column>
-                                </p:row>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="nomPers" value="Nombre(s):" />
+                <p:inputText id="nomPers" value="#{gestionMedicoMB.datPersona.nombre}" required="true" />
+                <p:message for="nomPers" />
+              </p:column>
 
-                                <p:row>
-                                    <p:column>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="curp" value="CURP:" />
+                <p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" />
+                <p:message for="curp" />
+              </p:column>  
 
-                                        <table width="100%" border="0">
-                                            <tr>
-                                                <td><p:outputLabel for="idUsr" value="Usuario:" /> </td>
-                                                <td><p:outputLabel for="contra" value="Contraseña:"/></td>
-                                                <td><p:outputLabel for="estado" value="Estado:"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p:inputText id="idUsr" value="#{gestionMedicoMB.datUsuario.idUsuario}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:inputText id="contra" value="#{gestionMedicoMB.datUsuario.contrasenia}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:selectBooleanCheckbox id="estado" value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><p:message id="idUsrMess" for="idUsr" /></td>
-                                                <td><p:message for="contra" /></td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="genMenu" value="Género:" />
+                <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" required="true">
+                  <f:selectItems value="#{gestionMedicoMB.catGenero}" var="genero" 
+                                 itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                  <p:ajax />
+                </p:selectOneMenu> 
+                <p:message for="genMenu" />
+              </p:column>  
 
-                                    </p:column>
-                                </p:row>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="edad" value="Edad:" />
+                <p:inputText id="edad" value="#{gestionMedicoMB.datPersona.edad}" required="true" />
+                <p:message for="edad"/>
+              </p:column>  
 
-                                <p:row>
-                                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Medico</p:column>
-                                </p:row>
+            </p:panelGrid>
+          </p:column>
+        </p:row>
+        <p:row>
+          <p:column style="text-align: center" class="ui-widget-header">Datos del Medico</p:column>
+        </p:row>
+        <p:row>
+          <p:column>
+            <p:panelGrid columns="3"
+                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                         layout="grid"
+                         styleClass="ui-panelgrid-blank ui-fluid"
+                         style="border:0px none; background-color:transparent;">
 
-                                <p:row>
-                                    <p:column>
-                                        <table width="100%" border="0">
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="hCedula" value="Cedula Profesional:" />
+                <p:inputText id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" />
+                <p:message for="hCedula" />
+              </p:column>
 
-                                            <tr>
-                                                <td><p:outputLabel for="hCedula" value="Cedula Profesional:" /></td>
-                                                <td><p:outputLabel for="hEmail" value="Correo Electronico:" /></td>
-                                                <td><p:outputLabel for="hCelular" value="Telefono Celular:" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p:inputText id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true" />
-                                                </td>
-                                                <td>
-                                                    <p:inputText id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><p:message for="hCedula" /></td>
-                                                <td><p:message for="hEmail" /></td>
-                                                <td><p:message for="hCelular" /></td>
-                                            </tr>
-                                        </table>
-                                    </p:column>
-                                </p:row>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="hEmail" value="Correo Electronico:" />
+                <p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true" />
+                <p:message for="hEmail" />
+              </p:column>
 
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="hCelular" value="Telefono Celular:" />
+                <p:inputText id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" />
+                <p:message for="hCelular" />
+              </p:column>
 
-                                <p:row>
-                                    <p:column colspan="3" style="text-align: right">
-                                        <p:commandButton icon="fas fa-save" value="Guardar" 
-                                                         action="#{gestionMedicoMB.guardarMedico()}"
-                                                         update="@all"/>
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-            </h:form>
-            <h:form>
-                <p:panelGrid>
-                    <p:row>
-                        <p:column colspan="3" style="text-align: right">
+            </p:panelGrid>
+          </p:column>
+        </p:row>
+        <p:row>
+          <p:column style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
+        </p:row>
+        <p:row>
+          <p:column>
+            <p:panelGrid columns="3"
+                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                         layout="grid"
+                         styleClass="ui-panelgrid-blank ui-fluid"
+                         style="border:0px none; background-color:transparent;">
 
-                            <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}" 
-                                             icon="pi pi-times"/>    
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="idUsr" value="Usuario:" />
+                <p:inputText id="idUsr" value="#{gestionMedicoMB.datUsuario.idUsuario}" required="true" >
+                  <p:ajax  event="keyup"/>
+                </p:inputText>
+                <p:message id="idUsrMess" for="idUsr" />
+              </p:column>
 
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-            </h:form>
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="contra" value="Contraseña:"/>
+                <p:inputText id="contra" value="#{gestionMedicoMB.datUsuario.contrasenia}" required="true" />
+                <p:message for="contra" />
+              </p:column>
 
+              <p:column style="background-color: lightcoral">
+                <p:outputLabel for="estado" value="Estado de Sesión:"/><br/>
+                <p:selectBooleanCheckbox id="estado" value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/>
+              </p:column>
 
-        </h:body>
-    </f:view>
+            </p:panelGrid>
+          </p:column>
+        </p:row>
+        <p:row>
+          <p:column style="text-align: right">
+            <p:commandButton icon="fas fa-save" value="Guardar" action="#{gestionMedicoMB.guardarMedico()}"
+                             update="@all"/>
+          </p:column>
+        </p:row>
+      </p:panelGrid>
+    </h:form>
+    <h:form>
+      <p:panelGrid>
+        <p:row>
+          <p:column colspan="3" style="text-align: right">
+
+            <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}" 
+                             icon="pi pi-times"/>    
+
+          </p:column>
+        </p:row>
+      </p:panelGrid>
+    </h:form>
+  </h:body>
 </html>

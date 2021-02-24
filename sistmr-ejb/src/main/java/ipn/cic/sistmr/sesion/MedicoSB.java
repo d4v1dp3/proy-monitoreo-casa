@@ -125,4 +125,14 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         }
                     
     }
+
+    @Override
+    public EntMedico getMedico(Integer idMedico) throws MedicoException {
+            Query qry = em.createQuery("SELECT e From EntMedico e WHERE e.idMedico = :idMedico");
+        qry.setParameter("idMedico", idMedico);
+        EntMedico res = (EntMedico)qry.getSingleResult();
+        res.getCedulaProf();
+        res.getIdMedico();
+        return res;
+    }
 }

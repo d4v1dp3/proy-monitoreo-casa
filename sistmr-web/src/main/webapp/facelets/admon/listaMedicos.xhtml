@@ -30,38 +30,50 @@ Todos los derechos reservados
                 <p:growl id="msgsLM" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
+                <p:panel id="pnUsrs" header="Gestión Médicos" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la gestión de los datos de médicos que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
 
-                <p:panel id="pnLMedicos" header="Listado de Medicos" footer="" style="margin-bottom:20px">
-                    <p:dataTable var="medico" value="#{listadoMedicosMB.listadoMedicos}" rows="10"
-                                 paginator="true"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                 rowsPerPageTemplate="10,20,30">
-                        <p:column headerText="Id">
-                            <h:outputText value="#{medico.idMedico}" />
-                        </p:column>
+                            <p:panel id="pnLMedicos" header="Listado de Medicos" style="margin-bottom:20px">
+                                <p:dataTable var="medico" value="#{listadoMedicosMB.listadoMedicos}" rows="10"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                             rowsPerPageTemplate="10,20,30">
+                                    <p:column headerText="Id">
+                                        <h:outputText value="#{medico.idMedico}" />
+                                    </p:column>
 
-                        <p:column headerText="Cédula Profesional" filterBy="#{medico.cedulaProf}" filterMatchMode="contains">
-                            <h:outputText value="#{medico.cedulaProf}" />
-                        </p:column>
-                        
-                        <p:column headerText="Primer Ap." filterBy="#{medico.idPersona.primerApellido}" filterMatchMode="contains">
-                            <h:outputText value="#{medico.idPersona.primerApellido}" />
-                        </p:column>
+                                    <p:column headerText="Cédula Profesional" filterBy="#{medico.cedulaProf}" filterMatchMode="contains">
+                                        <h:outputText value="#{medico.cedulaProf}" />
+                                    </p:column>
 
-                        <p:column headerText="Segundo Ap." filterBy="#{medico.idPersona.segundoApellido}" filterMatchMode="contains">
-                            <h:outputText value="#{medico.idPersona.segundoApellido}" />
-                        </p:column>
+                                    <p:column headerText="Primer Ap." filterBy="#{medico.idPersona.primerApellido}" filterMatchMode="contains">
+                                        <h:outputText value="#{medico.idPersona.primerApellido}" />
+                                    </p:column>
 
-                        <p:column headerText="Nombre" filterBy="#{medico.idPersona.nombre}" filterMatchMode="contains">
-                            <h:outputText value="#{medico.idPersona.nombre}" />
-                        </p:column>
+                                    <p:column headerText="Segundo Ap." filterBy="#{medico.idPersona.segundoApellido}" filterMatchMode="contains">
+                                        <h:outputText value="#{medico.idPersona.segundoApellido}" />
+                                    </p:column>
 
-                        <p:column headerText="No. Pacientes" style="text-aling:center" >
-                            <h:outputText value="#{medico.entPacienteMedicoList.size()}" />
-                        </p:column>
+                                    <p:column headerText="Nombre" filterBy="#{medico.idPersona.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{medico.idPersona.nombre}" />
+                                    </p:column>
 
-                    </p:dataTable>
+                                    <p:column headerText="No. Pacientes" style="text-aling:center" >
+                                        <h:outputText value="#{medico.entPacienteMedicoList.size()}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:panel>
+
+                        </div>
+                    </div>
                 </p:panel>
             </h:form>
         </ui:define>    

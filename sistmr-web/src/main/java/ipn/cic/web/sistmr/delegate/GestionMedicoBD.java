@@ -13,6 +13,7 @@ import ipn.cic.sistmr.exception.NoExisteHospitalException;
 import ipn.cic.sistmr.exception.RolException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.modelo.EntGenero;
+import ipn.cic.sistmr.modelo.EntHospital;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
@@ -27,13 +28,18 @@ import ipn.cic.sistmr.util.Constantes;
 import ipn.cic.web.sistmr.bean.vo.MedicoVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.bean.vo.UsuarioVO;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 /**
@@ -43,6 +49,8 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 @Stateless
 @PermitAll
 @SecurityDomain("other")
+@TransactionManagement(value = TransactionManagementType.CONTAINER)
+@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
 public class GestionMedicoBD implements GestionMedicoBDLocal {
 
     private static final Logger logger = Logger.getLogger(GestionMedicoBD.class.getName());
@@ -56,72 +64,82 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
     @EJB
     private GeneroSBLocal generoSB;
     @EJB
-    private RolSBLocal  rolSB;
+    private RolSBLocal rolSB;
     @EJB
     private HospitalSBLocal hospitalSB;
+    @Resource
+    private EJBContext ejbContext;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona,
-                                        UsuarioVO usuario) throws MedicoException,  IDUsuarioException{
+            UsuarioVO usuario) throws MedicoException, IDUsuarioException {
         // Aquí hay que preparar los datos para almacenar la información
         // primero los datos de persona para persistirlos
-        EntPersona entPersona = new EntPersona();
-        entPersona.setNombre(persona.getNombre().toUpperCase());
-        entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
-        entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
-        entPersona.setCurp(persona.getCurp().toUpperCase());
         try {
+            logger.log(Level.INFO, "Inicia Delegate guardar medico nuevo ");
+            logger.log(Level.INFO, "Persona para medico ... ");
+            EntPersona entPersona = new EntPersona();
+            entPersona.setNombre(persona.getNombre().toUpperCase());
+            entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
+            entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
+            entPersona.setCurp(persona.getCurp().toUpperCase());
+            entPersona.setEdad(persona.getEdad());
+            
+
             EntGenero genero = generoSB.getGeneroID(persona.getIdGenero().shortValue());
             entPersona.setIdGenero(genero);
             entPersona = personaSB.savePersona(entPersona);
-        } catch (GeneroException ex) {
-            logger.log(Level.SEVERE, "Error al obtener EntGenero con id : {0}", persona.getIdGenero());
-            logger.log(Level.SEVERE, "Error al obtener EntGenero: {0}", ex.getMessage());
-            throw new MedicoException("Imposible asignar genero ", ex);
-        } catch (SaveEntityException ex) {
-            logger.log(Level.SEVERE,"Error al persistir EnPersona : {0}",ex.getMessage());
-            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE,"Error Desconocido : {0}",ex.getMessage());
-            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
-        }
-        
-        // Creando la Entidad USUARIO
-        EntUsuario entUsuario = new EntUsuario();
-        entUsuario.setIdUsuario(usuario.getIdUsuario());
-        entUsuario.setContrasenia(usuario.getContrasenia());
-        entUsuario.setIdPersona(entPersona);
-        entUsuario.setActivo(usuario.getActivo());
-        Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
-        
-        
-        try {
+            logger.log(Level.INFO, "{0}", entPersona.getIdPersona());
+            
+            // Creando la Entidad USUARIO
+            logger.log(Level.INFO, "Usuario para medico ... ");
+            EntUsuario entUsuario = new EntUsuario();
+            entUsuario.setIdUsuario(usuario.getIdUsuario());
+            entUsuario.setContrasenia(usuario.getContrasenia());
+            entUsuario.setIdPersona(entPersona);
+            entUsuario.setActivo(usuario.getActivo());
+            Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
+
             EntRol rolMedico = rolSB.getRolId(medRol);
             entUsuario.getEntRolList().add(rolMedico);
             entUsuario = usuarioSB.saveUsuario(entUsuario);
-        } catch (SaveEntityException | RolException ex) {
-            logger.log(Level.SEVERE,"Error al persistir usuario : {0}",ex.getMessage());
-            throw new MedicoException("Error ", ex);
-        }
-        
-        EntMedico entMed = new EntMedico();
-        entMed.setCedulaProf(medico.getCedulaProf());
-        entMed.setCelular(medico.getCelular());
-        entMed.setEmail(medico.getEmail());
-        entMed.setIdPersona(entPersona);
-        
-        try {
+            logger.log(Level.INFO, "{0}", entUsuario.getIdUsuario());
+
+            EntMedico entMed = new EntMedico();
+            entMed.setCedulaProf(medico.getCedulaProf());
+            entMed.setCelular(medico.getCelular());
+            entMed.setEmail(medico.getEmail());
+            entMed.setIdPersona(entPersona);
+
+            entMed.setEntHospitalList(new ArrayList<EntHospital>());
             entMed.getEntHospitalList().add(hospitalSB.getPrimerHospital());
+
+            entMed = medicoSB.saveMedico(entMed);
+
+            return entMed;
+        } catch (GeneroException ex) {
+            logger.log(Level.SEVERE, "Error al obtener EntGenero con id : {0}", persona.getIdGenero());
+            logger.log(Level.SEVERE, "Error al obtener EntGenero: {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
+            throw new MedicoException("Imposible asignar genero ", ex);
+        } catch (SaveEntityException ex) {
+            logger.log(Level.SEVERE, "Error al persistir EnPersona : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
+            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
+        } catch (RolException ex) {
+            logger.log(Level.SEVERE, "Error al persistir usuario : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
+            throw new MedicoException("Error ", ex);
         } catch (NoExisteHospitalException ex) {
-            logger.log(Level.SEVERE,"Error al ObtenerDatos de hospital : {0}",ex.getMessage());
+            logger.log(Level.SEVERE, "Error al ObtenerDatos de hospital : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
             throw new MedicoException("Error al consultar datos de hospital ", ex);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error Desconocido : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
+            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
         }
-        
-        entMed = medicoSB.saveMedico(entMed);
-        
-        return entMed;
-        
     }
 
 }

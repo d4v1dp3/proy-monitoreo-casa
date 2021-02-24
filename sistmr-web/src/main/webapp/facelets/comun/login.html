@@ -28,49 +28,46 @@ Todos los derechos reservados
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     </head>
     <body>
-
-        <div class="contenedorprincipal">
-
-            <div class="header">
+        <div>
+            <nav class="navbar navbar-dark">
                 <div class="barraTitulo">
-                    <div class="imgcontainer">
-                        <img class="img-responsive" height="50" src="/sistmr-web/resources/images/logoCDMX.png">
+                    <div class="imgcontainer navbar-brand">
+                        <img class="img-responsive" src="/sistmr-web/resources/images/logoCDMX.png">
                     </div>
-<!--                    <div>
-                        <table border="0px" width="80px"><tr><td></td></tr></table>
-                    </div>-->
-                    <div class="titulocontainer">
+                    <div class="titulocontainer navbar-nav ml-auto">
                         <div>Sistema para el monitoreo remoto del estado general de salud de personas desde su hogar</div>
                     </div>
-
                 </div>
-            </div>
+            </nav>
+        </div>
+        <div>
+            <section class="contenedorprincipal">
+                <div class="contenido">
+                    <div class="login">
+                        <div class="wrapper fadeInDown">
+                            <div id="formContent">
+                                <div class="fadeIn first">
+                                    <img src="/sistmr-web/resources/images/img_avatar2.png" alt="Avatar" class="avatar">
+                                </div>
+                                <form name="loginForm" method="post" accept-charset="utf-8" action="j_security_check">
+                                    <div>
+                                        <input type="text" required name="j_username" placeholder="Nombre de usuario" class="fadeIn second" />
+                                        <input type="password" placeholder="Clave de acceso" id="lpass" required name="j_password" class="fadeIn third" />
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="fadeIn fourth">Entrar</button>
+                                    </div>
+                                </form>
 
-            <div class="contenido">
-
-                <div class="login">
-                    <div class="wrapper fadeInDown">
-                        <div id="formContent">
-                            <div class="fadeIn first">
-                                <img src="/sistmr-web/resources/images/img_avatar2.png" alt="Avatar" class="avatar">
                             </div>
-                            <form name="loginForm" method="post" accept-charset="utf-8" action="j_security_check">
-                                <div>
-                                    <input type="text" required name="j_username" placeholder="Nombre de usuario" class="fadeIn second" />
-                                    <input type="password" placeholder="Clave de acceso" id="lpass" required name="j_password" class="fadeIn third" />
-                                </div>
-                                <div>
-                                    <button type="submit" class="fadeIn fourth">Entrar</button>
-                                </div>
-                            </form>
-
                         </div>
+
                     </div>
-
                 </div>
-            </div>
-
-            <div class="footer">
+            </section>
+        </div>
+        <div>
+            <footer class="footer">
                 <div class="superior">
                     <div>
                         <p style="text-align:center; font-size: 12px">
@@ -79,10 +76,9 @@ Todos los derechos reservados
                         </p>
                     </div>
                 </div>
-
                 <div class="inferior">
                     <div class="izquierda">
-                        <img class="img-responsive" src="/sistmr-web/resources/images/logo-blanco.png" width="200">
+                        <img class="img-responsive" src="/sistmr-web/resources/images/logo-blanco.png" width="250">
                     </div>
                     <div class="centrado">
                         <p id="poli">
@@ -97,22 +93,19 @@ Todos los derechos reservados
                                 <a href="http://www.cic.ipn.mx/">Desarrollado por CIC-IPN</a>
                                 <br/>Laboratorio de Rob&oacute;tica y Mecartr&oacute;nica
                             </span>
-
                         </p>
                     </div>
                     <div class="derecha">
                         <div>
-                            <img class="img-responsive" src="/sistmr-web/resources/images/cicLogo.jpg" width="70" height="50">
-                        </div>
-                        <div>
+                            <img class="img-responsive" src="/sistmr-web/resources/images/cicLogo.jpg" width="80">
                             <img class="img-responsive" src="/sistmr-web/resources/images/logo-ipn.png" height="100">
                         </div>
+                        <div>
+                            
+                        </div>
                     </div>
-                </div>
-
-            </div>
+            </footer>
         </div>
-
     </body>
 </html>
 

@@ -30,54 +30,62 @@ Todos los derechos reservados
                 <p:growl id="msgsGP" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
+                <p:panel id="pnPac" header="Pacientes" footer="" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Consulta de los datos de pacientes que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
 
-                <p:panel id="pnGPacientes" header="Listado de Pacientes" footer="" style="margin-bottom:20px">
-                    <!--Panel para presentar el listado de pacientes asociados a un Médico.-->
-                    
-                    
-                    
-                    <p:dataTable var="paciente" value="#{listadoPacientesMB.pacientesComp}" rows="10"
-                                 paginator="true"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                 rowsPerPageTemplate="10,20,30">
-                        <p:column headerText="Id Paciente">
-                            <h:outputText value="#{paciente.idPaciente}" />
-                        </p:column>
+                            <p:panel id="pnGPacientes" header="Listado de Pacientes" style="margin-bottom:20px">
 
-                        <p:column headerText="Primer Ap." filterBy="#{paciente.idPersona.primerApellido}" filterMatchMode="contains">
-                            <h:outputText value="#{paciente.idPersona.primerApellido}" />
-                        </p:column>
-                        <p:column headerText="Segundo Ap." filterBy="#{paciente.idPersona.segundoApellido}" filterMatchMode="contains">
-                            <h:outputText value="#{paciente.idPersona.segundoApellido}" />
-                        </p:column>
-                        <p:column headerText="Nombre" filterBy="#{paciente.idPersona.nombre}" filterMatchMode="contains">
-                            <h:outputText value="#{paciente.idPersona.nombre}" />
-                        </p:column>
+                                <p:dataTable var="paciente" value="#{listadoPacientesMB.pacientesComp}" rows="10"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                             rowsPerPageTemplate="10,20,30">
+                                    <p:column headerText="Id Paciente">
+                                        <h:outputText value="#{paciente.idPaciente}" />
+                                    </p:column>
 
-                        <p:column headerText="Id Careta">
-                            <h:outputText value="#{paciente.idCareta.idCareta}" />
-                        </p:column>
+                                    <p:column headerText="Primer Ap." filterBy="#{paciente.idPersona.primerApellido}" filterMatchMode="contains">
+                                        <h:outputText value="#{paciente.idPersona.primerApellido}" />
+                                    </p:column>
+                                    <p:column headerText="Segundo Ap." filterBy="#{paciente.idPersona.segundoApellido}" filterMatchMode="contains">
+                                        <h:outputText value="#{paciente.idPersona.segundoApellido}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre" filterBy="#{paciente.idPersona.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{paciente.idPersona.nombre}" />
+                                    </p:column>
 
-                        <p:column headerText="Estado">
-                            <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
-                        </p:column>
+                                    <p:column headerText="Id Careta">
+                                        <h:outputText value="#{paciente.idCareta.idCareta}" />
+                                    </p:column>
 
-                        <p:column headerText="Antecedentes" style="width:32px;text-align: center">
-                            <p:commandButton icon="fas fa-clipboard" title="Antecedentes" action="#{listadoPacientesMB.mostrarAntecedentes()}">
-                                <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
-                                <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMostrarAntecedentes}" update="@all"/>
-                            </p:commandButton>
-                        </p:column>
-                        
-                         <p:column headerText="Signos y Sintomas" style="width:32px;text-align: center">
-                            <p:commandButton icon="fas fa-heartbeat" title="Signos" action="#{listadoPacientesMB.mostrarDashboard()}">
-                                <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
-                                <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
-                            </p:commandButton>
-                        </p:column>
+                                    <p:column headerText="Estado de salud">
+                                        <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
+                                    </p:column>
 
-                    </p:dataTable>
+                                    <p:column headerText="Antecedentes" style="width:40px;text-align: center">
+                                        <p:commandButton icon="fas fa-clipboard" title="Antecedentes" action="#{listadoPacientesMB.mostrarAntecedentes()}">
+                                            <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
+                                            <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMostrarAntecedentes}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>
+
+                                    <p:column headerText="Signos y Sintomas" style="width:40px;text-align: center">
+                                        <p:commandButton icon="fas fa-heartbeat" title="Signos" action="#{listadoPacientesMB.mostrarDashboard()}">
+                                            <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
+                                            <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:panel>
+                        </div>
+                    </div>
                 </p:panel>
             </h:form>
         </ui:define>    
