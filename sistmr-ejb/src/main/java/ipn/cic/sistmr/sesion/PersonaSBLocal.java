@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmr.sesion;
 
+import ipn.cic.sistmr.exception.NoExistePersonaException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.modelo.EntPersona;
 import javax.ejb.Local;
@@ -18,4 +19,5 @@ import javax.ejb.Local;
 public interface PersonaSBLocal {
     EntPersona savePersona(EntPersona persona)throws SaveEntityException;
     EntPersona getPersonaDePaciente(Long idPaciente);
+    EntPersona getEntPersona(EntPersona Persona) throws NoExistePersonaException;
 }

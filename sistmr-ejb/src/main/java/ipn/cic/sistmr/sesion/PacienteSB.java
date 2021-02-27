@@ -9,6 +9,8 @@ package ipn.cic.sistmr.sesion;
 import ipn.cic.sistmr.exception.NoExistePacienteException;
 import ipn.cic.sistmr.exception.PacienteException;
 import ipn.cic.sistmr.exception.SaveEntityException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
+import ipn.cic.sistmr.modelo.EntCareta;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntPersona;
@@ -36,6 +38,11 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
             logger.log(Level.SEVERE,"Error al intentar salvar entidad : {0}", ex.getMessage());
             throw new PacienteException("Error al salvar entidad en PacienteSB",ex);
         }
+    }
+    
+    @Override
+    public EntPaciente updatePaciente(EntPaciente pac) throws UpdateEntityException {//*
+        return (EntPaciente)this.updateEntity(pac);   
     }
     
     @Override
@@ -90,5 +97,16 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
         }
     }
     
+        @Override
+    public EntCareta getCaretaDePaciente(EntPaciente Paciente) throws NoExistePacienteException {
+        Query qry = em.createQuery("SELECT e.idCareta FROM EntPaciente e WHERE e.idPaciente = :idPaciente");
+        qry.setParameter("idPaciente", Paciente.getIdPaciente());
+
+        EntCareta res = (EntCareta) qry.getSingleResult();
+        res.getIdCareta();
+        res.getFechaManufactura();
+        res.getNoSerie();
+        return res;
+    }
 
 }

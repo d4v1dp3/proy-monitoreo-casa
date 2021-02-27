@@ -6,12 +6,14 @@
  */
 package ipn.cic.sistmr.sesion;
 
+import ipn.cic.sistmr.exception.NoExistePersonaException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.modelo.EntPersona;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -38,6 +40,20 @@ public class PersonaSB extends BaseSB implements PersonaSBLocal {
             logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
         }
         return null;
+    }
+    
+      @Override
+    public EntPersona getEntPersona(EntPersona Persona) throws NoExistePersonaException {
+        Query qry = em.createQuery("SELECT e FROM EntPersona e WHERE e.idPersona = :idPersona");
+        qry.setParameter("idPersona", Persona.getIdPersona());
+
+        EntPersona res = (EntPersona) qry.getSingleResult();
+        res.getCurp();
+        res.getEdad();
+        res.getNombre();
+        res.getPrimerApellido();
+        res.getSegundoApellido();
+        return res;
     }
     
 }

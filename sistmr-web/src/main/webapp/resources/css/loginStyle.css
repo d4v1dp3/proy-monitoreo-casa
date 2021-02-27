@@ -71,6 +71,7 @@ body {
     line-height: 26px;
     font-family: sans-serif;
     color: #00b140;
+    /*font-weight: bold;*/
 }
 
 .titulocontainer>div {

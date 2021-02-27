@@ -100,8 +100,9 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             entUsuario.setIdPersona(entPersona);
             entUsuario.setActivo(usuario.getActivo());
             Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
-
+            
             EntRol rolMedico = rolSB.getRolId(medRol);
+            logger.log(Level.INFO, "Rol asignado: {0} ", rolMedico.getDescripcion());
             entUsuario.getEntRolList().add(rolMedico);
             entUsuario = usuarioSB.saveUsuario(entUsuario);
             logger.log(Level.INFO, "{0}", entUsuario.getIdUsuario());

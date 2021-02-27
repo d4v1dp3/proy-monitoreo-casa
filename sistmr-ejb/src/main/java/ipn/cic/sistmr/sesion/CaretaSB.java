@@ -43,12 +43,11 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
     @Override
     public EntCareta getCareta(long idCareta) throws NoExisteCaretaException {        
         Query qry = em.createQuery("SELECT e FROM EntCareta e WHERE e.idCareta = :idCareta");
-        List<EntCareta> res = qry.getResultList();//DUDA
+        qry.setParameter("idCareta", idCareta);
         
-        if(res.size()==0){
-            throw new NoExisteCaretaException("Careta no encontrada.");
-        }
-        return res.get(0);
+        EntCareta res = (EntCareta)qry.getSingleResult();
+        
+        return res;
     }
     
     @Override

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Datos_Paciente
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            <h:form id="frIDatos">
+                <p:growl id="msgsID" showDetail="true"  > 
+                    <p:autoUpdate />
+                </p:growl>
+                <p:panel id="pnGIDatosPaciente" header="Mis Datos" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la actualizacion de los datos de paciente que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>
+                        </div>
+                    </div>
+
+                    <center>
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column style="border-color: white;">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Mis Datos</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <center><i class="fas fa-user" style="font-size: 8em"></i></center>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:panelGrid>
+                                                    <p:row>
+                                                        <p:column colspan="2" style="border-color: white;"></p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+
+                                                <p:panelGrid columns="2"
+                                                             columnClasses="ui-grid-col-6,ui-grid-col-8"
+                                                             layout="grid"
+                                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                                             style="border:0px none; background-color:transparent;">
+
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="NOMBRE:" />
+                                                    </p:column>
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.nombre}" style="font-weight: bold"/>
+                                                        <p:outputLabel value=" "/>
+                                                        <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.primerApellido}" style="font-weight: bold"/>
+                                                        <p:outputLabel value=" "/>
+                                                        <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.segundoApellido}" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="CURP:" />
+                                                    </p:column>
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.curp}" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="EDAD:" />
+                                                    </p:column>
+
+                                                    <p:column style="background-color: lightcoral">
+                                                        <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.edad}" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                </p:panelGrid>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
+                                </p:column>
+                                <p:column style="border-color: white;">
+
+                                    <p:panel header="Actualizar Información">
+<!--                                        <h:form id="frmEditPaciente">
+                                            <p:growl id="msgEditPac" showDetail="true" />-->
+                                            <p:panelGrid>
+                                                <p:row>
+                                                    <p:column>
+                                                        <center>
+                                                            <p>Formulario para la actualizacion de mis datos de contacto. </p>
+                                                        </center>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column style="text-align: center" class="ui-widget-header">Datos de Contacto</p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:panelGrid>
+                                                            <p:row>
+                                                                <p:column colspan="2" style="border-color: white;"></p:column>
+                                                            </p:row>
+                                                        </p:panelGrid>
+
+                                                        <p:panelGrid columns="2"
+                                                                     columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                                                     layout="grid"
+                                                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                                                     style="border:0px none; background-color:transparent;">
+
+                                                            <p:column style="background-color: lightcoral">
+                                                                <p:outputLabel for="telcel" value="Teléfono Celular:" />
+                                                                <p:inputText id="telcel" value="#{inicioPacienteMB.paciente.telCel}" required="true" />
+                                                                <p:message for="telcel"/>
+                                                            </p:column>
+
+                                                            <p:column style="background-color: lightcoral">
+                                                                <p:outputLabel for="tel" value="Teléfono Fijo::" />
+                                                                <p:inputText id="tel" value="#{inicioPacienteMB.paciente.telFijo}" required="true" />
+                                                                <p:message for="tel"/>
+                                                            </p:column>
+
+                                                        </p:panelGrid>
+
+
+                                                    </p:column>
+                                                </p:row>
+
+                                                <p:row>
+                                                    <p:column style="text-align: right">
+                                                        <p:commandButton value="Guardar Cambios" action="#{inicioPacienteMB.guardarCambiosPaciente()}"
+                                                                         icon="fas fa-save" update="@all"/>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+<!--                                        </h:form>-->
+                                    </p:panel>
+
+                                </p:column>
+
+                            </p:row>
+                        </p:panelGrid>
+                    </center>
+                </p:panel>
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>
+
+
+
+

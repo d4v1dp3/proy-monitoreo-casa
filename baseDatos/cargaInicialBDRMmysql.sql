@@ -46,7 +46,7 @@ Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (2, 'G
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'Gestión Hospital', 'fas fa-hospital', '/faces/facelets/admon/gestionHospital.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
-Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'fas fa-clipboard', '/faces/facelets/paciente/inicioPaciente.xhtml');
+Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'fas fa-clipboard', '/faces/facelets/paciente/datosPaciente.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (7, 'Valores de Referencia', 'pi pi-sliders-h', '/faces/facelets/admon/valoresReferencia.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (8, 'Gestion Dispositivos', 'fa fa-hdd-o', '/faces/facelets/admon/gestionDispositivos.xhtml');
 

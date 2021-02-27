@@ -8,11 +8,11 @@ package ipn.cic.sistmr.sesion;
 
 import ipn.cic.sistmr.exception.NoExistePacienteException;
 import ipn.cic.sistmr.exception.PacienteException;
-import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
+import ipn.cic.sistmr.modelo.EntCareta;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPersona;
-import ipn.cic.sistmr.modelo.EntUsuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,8 +24,9 @@ import javax.ejb.Local;
 public interface PacienteSBLocal {
     
     EntPaciente guardaPaciente(EntPaciente paciente) throws PacienteException;
+    EntPaciente updatePaciente(EntPaciente pac) throws UpdateEntityException;
     EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException;
     public EntPaciente getPaciente(EntPersona Persona) throws NoExistePacienteException;
     public List<EntPaciente> getPacientes(EntMedico entMedico) throws PacienteException;
-    
+    EntCareta getCaretaDePaciente(EntPaciente Paciente) throws NoExistePacienteException;
 }
