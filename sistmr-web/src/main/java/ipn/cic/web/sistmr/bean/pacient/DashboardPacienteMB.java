@@ -699,5 +699,7 @@ public class DashboardPacienteMB implements Serializable{
     public void setpArtColor(String pArtColor) {
         this.pArtColor = pArtColor;
     }
-   
+
+    
+    
 }

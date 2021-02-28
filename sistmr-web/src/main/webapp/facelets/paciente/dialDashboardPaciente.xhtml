@@ -10,11 +10,21 @@
             <f:viewParam name="pacNombre" value="#{dashboardPacienteMB.pacienteNombre}" />
             <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
             <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
-            <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>  
+            <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>
+            <f:viewParam name="pacfechaHist" value="#{dashboardPacienteMB.fechaHist}"/>
             <f:viewAction action="#{dashboardPacienteMB.cargaInicial}"/>
         </f:metadata>
         <h:head>
             <title>Signos del Paciente</title>
+            <script type="text/javascript">    
+                PrimeFaces.locales ['es'] = {
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
+                    dayNamesMin: ['D', 'L', 'M', 'M ', 'J', 'V ', 'S']
+                };
+            </script>
             <style type="text/css">
                 .ui-widget {
                     font-size: 90%;
@@ -29,6 +39,21 @@
                 .titulo{
                     font-weight: bold !important;
                 }
+                .greenBackground .ui-panel-content{
+                    background: greenyellow !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }
+                .redBackground .ui-panel-content{
+                    background: crimson !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }
+                .yellowBackground .ui-panel-content{
+                    background: yellow !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }                 
             </style>
             
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
@@ -36,128 +61,100 @@
 
         </h:head>
 
-        <h:body>       
-            <center>
+        <h:body>      
+            <h:form id="dashboardForm">
                 <p:growl id="msgAltaMed" showDetail="true" />
                 
-                                <h2>
-                                    <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
-                                        <p:outputLabel value="  "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
-                                        <p:outputLabel value=" "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
-                                        <p:outputLabel value=" "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
-                                </h2>
+                <h2>
+                    <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
+                    <p:outputLabel value="  "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
+                    <p:outputLabel value=" "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
+                    <p:outputLabel value=" "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
+                </h2>
 
-                <p:panelGrid style="margin-top:20px">
+                <p:panelGrid id="grid" style="margin: 0 auto;">
                     <f:facet name="header">
                         <p:row style="text-align: left;">
                             <p:column colspan="2" >
-                            ESTADO DEL PACIENTE A LA ÚLTIMA TOMA DE SIGNOS Y SINTOMAS
-                        </p:column>
+                                ESTADO DEL PACIENTE A LA ÚLTIMA TOMA DE SIGNOS Y SINTOMAS
+                            </p:column>
                         <p:column>
-                            <h:outputText value="Fecha: 07/11/2020    "/>
-                            <h:outputText value="Hora: 13:00"/>
+                            <h:outputText value="FECHA: "/>
+                            <h:outputText value="#{dashboardPacienteMB.fechaUltMedicion}"/>
+                            <h:outputText value=" HORA: "/>
+                            <h:outputText value="#{dashboardPacienteMB.horaUltMedicion}"/>
                         </p:column>
                         </p:row>
                     </f:facet>
 
-
                     <p:row>     
                         <p:column>
-                            <p:panel id="oxigeno" header="Saturación de Oxígeno" style="text-align: center;">
-                                <h:outputText value="98"  class="labelMedida"/>
-                                <h:outputText value="%"  style="font-size: 15px"/>
-
-                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoOxigeno}" style="width: 200px; height: 50px;">
-                                    <h:outputScript>
-                                        function customExtender() {
-                                        this.cfg.grid = {
-                                        background: '#FFF',
-                                        borderWidth: 0,
-                                        shadow: 0
-                                        };
-                                        }
-                                    </h:outputScript>
-                                </p:chart>
-
+                            <p:panel id="panelOxigeno" header="Saturación de Oxígeno" styleClass="#{dashboardPacienteMB.satOxgColor}">
+                                <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxg}" style="font-size: 50px;"/>
+                                <h:outputText value="%"  style="font-size: 15px;"/>
                             </p:panel>
                         </p:column>
                         <p:column>
-                            <p:panel id="temperatura" header="Temperatura" style="text-align: center;">
-                                <h:outputText value="36.4"  class="labelMedida"/>
-                                <h:outputText value="°C"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoTemperatura}" style="width: 200px; height: 50px;"/>
+                            <p:panel id="panelTemperatura" header="Temperatura" styleClass="#{dashboardPacienteMB.tempColor}">
+                                <h:outputText value="#{dashboardPacienteMB.pacTemperatura}"  style="font-size: 50px;"/>
+                                <h:outputText value="°C"  style="font-size: 15px;"/>
                             </p:panel>
-
                         </p:column>
                         <p:column>
-                            <p:panel id="prediag" header="Estado del Paciente" style="text-align: center;">
-                                <h:outputText value="Estable"  style="font-weight: bold; font-size: 30px"/>
+                            <p:panel id="panelEstadoPac" header="Pre-Diagnóstico" style="text-align: center;">
+                                <h:outputText value="#{dashboardPacienteMB.pacEstado}" style="font-weight: bold; font-size: 30px;"/>
                             </p:panel>
-
                         </p:column>                   
                     </p:row>
-                    <p:row>
+                    <p:row> 
                         <p:column>
-                            <p:panel id="fRespiratoria" header="Frecuencia Respiratoria" style="text-align: center;">  
-                                <h:outputText value="14"  class="labelMedida"/>
+                            <p:panel id="panelfRespiratoria" header="Frecuencia Respiratoria" styleClass="#{dashboardPacienteMB.frespColor}" >  
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoria}"  style="font-size: 50px"/>
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoFR}" style="width: 200px; height: 50px" />
                             </p:panel>
                         </p:column>
                         <p:column>
-                            <p:panel id="fCardiaca" header="Frecuencia Cardíaca" style="text-align: center;">
-                                <h:outputText value="68"  class="labelMedida"/>
-                                <h:outputText value="LPM"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoFC}" style="width: 200px; height: 50px" />
+                            <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.fcardColor}">
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-size: 50px"/>
+                                <h:outputText value="LPM" style="font-size: 15px"/>
                             </p:panel>
                         </p:column>
-                        <p:column>
-
-                            
-                            <p:panel id="fArtDistolica" header="Presión Arterial" style="text-align: center;">
-                                <h:outputText value="100"  class="labelMedida"/>
-                                <h:outputText value="/"  class="labelMedida"/>
-                                <h:outputText value="80"  class="labelMedida"/>
+                        <p:column> 
+                            <p:panel id="panelPArt" header="Presión Arterial" styleClass="#{dashboardPacienteMB.pArtColor}">
+                                <h:outputText value="#{dashboardPacienteMB.pacPreArtSistolica}"  style="font-size: 50px"/>
+                                <h:outputText value="/"  style="font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacPreArtDiastolica}"  style="font-size: 50px"/>
                                 <h:outputText value="mmHg"  style="font-size: 15px"/>
-
-                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoPA}" style="width: 250px; height: 50px" />
-
-                            </p:panel>
-                            
-                            
+                            </p:panel> 
                         </p:column>
                     </p:row>
-
                     <p:row>
-                        <p:column  colspan="3" style="text-align: left; font-weight: bold; ">
-                            <h:outputText value="HISTÓRICO DEL PACIENTE AL:   "/>                        
-                            <h:outputText value="07/11/2020    "/>
+                        <p:column colspan="2">
+                            <h:outputText value="HISTORIAL DEL PACIENTE AL: " style="text-align: center;font-weight: bold; font-size: 20px" />                        
+                            <h:outputText id ="fechaHist" value="#{dashboardPacienteMB.fechaHist}" style="text-align: center;font-weight: bold; font-size: 20px"/>
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="inline" value="#{dashboardPacienteMB.fechaCalendario}" locale="es" mode="inline"/>
+                            <p:commandButton value="Buscar" id = "btnCalendar" update="fechaHist graficas" action="#{dashboardPacienteMB.updateDashboard}"/>          
                         </p:column>
                     </p:row>                
                     <p:row>
                         <p:column  colspan="3">
-                            <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
-                                <p:chart type="bar" model="#{dashboardPacienteMB.historicoSOxigeno}" style="height:250px;" />
-                                <p:chart type="bar" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
+                            <p:panelGrid columns="1" id="graficas" layout="grid" styleClass="showcase-text-align-center">
+                                <p:chart type="line" model="#{dashboardPacienteMB.historicoSOxigeno}" style="height:250px;" />
+                                <p:chart type="line" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecCardiaca}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecRespiratoria}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoPreArterial}" style="height:250px;"/>
                             </p:panelGrid>
                         </p:column>
                     </p:row>
-                    <p:row>
-                        <p:column colspan="3" style="text-align: right">
-                            <h:form>
-                            <p:commandButton value="Cerrar" icon="pi pi-times" actionListener="#{dashboardPacienteMB.cerrarDialogo}"  />
-                            </h:form>
-                        </p:column>
-                    </p:row>
+                    
                 </p:panelGrid>
-
-            </center>
+            </h:form>                         
         </h:body>
     </f:view>
 </html>

@@ -141,8 +141,7 @@ public class GestionDispositivosMB implements Serializable {
         int minuto = fecha.get(Calendar.MINUTE);
         int segundo = fecha.get(Calendar.SECOND);
         
-        
-          
+
         //Guradar Careta en BD
         try{            
             logger.log(Level.INFO,"Guardando careta...");
@@ -196,7 +195,7 @@ public class GestionDispositivosMB implements Serializable {
         }else{
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Exíto",
-                                                "El registro de careta se realizó correctamente : id="+this.caretaGuard.getIdCareta(), 
+                                                "Dispositivo registrado correctamente :"+this.caretaGuard.getNoSerie(), 
                                                 FacesMessage.SEVERITY_INFO);
         }
         utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);        
@@ -257,7 +256,20 @@ public class GestionDispositivosMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("dispositivos/dialRegistrarDispositivo", options, null);
     }
     
-    public void retornoRegistrarDispositivo(){
+    public void retornoRegistrarDispositivo(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Operación Exitosa ",
+                            "Dispositivo registrado correctamente.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        
+        utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
         cargarDispositivos();
     }
     
