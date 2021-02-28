@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -52,14 +53,18 @@ public class EntUsuario implements Serializable {
     private String contrasenia;
     @Column(name = "ACTIVO")
     private Boolean activo;
-    @ManyToMany(mappedBy = "entUsuarioList", fetch = FetchType.LAZY)
+    @JoinTable(name = "RM_USUARIO_ROL", joinColumns = {
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")},
+         inverseJoinColumns = {
+        @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<EntRol> entRolList;
+    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    private List<EntBitacora> entBitacoraList;
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne(fetch = FetchType.LAZY)
     private EntPersona idPersona;
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
-    private List<EntBitacora> entBitacoraList;
-
+    
     public EntUsuario() {
         entRolList = new ArrayList<>();
     }

@@ -127,9 +127,9 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             Short pacRol = new Integer(Constantes.getInstance().getInt("ROL_PACIENTE")).shortValue();
 
             EntRol rolPaciente = rolSB.getRolId(pacRol);
-            logger.log(Level.INFO, "Rol asignado: {0}", rolPaciente.getDescripcion());
             entUsuario.getEntRolList().add(rolPaciente);
             entUsuario = usuarioSB.saveUsuario(entUsuario);
+            logger.log(Level.INFO, "Rol asignado: {0}", entUsuario.getEntRolList().get(0).getDescripcion());
 
             logger.log(Level.INFO, "Creando Entidad Paciente[1]");
             entPac.setIdPersona(entPersona);
