@@ -9,6 +9,7 @@ package ipn.cic.web.sistmr.bean.admon;
 import ipn.cic.sistmr.exception.CaretaHospitalException;
 import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.IDUsuarioException;
+import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.exception.PacienteException;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
@@ -18,6 +19,7 @@ import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
+import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.web.sistmr.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmr.bean.vo.PacienteVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
@@ -31,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -64,6 +65,8 @@ public class GestionPacienteMB implements Serializable {
 
     @EJB
     GestionPacienteBDLocal gstPac;
+    @EJB
+    MedicoSBLocal medicoSB;
     @EJB
     UtilWebSBLocal utilWebSB;
     @EJB
@@ -129,14 +132,9 @@ public class GestionPacienteMB implements Serializable {
         listaMedicos = new ArrayList();
         try {
             //Cargar Lista de Medicos
-            setListaMedicos((List<EntMedico>) catalogoSB.getCatalogo("EntMedico"));
-        } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Imposible recuperar catalogo de medicos:{0} ",ex.getMessage());
-            FacesMessage msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error",
-                            "No es posible recuperar catálogo de médicos :" + ex.getMessage(),
-                            FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            setListaMedicos((List<EntMedico>) medicoSB.getMedicos());
+        } catch (MedicoException ex) {
+            logger.log(Level.INFO, "Imposible recuperar catalogo de medicos");
         }
 
         try {

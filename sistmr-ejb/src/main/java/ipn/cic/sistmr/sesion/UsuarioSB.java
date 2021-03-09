@@ -8,7 +8,9 @@ package ipn.cic.sistmr.sesion;
 
 import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.SaveEntityException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
 import java.util.List;
@@ -104,5 +106,24 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         }catch(NoResultException e){
             return false;
         }
+    }
+    
+    @Override
+    public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
+        return (EntUsuario)this.updateEntity(usuario);   
+    }
+    
+    @Override
+    public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException {
+        query = em.createQuery("SELECT usr.idPersona From EntUsuario usr WHERE usr.idUsuario=:idUsuario");
+        query.setParameter("idUsuario", usuario.getIdUsuario());
+        EntPersona persona = (EntPersona) query.getSingleResult();
+        persona.getCurp();
+        persona.getNombre();
+        persona.getPrimerApellido();
+        persona.getSegundoApellido();
+        persona.getEdad();
+        persona.getIdGenero();
+        return persona;
     }
 }

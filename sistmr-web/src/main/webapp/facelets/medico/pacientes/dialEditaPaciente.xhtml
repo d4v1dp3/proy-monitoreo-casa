@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view>
+        <f:metadata> 
+            <f:viewParam name="idpac" value="#{listadoPacientesMB.paciente.idPaciente}" />
+            <f:viewParam name="nombre" value="#{listadoPacientesMB.persona.nombre}" />
+            <f:viewParam name="primerapellido" value="#{listadoPacientesMB.persona.primerApellido}" />
+            <f:viewParam name="segundoapellido" value="#{listadoPacientesMB.persona.segundoApellido}" />
+            <f:viewParam name="curp" value="#{listadoPacientesMB.persona.curp}" />
+            <f:viewParam name="edad" value="#{listadoPacientesMB.persona.edad}" />
+        </f:metadata>
+        <h:head>
+            <title>Editar Paciente.</title>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 90%;
+                }
+            </style>
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+        </h:head>
+
+        <h:body>
+            <i id="customheader" class="fas fa-user-edit" style="display:none"></i>
+            <center>
+                <h:form id="frmEditaUsuario">
+                    <p:growl id="msgEditUsr" showDetail="true"> 
+                        <p:autoUpdate />
+                    </p:growl>
+
+                    <p:messages id="msgEditaUsrGral" showDetail="true" closable="true">
+                        <p:autoUpdate/>
+                    </p:messages>
+
+                    <div class="p-grid p-dir-col">
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <center>
+                                        <h2>
+                                            <p:outputLabel value="ESTADO DE SALUD DEL PACIENTE" class="titulo"></p:outputLabel>
+                                        </h2>
+                                        <p>Formulario para la actualizacion de estado del paciente. </p>
+                                    </center>
+                                </p:column>
+                            </p:row>
+                            <!--                            <p:row>
+                                                            <p:column style="text-align: center" class="ui-widget-header">Estado del Paciente</p:column>
+                                                        </p:row>-->
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column colspan="1" style="border-color: white;"></p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
+                                    <p:panelGrid columns="1"
+                                                 columnClasses="ui-grid-col-12"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel value="Nombre:   " />  
+                                            <p:outputLabel value="#{listadoPacientesMB.persona.primerApellido} " style="font-weight: bold;"/>
+                                            <p:outputLabel value="#{listadoPacientesMB.persona.segundoApellido} " style="font-weight: bold;"/>
+                                            <p:outputLabel value="#{listadoPacientesMB.persona.nombre}" style="font-weight: bold;"/>
+                                        </p:column>
+
+                                        <p:column style="background-color: lightcoral">
+                                            <p:outputLabel for="estMenu" value="Estado:  " />
+                                            <p:selectOneMenu id="estMenu" value="#{listadoPacientesMB.paciente.idEstadopaciente}" dynamic="true">
+                                                <f:selectItems value="#{listadoPacientesMB.catEstado}" var="estado" 
+                                                               itemLabel="#{estado.descripcion}" itemValue="#{estado.idEstadopaciente}"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="estMenu" />
+                                        </p:column>
+
+                                    </p:panelGrid>
+
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="text-align: right">
+                                    <p:commandButton value="Guardar Cambios" actionListener="#{listadoPacientesMB.guardarCambiosPaciente()}"
+                                                     icon="fas fa-save" update="@all"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
+                </h:form>
+                </center>
+                <h:form>
+                    <p:growl id="msgEdUs" showDetail="true" />
+                    <p:commandButton value="cerrar" icon="pi pi-times"
+                                     action="#{listadoPacientesMB.cerrarDialogo()}" />
+                </h:form>
+            
+        </h:body>
+    </f:view>
+</html>

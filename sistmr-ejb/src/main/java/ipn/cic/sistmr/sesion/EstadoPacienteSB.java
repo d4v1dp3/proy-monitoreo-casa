@@ -25,7 +25,7 @@ public class EstadoPacienteSB extends BaseSB implements EstadoPacienteSBLocal {
     @Override
     public EntEstadopaciente getEstadoPaciente(Integer idestado) throws EstadoPacienteException {
         Query qry = em.createQuery("SELECT e FROM EntEstadopaciente e WHERE e.idEstadopaciente = :idestado");
-        qry.setParameter("idestado", idestado);
+        qry.setParameter("idestado", idestado.shortValue());
         try{
             EntEstadopaciente res = (EntEstadopaciente)qry.getSingleResult();
             logger.log(Level.SEVERE, "Estado {0} encontrado.", res.getIdEstadopaciente());

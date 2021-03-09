@@ -8,6 +8,7 @@ package ipn.cic.sistmr.sesion;
 
 import ipn.cic.sistmr.exception.NoExistePersonaException;
 import ipn.cic.sistmr.exception.SaveEntityException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.modelo.EntPersona;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,11 @@ public class PersonaSB extends BaseSB implements PersonaSBLocal {
     public EntPersona savePersona(EntPersona persona) throws SaveEntityException {
         persona = (EntPersona) this.saveEntity(persona);
         return persona;
+    }
+    
+    @Override
+    public EntPersona updatePersona(EntPersona persona) throws UpdateEntityException {
+        return (EntPersona)this.updateEntity(persona);   
     }
     
     @Override

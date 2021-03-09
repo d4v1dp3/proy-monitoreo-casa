@@ -81,6 +81,13 @@ Todos los derechos reservados
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
                                         </p:commandButton>
                                     </p:column>
+                                    
+                                    <p:column headerText="" style="width:40px;text-align: center">
+                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                            <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
+                                            <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>
 
                                 </p:dataTable>
                             </p:panel>

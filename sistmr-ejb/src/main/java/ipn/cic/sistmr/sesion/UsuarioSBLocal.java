@@ -8,7 +8,9 @@ package ipn.cic.sistmr.sesion;
 
 import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.SaveEntityException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
 import java.util.List;
@@ -68,4 +70,6 @@ public interface UsuarioSBLocal {
      * @throws UsuarioException
      */
     public List<EntUsuario> getUsuarios()throws UsuarioException;
+    public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException;
+    public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException;
 }

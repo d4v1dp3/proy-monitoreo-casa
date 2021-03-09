@@ -6,15 +6,24 @@
  */
 package ipn.cic.web.sistmr.bean.pacient;
 
+import ipn.cic.sistmr.exception.CatalogoException;
+import ipn.cic.sistmr.exception.EstadoPacienteException;
 import ipn.cic.sistmr.exception.MedicoException;
+import ipn.cic.sistmr.exception.NoExistePacienteException;
 import ipn.cic.sistmr.exception.PacienteException;
+import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntUsuario;
+import ipn.cic.sistmr.sesion.CatalogoSBLocal;
+import ipn.cic.sistmr.sesion.EstadoPacienteSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.sistmr.sesion.PacienteSBLocal;
 import ipn.cic.sistmr.sesion.UsuarioSBLocal;
+import ipn.cic.web.sistmr.bean.vo.PacienteVO;
+import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
@@ -50,13 +59,22 @@ public class ListadoPacientesMB implements Serializable {
     @EJB
     private PacienteSBLocal pacienteSB;
     @EJB
+    private EstadoPacienteSBLocal estadopacienteSB;
+    @EJB
     private MedicoSBLocal medicoSB;
     @EJB
     private UtilWebSBLocal utilWebSB;
+    @EJB
+    private CatalogoSBLocal catalogoSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
     private EntPaciente pacienteMostrar;
+    private EntPaciente pacienteEditar;
+     private List<EntEstadopaciente> catEstado;
+    
+    private PersonaVO persona = new PersonaVO();
+    private PacienteVO paciente = new PacienteVO();
 
     @PostConstruct
     public void cargaPacientes() {
@@ -74,6 +92,15 @@ public class ListadoPacientesMB implements Serializable {
 
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar medico.");
+        }
+        
+        try {
+            setCatEstado((List<EntEstadopaciente>) catalogoSB.getCatalogo("EntEstadopaciente"));
+        } catch (CatalogoException ex) {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "No es posible recuperar catálogo de estadoPaciente :" + ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR);
         }
         
         
@@ -148,7 +175,7 @@ public class ListadoPacientesMB implements Serializable {
         logger.log(Level.INFO,"Abre antecedentes del paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 340);
+        options.put("width", 650);
         options.put("height", 500);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
@@ -165,6 +192,12 @@ public class ListadoPacientesMB implements Serializable {
         
         List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
+        
+        List<String> curp = new ArrayList<>();
+        curp.add(pacienteMostrar.getIdPersona().getCurp());
+        
+        List<String> edad = new ArrayList<>();
+        edad.add(pacienteMostrar.getIdPersona().getEdad()+"");
             
 
         List<String> diabetes = new ArrayList<>();
@@ -236,6 +269,8 @@ public class ListadoPacientesMB implements Serializable {
         parametros.put("emba", embarazo);
         parametros.put("artr", artritis);
         parametros.put("enfa", enfau);
+        parametros.put("curp", curp);
+        parametros.put("edad", edad);
                 
         PrimeFaces.current().dialog().openDynamic("pacientes/dialAntecedentesPaciente", options, parametros);
     }
@@ -251,6 +286,117 @@ public class ListadoPacientesMB implements Serializable {
                             FacesMessage.SEVERITY_INFO);
         }
         utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+    }
+    
+    public void guardarCambiosPaciente() {
+
+        logger.log(Level.INFO, "Entrando a guardar cambios en paciente.");
+        FacesMessage msg = null;
+
+        try {
+
+            logger.log(Level.INFO, "Buscando paciente id={0}.", paciente.getIdPaciente());
+            pacienteEditar = pacienteSB.getPaciente(paciente.getIdPaciente());
+            logger.log(Level.INFO, "Entidad Paciente recuperado {0}.", pacienteEditar.getIdPaciente());
+            
+            logger.log(Level.INFO, "Estado a actualizar={0}.", paciente.getIdEstadopaciente());
+            EntEstadopaciente estadopac = estadopacienteSB.getEstadoPaciente(paciente.getIdEstadopaciente());
+            
+            pacienteEditar.setIdEstadopaciente(estadopac);
+            
+            pacienteEditar = pacienteSB.updatePaciente(pacienteEditar);
+           
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Exíto",
+                            "Datos actualizados correctamente. ",
+                            FacesMessage.SEVERITY_INFO);
+
+        } catch (NoExistePacienteException ex) {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "Imposible recuperar datos del paciente. ",
+                            FacesMessage.SEVERITY_ERROR);
+        } catch (UpdateEntityException ex) {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "Imposible actualizar datos del paciente. ",
+                            FacesMessage.SEVERITY_ERROR);
+        } catch (EstadoPacienteException ex) {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "Imposible recuperar estado de paciente. ",
+                            FacesMessage.SEVERITY_ERROR);
+        }
+
+        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        cerrarDialogo(msg);
+    }
+    
+    public void editarPaciente() {
+        logger.log(Level.INFO,"Abre dialogo edita paciente.");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 400);
+        options.put("height", 450);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+        
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+        
+        List<String> idpac = new ArrayList<>();
+        idpac.add(pacienteEditar.getIdPaciente()+"");
+        
+        List<String> valNombre = new ArrayList<>();
+        valNombre.add(pacienteEditar.getIdPersona().getNombre());
+        
+        List<String> valPrimerAp = new ArrayList<>();
+        valPrimerAp.add(pacienteEditar.getIdPersona().getPrimerApellido());
+        
+        List<String> valSegundoAp = new ArrayList<>();
+        valSegundoAp.add(pacienteEditar.getIdPersona().getSegundoApellido());
+        
+        List<String> curp = new ArrayList<>();
+        curp.add(pacienteEditar.getIdPersona().getCurp());
+        
+        List<String> edad = new ArrayList<>();
+        edad.add(pacienteEditar.getIdPersona().getEdad()+"");
+        
+        parametros.put("idpac", idpac);
+        parametros.put("nombre", valNombre);
+        parametros.put("primerapellido", valPrimerAp);
+        parametros.put("segundoapellido", valSegundoAp);
+        parametros.put("curp", curp);
+        parametros.put("edad", edad);
+        
+                
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
+    }
+    
+    public void retornoEditarPaciente(SelectEvent event) {
+        FacesMessage msg = null;
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo ",
+                            "Diálogo cerrado sin aplicar cambios.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+        cargaPacientes();
+    }
+    
+    public void cerrarDialogo(){
+        FacesMessage mensaje = Mensaje.getInstance()
+                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+                                                   FacesMessage.SEVERITY_INFO);
+        PrimeFaces.current().dialog().closeDynamic(mensaje);
+    }
+    
+    public void cerrarDialogo(FacesMessage mensaje) {
+        PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
 
     /**
@@ -282,4 +428,45 @@ public class ListadoPacientesMB implements Serializable {
         this.pacienteMostrar = pacienteMostrar;
     }
 
+    public EntMedico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(EntMedico medico) {
+        this.medico = medico;
+    }
+
+    public EntPaciente getPacienteEditar() {
+        return pacienteEditar;
+    }
+
+    public void setPacienteEditar(EntPaciente pacienteEditar) {
+        this.pacienteEditar = pacienteEditar;
+    }
+
+    public List<EntEstadopaciente> getCatEstado() {
+        return catEstado;
+    }
+
+    public void setCatEstado(List<EntEstadopaciente> catEstado) {
+        this.catEstado = catEstado;
+    }
+
+    public PersonaVO getPersona() {
+        return persona;
+    }
+
+    public void setPersona(PersonaVO persona) {
+        this.persona = persona;
+    }
+
+    public PacienteVO getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(PacienteVO paciente) {
+        this.paciente = paciente;
+    }
+
+    
 }

@@ -204,10 +204,11 @@
               </p:column>
 
               <p:column style="background-color: lightcoral">
-                <p:outputLabel for="idMed" value="Médico (Cedula Prof.):" />
+                <p:outputLabel for="idMed" value="Médico: " />
                 <p:selectOneMenu id="idMed" value="#{gestionPacienteMB.datPaciente.idMedico}" required="true">
                   <f:selectItems value="#{gestionPacienteMB.listaMedicos}" var="medico" 
-                                 itemLabel="#{medico.cedulaProf}" itemValue="#{medico.idMedico}"/>
+                                                   itemLabel="#{medico.idPersona.primerApellido} #{medico.idPersona.segundoApellido} #{medico.idPersona.nombre}" itemValue="#{medico.idMedico}">
+                                    </f:selectItems>
                   <p:ajax />
                 </p:selectOneMenu>
                 <p:message for="idMed" />

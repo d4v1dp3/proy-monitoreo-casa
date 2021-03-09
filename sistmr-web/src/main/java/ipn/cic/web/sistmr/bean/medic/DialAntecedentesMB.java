@@ -7,10 +7,13 @@
 package ipn.cic.web.sistmr.bean.medic;
 
 import ipn.cic.web.sistmr.bean.admon.GestionHospitalMB;
+import ipn.cic.web.sistmr.util.Mensaje;
 import java.io.Serializable;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -36,6 +39,19 @@ public class DialAntecedentesMB implements Serializable{
     private String embarazo = "";
     private String artritis = "";
     private String enfautoinmune= "";
+    private String curp="";
+    private String edad="";
+    
+    public void cerrarDialogo() {
+        FacesMessage mensaje = Mensaje.getInstance()
+                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+                        FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(mensaje);
+    }
+
+    public void cerrarDialogo(FacesMessage mensaje) {
+        PrimeFaces.current().dialog().closeDynamic(mensaje);
+    }
 
     public String getCancer() {
         return cancer;
@@ -131,6 +147,22 @@ public class DialAntecedentesMB implements Serializable{
 
     public void setDiabetes(String diabetes) {
         this.diabetes = diabetes;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
     }
 
     
