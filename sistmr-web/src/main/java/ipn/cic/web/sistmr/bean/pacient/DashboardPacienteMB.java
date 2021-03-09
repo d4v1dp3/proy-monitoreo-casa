@@ -33,6 +33,7 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartModel;
 
 /**
@@ -265,7 +266,8 @@ public class DashboardPacienteMB implements Serializable{
         historicoSOxigeno.addSeries(minVal);
         historicoSOxigeno.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoSOxigeno.setTitle("Saturación de Oxígeno");
-        historicoSOxigeno.setLegendPosition("se");
+        historicoSOxigeno.setLegendPosition("e");
+        historicoSOxigeno.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         historicoSOxigeno.setShowPointLabels(true);
         historicoSOxigeno.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
             
@@ -319,7 +321,8 @@ public class DashboardPacienteMB implements Serializable{
         historicoTemperatura.addSeries(minVal);
         historicoTemperatura.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoTemperatura.setTitle("Temperatura");
-        historicoTemperatura.setLegendPosition("se");
+        historicoTemperatura.setLegendPosition("e");
+        historicoTemperatura.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         historicoTemperatura.setShowPointLabels(true);
         historicoTemperatura.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
 
@@ -372,7 +375,8 @@ public class DashboardPacienteMB implements Serializable{
         historicoFrecCardiaca.addSeries(minVal);
         historicoFrecCardiaca.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoFrecCardiaca.setTitle("Frecuencia Cardíaca");
-        historicoFrecCardiaca.setLegendPosition("se");
+        historicoFrecCardiaca.setLegendPosition("e");
+        historicoFrecCardiaca.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         historicoFrecCardiaca.setShowPointLabels(true); 
         historicoFrecCardiaca.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
         
@@ -424,7 +428,8 @@ public class DashboardPacienteMB implements Serializable{
         historicoFrecRespiratoria.addSeries(minVal);
         historicoFrecRespiratoria.setSeriesColors("387df5,ff8a7d,ff8a7d");
         historicoFrecRespiratoria.setTitle("Frecuencia Respiratoria");
-        historicoFrecRespiratoria.setLegendPosition("se");
+        historicoFrecRespiratoria.setLegendPosition("e");
+        historicoFrecRespiratoria.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         historicoFrecRespiratoria.setShowPointLabels(true);     
         historicoFrecRespiratoria.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
        
@@ -486,7 +491,8 @@ public class DashboardPacienteMB implements Serializable{
         historicoPreArterial.addSeries(diasmin);
         historicoPreArterial.setSeriesColors("42cef5,425af5,ff8a7d,f5b642");
         historicoPreArterial.setTitle("Presión Arterial Sistólica y Diastólica");
-        historicoPreArterial.setLegendPosition("se");
+        historicoPreArterial.setLegendPosition("e");
+        historicoPreArterial.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         historicoPreArterial.setShowPointLabels(true);
         historicoPreArterial.getAxes().put(AxisType.X, new CategoryAxis("Tiempo(Horas)"));
         
