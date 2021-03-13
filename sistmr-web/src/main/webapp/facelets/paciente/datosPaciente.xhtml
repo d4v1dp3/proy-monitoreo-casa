@@ -124,13 +124,15 @@
 
                                                             <p:column style="background-color: lightcoral">
                                                                 <p:outputLabel for="telcel" value="Teléfono Celular:" />
-                                                                <p:inputText id="telcel" value="#{inicioPacienteMB.paciente.telCel}" required="true" />
+                                                                <p:inputMask id="telcel" value="#{inicioPacienteMB.paciente.telCel}" required="true" 
+                                                                         mask="999 999 9999" validateMask="true"/>
                                                                 <p:message for="telcel"/>
                                                             </p:column>
 
                                                             <p:column style="background-color: lightcoral">
                                                                 <p:outputLabel for="tel" value="Teléfono Fijo::" />
-                                                                <p:inputText id="tel" value="#{inicioPacienteMB.paciente.telFijo}" required="true" />
+                                                                <p:inputMask id="tel" value="#{inicioPacienteMB.paciente.telFijo}" required="true" 
+                                                                         mask="999 999 9999" validateMask="true"/>
                                                                 <p:message for="tel"/>
                                                             </p:column>
 

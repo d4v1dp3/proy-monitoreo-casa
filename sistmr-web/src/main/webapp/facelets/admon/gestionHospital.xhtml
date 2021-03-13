@@ -58,7 +58,7 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:inputText id="hCalle" value="#{gestionHospitalMB.hospEnt.dirCalle}" required="true" /></p:column>
-                                        <p:column><p:inputText id="hNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" /></p:column>
+                                        <p:column><p:inputNumber id="hNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" decimalPlaces="0" /></p:column>
                                         <p:column><p:inputText id="hCol" value="#{gestionHospitalMB.hospEnt.colonia}" required="true" /></p:column>
                                     </p:row>
                                     <p:row>
@@ -83,7 +83,8 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="hTel" value="Tel Emergencia:" /></p:column>
-                                        <p:column><p:inputText id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column><p:inputMask id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" 
+                                                         mask="999 999 9999" validateMask="true"/></p:column>
                                         <p:column><p:message for="hTel" /></p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -151,7 +152,7 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:inputText id="ehCalle" value="#{gestionHospitalMB.hospEnt.dirCalle}" required="true" /></p:column>
-                                        <p:column><p:inputText id="ehNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" /></p:column>
+                                        <p:column><p:inputNumber id="ehNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" decimalPlaces="0"/></p:column>
                                         <p:column><p:inputText id="ehCol" value="#{gestionHospitalMB.hospEnt.colonia}" required="true" /></p:column>
                                     </p:row>
                                     <p:row>
@@ -176,7 +177,8 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="ehTel" value="Tel Emergencia:" /></p:column>
-                                        <p:column><p:inputText id="ehTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column><p:inputMask id="ehTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" 
+                                                         mask="999 999 9999" validateMask="true"/></p:column>
                                         <p:column><p:message for="ehTel" /></p:column>
                                     </p:row>
                                 </p:panelGrid>

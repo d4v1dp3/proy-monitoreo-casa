@@ -92,7 +92,8 @@
 
               <p:column style="background-color: lightcoral">
                 <p:outputLabel for="curp" value="CURP:" />
-                <p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" />
+                <p:inputMask id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" 
+                                             mask="a*a*999999a*a*a*99" validateMask="true"/>
                 <p:message for="curp" />
               </p:column>  
 
@@ -108,7 +109,7 @@
 
               <p:column style="background-color: lightcoral">
                 <p:outputLabel for="edad" value="Edad:" />
-                <p:inputText id="edad" value="#{gestionMedicoMB.datPersona.edad}" required="true" />
+                <p:inputNumber id="edad" value="#{gestionMedicoMB.datPersona.edad}" required="true" decimalPlaces="0"/>
                 <p:message for="edad"/>
               </p:column>  
 
@@ -128,19 +129,23 @@
 
               <p:column style="background-color: lightcoral">
                 <p:outputLabel for="hCedula" value="Cedula Profesional:" />
-                <p:inputText id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" />
+                <p:inputMask id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" 
+                                             mask="9999999999" validateMask="true"/>
                 <p:message for="hCedula" />
               </p:column>
 
               <p:column style="background-color: lightcoral">
                 <p:outputLabel for="hEmail" value="Correo Electronico:" />
-                <p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true" />
+                <p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true"> 
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+                                </p:inputText> 
                 <p:message for="hEmail" />
               </p:column>
 
               <p:column style="background-color: lightcoral">
                 <p:outputLabel for="hCelular" value="Telefono Celular:" />
-                <p:inputText id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" />
+                <p:inputMask id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" 
+                                             mask="999 999 9999" validateMask="true"/>
                 <p:message for="hCelular" />
               </p:column>
 

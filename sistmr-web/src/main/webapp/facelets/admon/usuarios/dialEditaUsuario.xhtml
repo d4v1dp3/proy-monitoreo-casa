@@ -31,124 +31,129 @@
         <h:body>
             <i id="customheader" class="fas fa-user-edit" style="display:none"></i>
             <h:form id="frmEditaUsuario">
-            <p:growl id="msgEditUsr" showDetail="true"> 
-                <p:autoUpdate />
-            </p:growl>
+                <p:growl id="msgEditUsr" showDetail="true"> 
+                    <p:autoUpdate />
+                </p:growl>
 
-            <p:panelGrid>
-                <p:row>
-                    <p:column>
-                        <center>
-                            <h2>
-                                <p:outputLabel value="ACTUALIZACIÓN DE USUARIO" class="titulo"></p:outputLabel>
-                            </h2>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <center>
+                                <h2>
+                                    <p:outputLabel value="ACTUALIZACIÓN DE USUARIO" class="titulo"></p:outputLabel>
+                                </h2>
 
-                            <p>Formulario para la actualizacion de los datos de usuario. </p>
-                        </center>
-                        <p:panelGrid>
-                            <p:row>
-                                <p:column colspan="3" style="border-color: white;"></p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
-                </p:row>
-                <p:row>
-                    <p:column>
+                                <p>Formulario para la actualizacion de los datos de usuario. </p>
+                            </center>
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="3" style="border-color: white;"></p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
 
-                        
-                        <p:panelGrid columns="3"
-                                     columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
-                                     layout="grid"
-                                     styleClass="ui-panelgrid-blank ui-fluid"
-                                     style="border:0px none; background-color:transparent;">
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="apPat" value="Apellido Paterno:" />
-                                <p:inputText id="apPat" value="#{gestionUsuariosMB.primerApellido}" required="true" />
-                                <p:message for="apPat" />
-                            </p:column>
+                            <p:panelGrid columns="3"
+                                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                                         layout="grid"
+                                         styleClass="ui-panelgrid-blank ui-fluid"
+                                         style="border:0px none; background-color:transparent;">
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="apMat" value="Apellido Materno:" /> 
-                                <p:inputText id="apMat" value="#{gestionUsuariosMB.segundoApellido}" required="true" />
-                                <p:message for="apMat" />
-                            </p:column>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="apPat" value="Apellido Paterno:" />
+                                    <p:inputText id="apPat" value="#{gestionUsuariosMB.primerApellido}" required="true" />
+                                    <p:message for="apPat" />
+                                </p:column>
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="nomPers" value="Nombre(s):" />                              
-                                <p:inputText id="nomPers" value="#{gestionUsuariosMB.nombre}" required="true" />
-                                <p:message for="nomPers" />
-                            </p:column>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="apMat" value="Apellido Materno:" /> 
+                                    <p:inputText id="apMat" value="#{gestionUsuariosMB.segundoApellido}" required="true" />
+                                    <p:message for="apMat" />
+                                </p:column>
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="curp" value="CURP:" />
-                                <p:inputText id="curp" value="#{gestionUsuariosMB.curp}" required="true" />
-                                <p:message for="curp" />
-                            </p:column>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="nomPers" value="Nombre(s):" />                              
+                                    <p:inputText id="nomPers" value="#{gestionUsuariosMB.nombre}" required="true" />
+                                    <p:message for="nomPers" />
+                                </p:column>
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="genMenu" value="Género:" />
-                                <p:selectOneMenu id="genMenu" value="#{gestionUsuariosMB.idgenero}" dynamic="true">
-                                    <f:selectItems value="#{gestionUsuariosMB.catGenero}" var="genero" 
-                                                   itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
-                                </p:selectOneMenu>
-                                <p:message for="genMenu" />
-                            </p:column>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="curp" value="CURP:" />
+                                    <!--                                <p:inputText id="curp" value="# {gestionUsuariosMB.curp}" required="true"> 
+                                                                        <f:validateRegex pattern="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$" /> 
+                                                                    </p:inputText>-->
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="edad" value="Edad:" />
-                                <p:inputText id="edad" value="#{gestionUsuariosMB.edad}" required="true" />
-                                <p:message for="edad"/>
-                            </p:column>        
-                            
-                        </p:panelGrid>
+                                    <p:inputMask id="curp" value="#{gestionUsuariosMB.curp}" required="true" 
+                                                 mask="a*a*999999a*a*a*99" validateMask="true"/>
+                                    <p:message for="curp" />
+                                </p:column>
 
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
-                </p:row>
-                <p:row>
-                    <p:column>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="genMenu" value="Género:" />
+                                    <p:selectOneMenu id="genMenu" value="#{gestionUsuariosMB.idgenero}" dynamic="true">
+                                        <f:selectItems value="#{gestionUsuariosMB.catGenero}" var="genero" 
+                                                       itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="genMenu" />
+                                </p:column>
 
-                        <p:panelGrid columns="3"
-                                     columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
-                                     layout="grid"
-                                     styleClass="ui-panelgrid-blank ui-fluid"
-                                     style="border:0px none; background-color:transparent;">
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="edad" value="Edad:" />
+                                    <p:inputNumber id="edad" value="#{gestionUsuariosMB.edad}" required="true" decimalPlaces="0"/>
+                                    <p:message for="edad"/>
+                                </p:column>        
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="idUsr" value="Usuario:" />
-                                <p:inputText id="idUsr" value="#{gestionUsuariosMB.usuario}" required="true" readonly="true"/>
-                                <p:message for="idUsr" />
-                            </p:column>
+                            </p:panelGrid>
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="contra" value="Contraseña:" />
-                                <!--<p:password id="contra" value="#{gestionUsuariosMB.contrasenia}"  required="true" redisplay="true"/>-->
-                                <p:inputText id="contra" value="#{gestionUsuariosMB.contrasenia}" required="true"  />
-                                <p:message for="contra" />
-                            </p:column>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
 
-                            <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="estado" value="Estado de Sesión:" /><br/>
-                                <p:selectBooleanCheckbox id="estado" value="#{gestionUsuariosMB.activo}" itemLabel="Activo"/>
-                            </p:column>
-                        </p:panelGrid>
+                            <p:panelGrid columns="3"
+                                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                                         layout="grid"
+                                         styleClass="ui-panelgrid-blank ui-fluid"
+                                         style="border:0px none; background-color:transparent;">
 
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column style="text-align: right">
-                        <p:commandButton value="Guardar" actionListener="#{gestionUsuariosMB.guardarCambiosUsuario()}"
-                                         icon="fas fa-save" update="@all"/>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
-        </h:form>
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="idUsr" value="Usuario:" />
+                                    <p:inputText id="idUsr" value="#{gestionUsuariosMB.usuario}" required="true" readonly="true"/>
+                                    <p:message for="idUsr" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="contra" value="Contraseña:" />
+                                    <!--<p:password id="contra" value="#{gestionUsuariosMB.contrasenia}"  required="true" redisplay="true"/>-->
+                                    <p:inputText id="contra" value="#{gestionUsuariosMB.contrasenia}" required="true"  />
+                                    <p:message for="contra" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="estado" value="Estado de Sesión:" /><br/>
+                                    <p:selectBooleanCheckbox id="estado" value="#{gestionUsuariosMB.activo}" itemLabel="Activo"/>
+                                </p:column>
+                            </p:panelGrid>
+
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="text-align: right">
+                            <p:commandButton value="Guardar" actionListener="#{gestionUsuariosMB.guardarCambiosUsuario()}"
+                                             icon="fas fa-save" update="@all"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
             <h:form>
                 <p:growl id="msgEdUs" showDetail="true" />
 
