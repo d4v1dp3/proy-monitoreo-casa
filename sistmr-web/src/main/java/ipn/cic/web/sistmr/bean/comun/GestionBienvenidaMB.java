@@ -45,6 +45,7 @@ public class GestionBienvenidaMB implements Serializable{
     public String redirecciona() throws UsuarioException {
         int rol_paciente= Constantes.getInstance().getInt("ROL_PACIENTE");
         int rol_medico= Constantes.getInstance().getInt("ROL_MEDICO");
+        int rol_administrador= Constantes.getInstance().getInt("ROL_ADMINISTRADOR");
         
         String ruta="";
         
@@ -60,6 +61,8 @@ public class GestionBienvenidaMB implements Serializable{
                 ruta = "/faces/facelets/paciente/inicioPaciente.xhtml?faces-redirect=true";        
             }else if(rol.getIdRol()==rol_medico){
                 ruta = "/faces/facelets/medico/inicioMedico.xhtml?faces-redirect=true";
+            }else if(rol.getIdRol()==rol_administrador){
+                ruta = "/faces/facelets/admon/inicioAdmin.xhtml?faces-redirect=true";
             }
         }       
         return ruta;

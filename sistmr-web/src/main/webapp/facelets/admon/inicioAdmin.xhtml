@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : inicioAdmin
+    Created on : Marzo 2021
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Inicio_Admin
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+            </style>
+            <h:form id="frIAdmin">
+                <p:growl id="msgsIAdmin" showDetail="true"  > 
+                    <p:autoUpdate />
+                </p:growl>
+                <p:panel id="pnIAdmin" styleClass="gray" header="Inicio Administrador" style="margin-bottom:20px">
+
+                    <center>
+                        <div class="p-grid p-dir-col">
+                            <div class="p-col">
+                                <p> 
+                                    <p:outputLabel value="Bienvenido(a), " style="font-weight: bold; color: #4CAF50;"/>
+                                    <p:outputLabel value="#{inicioAdminMB.nomAdmin}" style="font-weight: bold; color: #4CAF50;"/>.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column style="border-color: white;">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Resumen General</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:panelGrid>
+                                                    <p:row>
+                                                        <p:column colspan="4" style="border-color: white;"></p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+
+                                                <p:panelGrid columns="4"
+                                                             columnClasses="ui-grid-col-8,ui-grid-col-8, ui-grid-col-8,ui-grid-col-8"
+                                                             layout="grid"
+                                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                                             style="border:0px none; background-color:transparent; text-align: center;">
+
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="hosp" header="Hospital" styleClass="green">
+                                                            <i class="fa fa-building-o" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioAdminMB.hospital.nombre}" style="font-weight: bold"/>
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Teléfono: " />
+                                                            <p:outputLabel value="#{inicioAdminMB.hospital.telEmergencias}" style="font-weight: bold"/>
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="med" header="Medicos" styleClass="green">
+                                                            <i class="fa fa-user-md" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <p:outputLabel value="Medicos Registrados." />
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Inactivos:  " /> 
+                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                           
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="pac" header="Pacientes" styleClass="green">
+                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <p:outputLabel value="Pacientes Registrados." />
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Inactivos:  " />
+                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                            
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="disp" header="Dispositivos" styleClass="green">
+                                                            <i class="fa fa-github-alt" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioAdminMB.caretas.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <p:outputLabel value="Dispositivos." />
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Sin asignar:  " />  
+                                                            <p:outputLabel value="#{inicioAdminMB.caretasSA.size()}" style="font-weight: bold"/>                                                            
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                </p:panelGrid>
+
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <br/>
+                        <div class="p-grid p-dir-col">
+                            <div class="p-col">
+                                <p> 
+                                    Resumen general para el administrador que administra el <b>#{inicioAdminMB.nomSistema}</b>
+                                </p>
+                            </div>
+                        </div>
+                    </center>
+                </p:panel>
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>
+
+
+
+
