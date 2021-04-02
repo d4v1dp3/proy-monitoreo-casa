@@ -15,11 +15,13 @@ import ipn.cic.sistmr.modelo.EntMedidas;
 import ipn.cic.sistmr.modelo.EntMedidasPK;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntPersona;
+import ipn.cic.sistmr.modelo.EntUsuario;
 import ipn.cic.sistmr.modelo.EntValoresReferencia;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.sistmr.sesion.MedidasSBLocal;
 import ipn.cic.sistmr.sesion.PacienteSBLocal;
 import ipn.cic.sistmr.sesion.PersonaSBLocal;
+import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.sistmr.sesion.ValoresReferenciaSBLocal;
 import ipn.cic.sistmr.util.correo.CorreoSBLocal;
 import ipn.cic.web.sistmr.bean.vo.MedidasVO;
@@ -58,6 +60,9 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
     private PersonaSBLocal personaSB;
     
     @EJB
+    private UsuarioSBLocal usuarioSB;
+    
+    @EJB
     private CorreoSBLocal correoSB;
     
     @EJB
@@ -79,6 +84,7 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
         EntMedidas medidas = new EntMedidas();
         EntMedico medico;
         EntPersona persona;
+        EntUsuario usuario;
         JsonObject respuesta;
         
         try {
@@ -102,8 +108,10 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
             medidas = medidasSB.guardaMedidas(medidas);
             logger.log(Level.INFO, "Medidas guardadas.");
 
-            medico = medicoSB.getMedicoDePaciente(paciente);                  
-            logger.log(Level.INFO, "Correo medico: {0}",medico.getEmail()); 
+            medico = medicoSB.getMedicoDePaciente(paciente); 
+            usuario = usuarioSB.getUsuarioDeMedico(medico);
+                             
+            logger.log(Level.INFO, "Correo medico: {0}",usuario.getEmail()); 
             
             persona = personaSB.getPersonaDePaciente(paciente.getIdPaciente());
             
@@ -124,7 +132,7 @@ private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getNa
                 logger.log(Level.INFO, "pDias: {0}",medidas.getPreArtDiastolica());
             }else{ 
                 logger.log(Level.INFO, "Parametros fuera de los rangos");
-                correoSB.enviarCorreo(mailSesion,medico.getEmail(),asunto,cuerpo+reporteMedidas);
+                correoSB.enviarCorreo(mailSesion,usuario.getEmail(),asunto,cuerpo+reporteMedidas);
             }
             
             respuesta = Json.createObjectBuilder()

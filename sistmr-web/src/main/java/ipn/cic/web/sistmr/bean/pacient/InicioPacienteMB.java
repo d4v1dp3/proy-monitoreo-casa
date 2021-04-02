@@ -20,6 +20,7 @@ import ipn.cic.sistmr.modelo.EntUsuario;
 import ipn.cic.sistmr.sesion.HospitalSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.sistmr.sesion.PacienteSBLocal;
+import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
@@ -55,6 +56,8 @@ public class InicioPacienteMB implements Serializable {
     @EJB
     private MedicoSBLocal medicoSB;
     @EJB
+    private UsuarioSBLocal usuarioSB;
+    @EJB
     private UtilWebSBLocal utilWebSB;
     @EJB
     private HospitalSBLocal hospitalSB;
@@ -66,6 +69,8 @@ public class InicioPacienteMB implements Serializable {
     private EntHospital hospital;
     private EntAntecedentes antecedentes;
     private EntCareta careta;
+    private EntUsuario usuario;
+    private EntUsuario usuarioMedico;
     private Boolean masculino = true;
 
     @PostConstruct
@@ -92,7 +97,8 @@ public class InicioPacienteMB implements Serializable {
             //Recuperar medico del paciente
             medicoPac = medicoSB.getMedicoDePaciente(paciente);
             logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
-
+            usuarioMedico=usuarioSB.getUsuarioDeMedico(medicoPac);
+            
             hospital = hospitalSB.getPrimerHospital();
 
         } catch (NoExistePacienteException ex) {
@@ -206,7 +212,8 @@ public class InicioPacienteMB implements Serializable {
         valSegundoAp.add(medicoPac.getIdPersona().getSegundoApellido());
 
         List<String> valCorreo = new ArrayList<>();
-        valCorreo.add(medicoPac.getEmail());
+        usuario = usuarioSB.getUsuarioDeMedico(medicoPac);
+        valCorreo.add(usuario.getEmail());
 
         List<String> valTel = new ArrayList<>();
         valTel.add(medicoPac.getCelular());
@@ -289,5 +296,13 @@ public class InicioPacienteMB implements Serializable {
         this.masculino = masculino;
     }
 
+    public EntUsuario getUsuarioMedico() {
+        return usuarioMedico;
+    }
+
+    public void setUsuarioMedico(EntUsuario usuarioMedico) {
+        this.usuarioMedico = usuarioMedico;
+    }
+   
 }
 

@@ -10,6 +10,7 @@ import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
@@ -125,5 +126,31 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         persona.getEdad();
         persona.getIdGenero();
         return persona;
+    }
+    
+    @Override
+    public EntUsuario getUsuariobyEmail(String email){
+        try {
+            query = em.createNamedQuery("EntUsuario.findByEmail");
+            query.setParameter("email", email);
+            EntUsuario entUsuario = (EntUsuario) query.getSingleResult();
+            return entUsuario;
+        }catch(Exception e){
+            
+        }
+        return null;
+    }
+
+    @Override
+    public EntUsuario getUsuarioDeMedico(EntMedico medico) {
+       try{
+            query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
+            query.setParameter("idPersona",medico.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            return usuario;
+        }catch(Exception e){
+            
+        }
+        return null;
     }
 }

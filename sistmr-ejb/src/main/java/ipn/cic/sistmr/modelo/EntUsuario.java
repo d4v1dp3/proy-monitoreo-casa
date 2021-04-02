@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EntUsuario.findAll", query = "SELECT e FROM EntUsuario e"),
     @NamedQuery(name = "EntUsuario.findByIdUsuario", query = "SELECT e FROM EntUsuario e WHERE e.idUsuario = :idUsuario"),
     @NamedQuery(name = "EntUsuario.findByContrasenia", query = "SELECT e FROM EntUsuario e WHERE e.contrasenia = :contrasenia"),
+    @NamedQuery(name = "EntUsuario.findByEmail", query = "SELECT e FROM EntUsuario e WHERE e.email = :email"),   
     @NamedQuery(name = "EntUsuario.findByActivo", query = "SELECT e FROM EntUsuario e WHERE e.activo = :activo")})
 public class EntUsuario implements Serializable {
 
@@ -64,6 +65,11 @@ public class EntUsuario implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne(fetch = FetchType.LAZY)
     private EntPersona idPersona;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "EMAIL")
+    private String email;
     
     public EntUsuario() {
         entRolList = new ArrayList<>();
@@ -114,6 +120,14 @@ public class EntUsuario implements Serializable {
         this.idPersona = idPersona;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    } 
+    
     @XmlTransient
     public List<EntBitacora> getEntBitacoraList() {
         return entBitacoraList;

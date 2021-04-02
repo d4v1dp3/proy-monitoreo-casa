@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EntMedico.findAll", query = "SELECT e FROM EntMedico e"),
     @NamedQuery(name = "EntMedico.findByIdMedico", query = "SELECT e FROM EntMedico e WHERE e.idMedico = :idMedico"),
     @NamedQuery(name = "EntMedico.findByCedulaProf", query = "SELECT e FROM EntMedico e WHERE e.cedulaProf = :cedulaProf"),
-    @NamedQuery(name = "EntMedico.findByEmail", query = "SELECT e FROM EntMedico e WHERE e.email = :email"),
     @NamedQuery(name = "EntMedico.findByCelular", query = "SELECT e FROM EntMedico e WHERE e.celular = :celular")})
 public class EntMedico implements Serializable {
 
@@ -55,11 +54,6 @@ public class EntMedico implements Serializable {
     @Column(name = "CEDULA_PROF")
     private String cedulaProf;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "EMAIL")
-    private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 12)
@@ -80,10 +74,9 @@ public class EntMedico implements Serializable {
         this.idMedico = idMedico;
     }
 
-    public EntMedico(Integer idMedico, String cedulaProf, String email, String celular) {
+    public EntMedico(Integer idMedico, String cedulaProf, String celular) {
         this.idMedico = idMedico;
         this.cedulaProf = cedulaProf;
-        this.email = email;
         this.celular = celular;
     }
 
@@ -101,14 +94,6 @@ public class EntMedico implements Serializable {
 
     public void setCedulaProf(String cedulaProf) {
         this.cedulaProf = cedulaProf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getCelular() {

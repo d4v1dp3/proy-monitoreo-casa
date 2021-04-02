@@ -160,10 +160,14 @@
                 <p:message for="telCel" />
               </p:column>
 
-              <p:column style="background-color: lightcoral">
-                <p:outputLabel for="@next" value=""/>
-                <p:outputLabel value=""/>
-              </p:column>
+                <p:column style="background-color: lightcoral">
+                    <p:outputLabel for="hEmail" value="Correo Electronico:" />
+                        <p:inputText id="hEmail" value="#{gestionPacienteMB.datUsuario.email}" required="true"> 
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+                         </p:inputText> 
+
+                         <p:message for="hEmail" />
+                </p:column>
             </p:panelGrid>
 
           </p:column>

@@ -66,7 +66,7 @@ public class InicioMedicoMB implements Serializable {
             logger.log(Level.INFO, "Persona encontrada: {0}", persona.getNombre());
 
             medico = medicoSB.getMedico(usrMedico.getIdPersona());
-            logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+     //       logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
             pacientesComp = medicoSB.getListaPaciente(medico);
 
             hospital = hospitalSB.getPrimerHospital();

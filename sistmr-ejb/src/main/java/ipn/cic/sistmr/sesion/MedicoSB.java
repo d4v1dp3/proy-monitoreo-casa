@@ -52,7 +52,6 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         res.getIdPersona();
         res.getCedulaProf();
         res.getCelular();
-        res.getEmail();
 
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
@@ -69,7 +68,6 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         EntMedico med = res.getEntMedico();
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", med.getCedulaProf());
         
-        med.getEmail();
         med.getIdPersona().getNombre();
         med.getIdPersona().getPrimerApellido();
         med.getIdPersona().getSegundoApellido();

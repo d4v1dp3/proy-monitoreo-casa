@@ -10,6 +10,7 @@ import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
@@ -72,4 +73,6 @@ public interface UsuarioSBLocal {
     public List<EntUsuario> getUsuarios()throws UsuarioException;
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException;
     public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException;
+    public EntUsuario getUsuariobyEmail(String email);
+    public EntUsuario getUsuarioDeMedico(EntMedico medico);
 }

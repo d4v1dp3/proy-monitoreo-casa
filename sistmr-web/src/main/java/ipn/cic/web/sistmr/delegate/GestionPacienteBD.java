@@ -122,6 +122,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             EntUsuario entUsuario = new EntUsuario();
             entUsuario.setIdUsuario(usuario.getIdUsuario());
             entUsuario.setContrasenia(usuario.getContrasenia());
+            entUsuario.setEmail(usuario.getEmail());
             entUsuario.setIdPersona(entPersona);
             entUsuario.setActivo(usuario.getActivo());
             Short pacRol = new Integer(Constantes.getInstance().getInt("ROL_PACIENTE")).shortValue();

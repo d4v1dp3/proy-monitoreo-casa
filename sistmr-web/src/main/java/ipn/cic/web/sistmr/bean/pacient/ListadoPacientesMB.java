@@ -87,7 +87,7 @@ public class ListadoPacientesMB implements Serializable {
             logger.log(Level.INFO, "Usuario encontrado: {0}", usrMedico.getIdPersona());
 
             medico = medicoSB.getMedico(usrMedico.getIdPersona());
-            logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+//            logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
             pacientesComp = medicoSB.getListaPaciente(medico);
 
         } catch (MedicoException ex) {
