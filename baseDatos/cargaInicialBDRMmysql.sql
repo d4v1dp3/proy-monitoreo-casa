@@ -112,5 +112,25 @@ VALUES(92.0,100.0,81.0,92.0,0.0,81.0,
        1,
        100,120,121,139,140,190,
        60,80,81,89,90,100);
+       
+/*Para el registro de un paciente en el sistema por el administrador */
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('1', 'REGISTRO_PACIENTE');
+/*Para el registro de un medico en el sistema por el administrador */
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('2', 'REGISTRO_MEDICO');
+/*Para el alta de un paciente en el sistema por el medico */
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('3', 'ALTA_PACIENTE');
+/*Para el deceso de un paciente en el sistema por el medico */
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('4', 'DECESO_PACIENTE');
+/*Para el inicios de sesion de un usuario en el sistema*/
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('5', 'INICIO_SESION_ADMIN');
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('6', 'INICIO_SESION_MED');
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('7', 'INICIO_SESION_PAC');
 
 commit;

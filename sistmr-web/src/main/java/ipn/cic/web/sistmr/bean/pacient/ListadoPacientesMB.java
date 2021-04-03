@@ -6,6 +6,7 @@
  */
 package ipn.cic.web.sistmr.bean.pacient;
 
+import ipn.cic.sistmr.exception.BitacoraException;
 import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.EstadoPacienteException;
 import ipn.cic.sistmr.exception.MedicoException;
@@ -13,10 +14,12 @@ import ipn.cic.sistmr.exception.NoExistePacienteException;
 import ipn.cic.sistmr.exception.PacienteException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
+import ipn.cic.sistmr.modelo.EntBitacora;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntUsuario;
+import ipn.cic.sistmr.sesion.BitacoraSBLocal;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
 import ipn.cic.sistmr.sesion.EstadoPacienteSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
@@ -30,6 +33,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +70,8 @@ public class ListadoPacientesMB implements Serializable {
     private UtilWebSBLocal utilWebSB;
     @EJB
     private CatalogoSBLocal catalogoSB;
+    @EJB
+    private BitacoraSBLocal bitacoraSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
@@ -305,6 +311,16 @@ public class ListadoPacientesMB implements Serializable {
             pacienteEditar.setIdEstadopaciente(estadopac);
             
             pacienteEditar = pacienteSB.updatePaciente(pacienteEditar);
+            
+            
+            //Registrar cambio de estado en Bitacora
+            EntUsuario usrMedico = utilWebSB.getUsrAutenticado();
+            Date fechaEntrada = new Date();
+            EntBitacora estadoPac;
+            if(estadopac.getIdEstadopaciente().intValue()==4)            
+                estadoPac = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMedico);
+            if(estadopac.getIdEstadopaciente().intValue()==3)
+                estadoPac = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMedico);
            
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Exíto",
@@ -326,6 +342,8 @@ public class ListadoPacientesMB implements Serializable {
                     .getMensajeAdaptado("Error",
                             "Imposible recuperar estado de paciente. ",
                             FacesMessage.SEVERITY_ERROR);
+        } catch (BitacoraException ex) {
+            logger.log(Level.INFO, "El evento no se ha registrado en Bitacora.");
         }
 
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);

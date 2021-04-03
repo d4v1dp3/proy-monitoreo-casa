@@ -69,6 +69,11 @@ public class EntEventobitacora implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    public EntEventobitacora(Integer idEvento, String descripcion) {
+        this.idEvento = idEvento;
+        this.descripcion = descripcion;
+    }
 
     @XmlTransient
     public List<EntBitacora> getEntBitacoraList() {

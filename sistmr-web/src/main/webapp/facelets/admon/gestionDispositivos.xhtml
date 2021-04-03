@@ -46,7 +46,7 @@ Todos los derechos reservados
 
                             <p:panel id="pnGDispositivos" header="Dispositivos Asignados" style="margin-bottom:20px">
                                 <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospital}" rows="10"
-                                             paginator="true"
+                                             paginator="true" reflow="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
                                              rowsPerPageTemplate="10,20,30">
@@ -90,7 +90,7 @@ Todos los derechos reservados
 
                             <p:panel id="pnGDispositivosNA" header="Dispositivos No Asignados" style="margin-bottom:20px">
                                 <p:dataTable var="caretahospitalNA" value="#{gestionDispositivosMB.caretashospitalNA}" rows="10"
-                                             paginator="true"
+                                             paginator="true" reflow="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
                                              rowsPerPageTemplate="10,20,30">
