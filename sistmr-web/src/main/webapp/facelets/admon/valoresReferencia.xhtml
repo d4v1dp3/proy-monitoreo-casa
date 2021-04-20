@@ -22,8 +22,24 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+                .tab{
+                    background: f3f3f3 !important;
+                }
+            </style>
+            
             <h:form id="frmValRef" rendered="true">  
-                <p:panel id="pnVRef" header="Valores de Referencia" style="margin-bottom:20px">
+                <p:panel id="pnVRef" header="Valores de Referencia" style="margin-bottom:20px" styleClass="green">
                     <style type="text/css">
                         .ui-widget-headerM{
                             background-color: #e7e8e9 !important;

@@ -36,13 +36,17 @@ Todos los derechos reservados
                     color: black !important;
                     border-color: #cacaca !important;
                 }
+                .tab{
+                    background: f3f3f3 !important;
+                }
             </style>
             
             <h:form id="frIAdmin">
                 <p:growl id="msgsIAdmin" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnIAdmin" header="Inicio Administrador" style="margin-bottom:20px" styleClass="gray">
+                
+                <p:panel id="pnIAdmin" header="Inicio Administrador" style="margin-bottom:20px" styleClass="green">
                     <center>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
@@ -77,6 +81,8 @@ Todos los derechos reservados
 
                                                     <p:column style="text-align: center;">
                                                         <p:panel id="hosp" header="Hospital">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-building-o" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <br/>
@@ -89,44 +95,48 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="med" header="Medicos">
+                                                        <p:panel id="med" header="Médicos">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-user-md" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
-                                                            <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
-                                                            <p:outputLabel value="Medicos Registrados." />
-                                                            <br/>
-                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
-                                                            <p:outputLabel value="Inactivos:  " /> 
-                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                           
-                                                        </p:panel>
-                                                    </p:column>
-
-                                                    <p:column style="text-align: center;">
-                                                        <p:panel id="pac" header="Pacientes">
-                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
-                                                            <br/>
-                                                            <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
-                                                            <p:outputLabel value="Pacientes Registrados." />
+                                                            
+                                                            <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 30px;font-weight: bold; color:  #3883ce" />
                                                             <br/>
                                                             <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
-                                                            <p:outputLabel value="Inactivos:  " />
-                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                            
+                                                            <p:outputLabel value="Médicos Registrados." />
+                                                                                                                    
                                                         </p:panel>
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
                                                         <p:panel id="disp" header="Dispositivos">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-github-alt" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <p:outputLabel value="#{inicioAdminMB.caretas.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
+                                                            <br/>                                                            
                                                             <p:outputLabel value="Dispositivos." />
                                                             <br/>
                                                             <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
                                                             <p:outputLabel value="Sin asignar:  " />  
                                                             <p:outputLabel value="#{inicioAdminMB.caretasSA.size()}" style="font-weight: bold"/>                                                            
+                                                        </p:panel>
+                                                    </p:column>
+                                                    
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="pac" header="Pacientes">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
+                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            
+                                                            <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 30px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Pacientes Registrados." />
+                                                                                                                    
                                                         </p:panel>
                                                     </p:column>
 
@@ -175,13 +185,13 @@ Todos los derechos reservados
                                         <p:row>
                                             <p:column style="text-align: center;">
                                                 <p:accordionPanel widgetVar="basic">
-                                                    <p:tab title="Ingresos">
+                                                    <p:tab title="Ingresos" titleStyleClass="tab">
                                                         <p:chart type="bar" model="#{inicioAdminMB.graficoIngresosPac}" style="width:100%;" />
                                                     </p:tab>
-                                                    <p:tab title="Altas">
+                                                    <p:tab title="Altas" titleStyleClass="tab">
                                                         <p:chart type="bar" model="#{inicioAdminMB.graficoAltasPac}" style="width:100%;" />
                                                     </p:tab>
-                                                    <p:tab title="Decesos">
+                                                    <p:tab title="Decesos" titleStyleClass="tab">
                                                         <p:chart type="bar" model="#{inicioAdminMB.graficoDecesosPac}" style="width:100%;" />
                                                     </p:tab>
                                                 </p:accordionPanel>

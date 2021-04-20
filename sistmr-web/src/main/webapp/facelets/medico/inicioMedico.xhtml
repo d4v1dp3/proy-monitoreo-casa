@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : gestionHospital
+    Created on : Diciembre 2020
+    Author     : Iliac Huerta Trujillo
+
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -17,11 +27,24 @@
         </ui:define>
 
         <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+            </style>
+            
             <h:form id="frIMedico">
                 <p:growl id="msgsIM" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnGIPaciente" header="Inicio Médico" style="margin-bottom:20px">
+                <p:panel id="pnGIPaciente" header="Inicio Médico" style="margin-bottom:20px" styleClass="green">
                     <center>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
@@ -39,7 +62,7 @@
                                         </p:row>
                                         <p:row>
                                             <p:column>
-                                                <center><i class="fas fa-user-md" style="font-size: 8em; color: #39ace7;"></i></center>                                                
+                                                <center><i class="fas fa-user-md" style="font-size: 8em; color: #39ace7;"></i>                                             </center>                                                
                                             </p:column>
                                         </p:row>
                                         <p:row>
@@ -57,11 +80,11 @@
                                                              style="border:0px none; background-color:transparent;">
 
                                                     <p:column style="background-color: lightcoral">
-                                                        <p:outputLabel value="CÉDULA PROFESIONAL:  " />
+                                                        <p:outputLabel value="CÉDULA:  " />
                                                     </p:column>
 
                                                     <p:column style="background-color: lightcoral">
-                                                        <p:outputLabel value="#{inicioMedicoMB.medico.cedulaProf}" style="font-weight: bold; color: #0066ff"/>
+                                                        <p:outputLabel value="#{inicioMedicoMB.medico.cedulaProf}" style="font-weight: bold; color: #0066ff; font-size: 20px"/>
                                                     </p:column>
 
                                                     <p:column style="background-color: lightcoral">
@@ -84,14 +107,13 @@
                                                         <p:outputLabel value="#{inicioMedicoMB.persona.curp}" style="font-weight: bold"/>
                                                     </p:column>
 
+                                                    <!--                                                    <p:column>
+                                                                                                            <p:outputLabel value="TELÉFONO:" />
+                                                                                                        </p:column>
                                                     
-                                                    <p:column>
-                                                        <p:outputLabel value="TELÉFONO:" />
-                                                    </p:column>
-
-                                                    <p:column style="background-color: lightcoral">
-                                                        <p:outputLabel value="#{inicioMedicoMB.medico.celular}" style="font-weight: bold"/>
-                                                    </p:column>
+                                                                                                        <p:column style="background-color: lightcoral">
+                                                                                                            <p:outputLabel value="#{inicioMedicoMB.medico.celular}" style="font-weight: bold"/>
+                                                                                                        </p:column>-->
 
                                                 </p:panelGrid>
 
@@ -101,9 +123,11 @@
 
                                 </p:column>
                                 <p:column style="border-color: white;">
+
+
                                     <p:panelGrid>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Información General</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Resumen del Estado de Pacientes</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
@@ -121,25 +145,18 @@
 
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="pacSignos" header="Pacientes">
-                                                            <i class="fas fa-user" style="font-size: 6em; color: #94aebd;"></i>
-                                                            <br/>
-                                                            <p:outputLabel value="#{inicioMedicoMB.pacientesComp.size()}" style="font-size: 25px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
-                                                            <p:outputLabel value="Pacientes Asignados." />
-
+                                                        <p:panel header="Estables">
+                                                            <p:knob max="#{inicioMedicoMB.pacientesComp.size()}" 
+                                                                    value="#{inicioMedicoMB.pacientesEstables.size()}" disabled="true" 
+                                                                    foregroundColor="#00e0e0" width="100px"/>
                                                         </p:panel>
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="pacHosp" header="Hospital">
-                                                            <i class="fa fa-building-o" style="font-size: 6em; color: #94aebd;"></i>
-                                                            <br/>
-                                                            <!--<p:outputLabel value="Nombre: " />-->
-                                                            <p:outputLabel value="#{inicioMedicoMB.hospital.nombre}" style="font-weight: bold"> </p:outputLabel>
-                                                            <br/>
-                                                            <p:outputLabel value="Teléfono: " />
-                                                            <p:outputLabel value="#{inicioMedicoMB.hospital.telEmergencias}" style="font-weight: bold"> </p:outputLabel>
+                                                        <p:panel header="Graves">
+                                                            <p:knob max="#{inicioMedicoMB.pacientesComp.size()}"
+                                                                    value="#{inicioMedicoMB.pacientesGraves.size()}" disabled="true" 
+                                                                    foregroundColor="#ff9c31" width="100px"/>
                                                         </p:panel>
                                                     </p:column>
 
@@ -150,8 +167,78 @@
                                     </p:panelGrid>
                                 </p:column>
                             </p:row>
+                            <p:row>
+                                <p:column colspan="2" style="border-color: white;">
+
+                                    <p:panelGrid style="width: 100%;">
+                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Información General</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:panelGrid>
+                                                    <p:row>
+                                                        <p:column colspan="3" style="border-color: white;"></p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+
+                                                <p:panelGrid columns="3"
+                                                             columnClasses="ui-grid-col-6,ui-grid-col-6,ui-grid-col-6"
+                                                             layout="grid"
+                                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                                             style="border:0px none; background-color:transparent; text-align: center;">
+
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel header="Hospital">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
+                                                            <i class="fa fa-building-o" style="font-size: 6em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioMedicoMB.hospital.nombre}" style="font-weight: bold"> </p:outputLabel>
+                                                            <br/>
+                                                            <p:outputLabel value="Teléfono: " />
+                                                            <p:outputLabel value="#{inicioMedicoMB.hospital.telEmergencias}" style="font-weight: bold"> </p:outputLabel>
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel header="Pacientes Atendidos">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
+                                                            <i class="fas fa-user" style="font-size: 6em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioMedicoMB.pacientesAtendidos.size()}" style="font-size: 25px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <p:outputLabel value="Pacientes." />
+
+                                                        </p:panel>
+                                                    </p:column>
+                                                    
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel header="Pacientes en Monitoreo">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
+                                                            <i class="fas fa-bed" style="font-size: 6em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            <p:outputLabel value="#{inicioMedicoMB.pacientesEstables.size()+inicioMedicoMB.pacientesGraves.size()}" style="font-size: 25px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <p:outputLabel value="Pacientes." />
+
+                                                        </p:panel>
+                                                    </p:column>
+
+                                                </p:panelGrid>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
+
+                                </p:column>
+                            </p:row>
+
                         </p:panelGrid>
-                        
+
                         <br/>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
@@ -166,7 +253,3 @@
         </ui:define>    
     </ui:composition>
 </html>
-
-
-
-

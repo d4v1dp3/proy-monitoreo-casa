@@ -10,10 +10,9 @@ import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.modelo.EntGenero;
+import ipn.cic.sistmr.modelo.EntHospital;
 import ipn.cic.sistmr.modelo.EntMedico;
-import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
-import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmr.bean.vo.MedicoVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.bean.vo.UsuarioVO;
@@ -21,6 +20,7 @@ import ipn.cic.web.sistmr.delegate.GestionMedicoBDLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -47,6 +47,8 @@ public class GestionMedicoMB implements Serializable{
     private EntMedico medGuardado;
     private List<EntGenero> catGenero;
     
+    private List<EntHospital> listaHospital;
+    
     @EJB
     GestionMedicoBDLocal gstMed;
     @EJB
@@ -70,26 +72,51 @@ public class GestionMedicoMB implements Serializable{
             utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
         }
+        
+        listaHospital = new ArrayList();
+        
+        try {
+            setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
+            
+            if(listaHospital.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Hospital",
+                            "Se requiere información del Hospital para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaMedico:idHospMsg", msg);
+            }
+        } catch (CatalogoException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "No es posible recuperar catálogo de hospital :"+ex.getMessage(), 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
+            return;
+        }
     }
     
     public void guardarMedico(){
-        medGuardado=null;
+        logger.log(Level.INFO, "Inicia proceso de guardar médico");
+        medGuardado = null;
         try{
+            logger.log(Level.INFO, "Guardando entidad médico");
             medGuardado = gstMed.guardarMedicoNuevo(datMedico, datPersona, datUsuario);
+            
         } catch (MedicoException ex) {
+            logger.log(Level.INFO, "Error al guardar médico: {0}",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
                                                 "Error al intentar guardar médico :"+ex.getMessage(), 
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
-        }catch (IDUsuarioException ex) {
+        } catch (IDUsuarioException ex) {
             logger.log(Level.INFO, "Error al guardar médico: {0}",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
-                                                "El ID de USUARIO ya existe, CAMBIARLO", 
+                                                "El ID de usuario ya existe, CAMBIARLO", 
                                                 FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaMedico:idUsrMess", msg);
+            utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
         }
         
@@ -97,13 +124,13 @@ public class GestionMedicoMB implements Serializable{
         if (medGuardado == null){
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
-                                                "Imposible guardar datos de Médico, intente más tarde", 
+                                                "Imposible guardar datos de Médico, intentelo más tarde.", 
                                                 FacesMessage.SEVERITY_ERROR);
             cerrarDialogo(msg);
         }else{
             msg = Mensaje.getInstance()
-                                     .getMensajeAdaptado("Exíto",
-                                                "El registro de médico se realizó correctamente : id="+this.medGuardado.getIdMedico(), 
+                                     .getMensajeAdaptado("Médico Registrado",
+                                                "El registro del médico se realizó correctamente: Cédula="+this.medGuardado.getCedulaProf(), 
                                                 FacesMessage.SEVERITY_INFO);
         }
         
@@ -113,9 +140,6 @@ public class GestionMedicoMB implements Serializable{
     
     public void cerrarDialogo(){
         logger.log(Level.INFO,"Invocando cerrar dialogo.");
-        //FacesMessage mensaje = Mensaje.getInstance()
-          //                            .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-            //                                       FacesMessage.SEVERITY_INFO);
         cerrarDialogo(null);
     }
     
@@ -191,5 +215,13 @@ public class GestionMedicoMB implements Serializable{
      */
     public void setCatGenero(List<EntGenero> catGenero) {
         this.catGenero = catGenero;
+    }
+
+    public List<EntHospital> getListHospital() {
+        return listaHospital;
+    }
+
+    public void setListHospital(List<EntHospital> listHospital) {
+        this.listaHospital = listHospital;
     }
 }

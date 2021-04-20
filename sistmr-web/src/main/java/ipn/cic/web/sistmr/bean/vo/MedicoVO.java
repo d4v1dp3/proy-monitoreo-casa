@@ -20,11 +20,13 @@ public class MedicoVO implements Serializable{
     private String cedulaProf;
     private String email;
     private String celular;
+    private String idHospital;
 
     public MedicoVO() {
         cedulaProf = "";
         celular = "";
         email = "";
+        idHospital = "";
     }
 
     
@@ -58,5 +60,14 @@ public class MedicoVO implements Serializable{
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+    public String getIdHospital() {
+        return idHospital;
+    }
+
+    public void setIdHospital(String idHospital) {
+        this.idHospital = idHospital;
+    }
+    
     
 }

@@ -59,8 +59,8 @@ public class GestionUsuariosMB implements Serializable {
 
     private List<EntUsuario> usuariosComp;
     private EntUsuario usuarioEditar;
+    private List<EntGenero> catGenero;    
     
-    private List<EntGenero> catGenero; 
     private long idUsuario;
     private String nombre;
     private String primerApellido;
@@ -71,6 +71,7 @@ public class GestionUsuariosMB implements Serializable {
     private String usuario;
     private String contrasenia;
     private Boolean activo;
+    
 
     @PostConstruct
     public void cargaUsuarios() {
@@ -87,18 +88,23 @@ public class GestionUsuariosMB implements Serializable {
         }
         
         try {
-             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
+            setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
         } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Error al recuperar catalogo genero. : {0}", ex.getMessage());
+            logger.log(Level.SEVERE, "Imposible recuperar Datos de Genero :{0} ",ex.getMessage());
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "No es posible recuperar catálogo de género :" + ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         
         if(msg==null){
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Éxito:",
+                    .getMensajeAdaptado("",
                             "Usuarios cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+//        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
         //PrimeFaces.current().ajax().update("frGestUsuarios:msgsGU");
     }
     
@@ -115,14 +121,26 @@ public class GestionUsuariosMB implements Serializable {
     }
     
     public void retornoAltaMedico(SelectEvent event){
-        retornoEditaUsuario(event);        
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaUsuarios();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
     }
     
     
     public void altaPaciente(){
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 700);
+        options.put("width", 750);
         options.put("height", 640);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
@@ -131,8 +149,20 @@ public class GestionUsuariosMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaPaciente", options, null);
     }
     
-    public void retornoAltaPaciente(){
-        
+    public void retornoAltaPaciente(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaUsuarios();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
     }
     
     public void editarUsuario() {
@@ -196,14 +226,14 @@ public class GestionUsuariosMB implements Serializable {
 
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
-
+            cargaUsuarios();
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
                             "Diálogo cerrado sin aplicar cambios",
                             FacesMessage.SEVERITY_INFO);
         }
-        cargaUsuarios();
+        
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
     }
     
@@ -266,11 +296,16 @@ public class GestionUsuariosMB implements Serializable {
     }
     
     public void cerrarDialogo(){
-        FacesMessage mensaje = Mensaje.getInstance()
-                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                                                   FacesMessage.SEVERITY_INFO);
-        PrimeFaces.current().dialog().closeDynamic(mensaje);
+        logger.log(Level.INFO,"Invocando cerrar dialogo.");
+        cerrarDialogo(null);
     }
+    
+//    public void cerrarDialogo(){
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                                                   FacesMessage.SEVERITY_INFO);
+//        PrimeFaces.current().dialog().closeDynamic(mensaje);
+//    }
     
     public void cerrarDialogo(FacesMessage mensaje) {
         PrimeFaces.current().dialog().closeDynamic(mensaje);
@@ -302,14 +337,6 @@ public class GestionUsuariosMB implements Serializable {
      */
     public void setUsuarioEditar(EntUsuario usuarioEditar) {
         this.usuarioEditar = usuarioEditar;
-    }
-
-    public List<EntGenero> getCatGenero() {
-        return catGenero;
-    }
-
-    public void setCatGenero(List<EntGenero> catGenero) {
-        this.catGenero = catGenero;
     }
 
     public long getIdUsuario() {
@@ -352,14 +379,6 @@ public class GestionUsuariosMB implements Serializable {
         this.curp = curp;
     }
 
-    public short getIdgenero() {
-        return idgenero;
-    }
-
-    public void setIdgenero(short idgenero) {
-        this.idgenero = idgenero;
-    }
-
     public int getEdad() {
         return edad;
     }
@@ -391,7 +410,20 @@ public class GestionUsuariosMB implements Serializable {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-    
-    
 
+    public List<EntGenero> getCatGenero() {
+        return catGenero;
+    }
+
+    public void setCatGenero(List<EntGenero> catGenero) {
+        this.catGenero = catGenero;
+    }
+
+    public short getIdgenero() {
+        return idgenero;
+    }
+
+    public void setIdgenero(short idgenero) {
+        this.idgenero = idgenero;
+    }
 }

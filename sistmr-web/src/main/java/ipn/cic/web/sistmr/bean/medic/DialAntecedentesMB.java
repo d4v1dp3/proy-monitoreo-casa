@@ -24,11 +24,13 @@ import org.primefaces.PrimeFaces;
 public class DialAntecedentesMB implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(GestionHospitalMB.class.getName());
+    private static final Logger logger = Logger.getLogger(DialAntecedentesMB.class.getName());
     
     private String pacienteNombre="";
     private String pacientePrimerAp="";
     private String pacienteSegundoAp="";
+    private String curp = "";
+    private String edad = "";
     
     private String diabetes = "";
     private String cancer= "";
@@ -39,8 +41,6 @@ public class DialAntecedentesMB implements Serializable{
     private String embarazo = "";
     private String artritis = "";
     private String enfautoinmune= "";
-    private String curp="";
-    private String edad="";
     
     public void cerrarDialogo() {
         FacesMessage mensaje = Mensaje.getInstance()

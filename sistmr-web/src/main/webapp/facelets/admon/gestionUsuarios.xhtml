@@ -26,11 +26,31 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+                .tab{
+                    background: f3f3f3 !important;
+                }
+                .ui-datatable.tUsrs th {
+                    background: #f3f3f3 !important;
+                }
+            </style>
+            
             <h:form id="frGestUsuarios">
                 <p:growl id="msgsGU" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnUsrs" header="Gestión de Usuarios" style="margin-bottom:20px">
+
+                <p:panel id="pnUsrs" header="Gestión de Usuarios" style="margin-bottom:20px" styleClass="green">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
@@ -42,49 +62,61 @@ Todos los derechos reservados
 
                             <div>
                                 <p>
-                                    <p:commandButton icon="fas fa-user-md" value="Alta Médico" title="Alta" actionListener="#{gestionUsuariosMB.altaMedico()}">
-                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
+                                    <p:commandButton icon="fas fa-user-md" value="     Registrar Médico" title="Alta" actionListener="#{gestionUsuariosMB.altaMedico()}">
+                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoAltaMedico}" update="@all"/>
                                     </p:commandButton>
-                                    <p:commandButton icon="fas fa-bed" value="Registrar Paciente" title="Registro" actionListener="#{gestionUsuariosMB.altaPaciente()}">
-                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
+                                    <p:commandButton icon="fas fa-bed" value="     Registrar Paciente" title="Registro" actionListener="#{gestionUsuariosMB.altaPaciente()}">
+                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoAltaPaciente}" update="@all"/>
                                     </p:commandButton>
                                 </p>    
                             </div>
-                            <p:panel id="pnGUsuarios" header="Usuarios Registrados" style="margin-bottom:20px">
-                                <p:dataTable var="usuario" value="#{gestionUsuariosMB.usuariosComp}" rows="10"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                             rowsPerPageTemplate="10,20,30">
-                                    <p:column headerText="Id">
-                                        <h:outputText value="#{usuario.idUsuario}" />
-                                    </p:column>
 
-                                    <p:column headerText="Primer Ap." filterBy="#{usuario.idPersona.primerApellido}" filterMatchMode="contains">
-                                        <h:outputText value="#{usuario.idPersona.primerApellido}" />
-                                    </p:column>
+               
+                            <p:dataTable id="users" var="usuario" value="#{gestionUsuariosMB.usuariosComp}" rows="10"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                         rowsPerPageTemplate="10,20,30" styleClass="tUsrs">
+                                
+                                <f:facet name="header">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Lista de Usuarios
 
-                                    <p:column headerText="Segundo Ap." filterBy="#{usuario.idPersona.segundoApellido}" filterMatchMode="contains">
-                                        <h:outputText value="#{usuario.idPersona.segundoApellido}" />
-                                    </p:column>
+                                        <div>
+                                            <p:commandButton id="toggler" type="button" value="Mostrar Columnas" icon="pi pi-align-justify"/>
+                                            <p:columnToggler datasource="users" trigger="toggler"/>
+                                        </div>
+                                    </div>
+                                </f:facet>
 
-                                    <p:column headerText="Nombre" filterBy="#{usuario.idPersona.nombre}" filterMatchMode="contains">
-                                        <h:outputText value="#{usuario.idPersona.nombre}" />
-                                    </p:column>
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{usuario.idUsuario.toUpperCase()}" />
+                                </p:column>
 
-                                    <p:column headerText="Activo" style="text-aling:center" >
-                                        <h:outputText value="" styleClass="ui-icon #{usuario.activo ? 'far fa-thumbs-up' : 'far fa-thumbs-down'}"/>
-                                    </p:column>
+                                <p:column headerText="Primer Ap." filterBy="#{usuario.idPersona.primerApellido}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.idPersona.primerApellido}" />
+                                </p:column>
 
-                                    <p:column style="width:32px;text-align: center">
-                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionUsuariosMB.editarUsuario()}">
-                                            <f:setPropertyActionListener value="#{usuario}" target="#{gestionUsuariosMB.usuarioEditar}" />
-                                            <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
-                                        </p:commandButton>
-                                    </p:column>
+                                <p:column headerText="Segundo Ap." filterBy="#{usuario.idPersona.segundoApellido}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.idPersona.segundoApellido}" />
+                                </p:column>
 
-                                </p:dataTable>
-                            </p:panel>
+                                <p:column headerText="Nombre" filterBy="#{usuario.idPersona.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.idPersona.nombre}" />
+                                </p:column>
+
+                                <p:column headerText="Activo" style="text-aling:center" >
+                                    <h:outputText value="" styleClass="ui-icon #{usuario.activo ? 'far fa-thumbs-up' : 'far fa-thumbs-down'}"/>
+                                </p:column>
+
+                                <p:column style="width:32px;text-align: center">
+                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionUsuariosMB.editarUsuario()}">
+                                        <f:setPropertyActionListener value="#{usuario}" target="#{gestionUsuariosMB.usuarioEditar}" />
+                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
 
                         </div>
                     </div>
@@ -93,7 +125,3 @@ Todos los derechos reservados
         </ui:define>    
     </ui:composition>
 </html>
-
-
-
-

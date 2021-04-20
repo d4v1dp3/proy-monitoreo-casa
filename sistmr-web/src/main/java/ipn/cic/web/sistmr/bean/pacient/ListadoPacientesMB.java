@@ -70,36 +70,61 @@ public class ListadoPacientesMB implements Serializable {
     private UtilWebSBLocal utilWebSB;
     @EJB
     private CatalogoSBLocal catalogoSB;
-    @EJB
-    private BitacoraSBLocal bitacoraSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
+    
     private EntPaciente pacienteMostrar;
     private EntPaciente pacienteEditar;
-     private List<EntEstadopaciente> catEstado;
-    
+    private List<EntEstadopaciente> catEstado;
+
     private PersonaVO persona = new PersonaVO();
     private PacienteVO paciente = new PacienteVO();
 
+    private List<EntPaciente> pacientesMonitoreados;
+    private List<EntPaciente> altasPacientes;
+    private List<EntPaciente> decesosPacientes;
+
     @PostConstruct
     public void cargaPacientes() {
-        FacesMessage msg=null;
-        
-        //Recuperar Entidad de Medico        
-        try {
-            logger.log(Level.INFO,"Entra a cargar medico.");
-            EntUsuario usrMedico = utilWebSB.getUsrAutenticado(); 
-            logger.log(Level.INFO, "Usuario encontrado: {0}", usrMedico.getIdPersona());
+        FacesMessage msg = null;
 
+        altasPacientes = new ArrayList();
+        decesosPacientes = new ArrayList();
+        pacientesMonitoreados = new ArrayList();
+
+        logger.log(Level.INFO, "Entra a cargar lista de pacientes de medico.");
+
+        try {
+            //Recuperar Entidad de Medico             
+            EntUsuario usrMedico = utilWebSB.getUsrAutenticado();
+            logger.log(Level.INFO, "\tUsuario encontrado: {0}", usrMedico.getIdPersona());
             medico = medicoSB.getMedico(usrMedico.getIdPersona());
-//            logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+        } catch (MedicoException ex) {
+            logger.log(Level.SEVERE, "\tError al recuperar medico.");
+        }
+
+        try {
+            //Recuperar y catalogar Pacientes del Medico
             pacientesComp = medicoSB.getListaPaciente(medico);
 
+            for (int i=0; i< pacientesComp.size();i++) {
+                EntPaciente pac = pacientesComp.get(i);
+                
+                if (pac.getIdEstadopaciente().getIdEstadopaciente() == 4) 
+                    altasPacientes.add(pac);
+                else if (pac.getIdEstadopaciente().getIdEstadopaciente() == 3) 
+                    decesosPacientes.add(pac);
+                else
+                    pacientesMonitoreados.add(pac);
+            }
+           
+            
         } catch (MedicoException ex) {
-            logger.log(Level.SEVERE,"Error al cargar medico.");
+            pacientesComp = new ArrayList();
+            logger.log(Level.SEVERE, "\tError al recuperar pacientes de medico.");
         }
-        
+
         try {
             setCatEstado((List<EntEstadopaciente>) catalogoSB.getCatalogo("EntEstadopaciente"));
         } catch (CatalogoException ex) {
@@ -108,21 +133,21 @@ public class ListadoPacientesMB implements Serializable {
                             "No es posible recuperar catálogo de estadoPaciente :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
         }
-        
-        
-        if(msg==null){
-            msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Éxito:",
-                            "Pacientes cargados correctamente",
-                            FacesMessage.SEVERITY_INFO);
-        }
-        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
-        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
+
+//        if(msg==null){
+//            msg = Mensaje.getInstance()
+//                    .getMensajeAdaptado("Éxito:",
+//                            "Pacientes cargados correctamente",
+//                            FacesMessage.SEVERITY_INFO);
+//        }
+//        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+//        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
+
+        logger.log(Level.INFO, "\tDatos recuperados correctamente.");
     }
 
-    
     public void mostrarDashboard() {
-        logger.log(Level.INFO,"Abre dashboard de un paciente.");
+        logger.log(Level.INFO, "Abre dashboard de un paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 890);
@@ -130,37 +155,37 @@ public class ListadoPacientesMB implements Serializable {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
-        
+
         //Envio de Parametros
         Map<String, List<String>> parametros = new HashMap<>();
-        
+
         List<String> valNombre = new ArrayList<>();
         valNombre.add(pacienteMostrar.getIdPersona().getNombre());
-        
+
         List<String> valPrimerAp = new ArrayList<>();
         valPrimerAp.add(pacienteMostrar.getIdPersona().getPrimerApellido());
-        
+
         List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
-            
+
         List<String> valId = new ArrayList<>();
         valId.add(pacienteMostrar.getIdPaciente().toString());
-            
-        DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         List<String> valFechaHist = new ArrayList<>();
         LocalDate fechaActual = LocalDate.now();
         valFechaHist.add(fechaActual.format(formatoFecha));
-                
-        logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
-        logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
-        logger.log(Level.INFO,"Fecha Actual: {0}",valFechaHist.get(0));
-        
+
+        logger.log(Level.INFO, "PrimerAp: {0}", valPrimerAp.get(0));
+        logger.log(Level.INFO, "SegundoAp: {0}", valSegundoAp.get(0));
+        logger.log(Level.INFO, "Fecha Actual: {0}", valFechaHist.get(0));
+
         parametros.put("pacNombre", valNombre);
         parametros.put("pacPrimerAp", valPrimerAp);
         parametros.put("pacSegundoAp", valSegundoAp);
         parametros.put("pacId", valId);
-        parametros.put("pacfechaHist",valFechaHist);
-                
+        parametros.put("pacfechaHist", valFechaHist);
+
         PrimeFaces.current().dialog().openDynamic("pacientes/dialDashboardPaciente", options, parametros);
     }
 
@@ -176,93 +201,101 @@ public class ListadoPacientesMB implements Serializable {
         }
         utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
-    
+
     public void mostrarAntecedentes() {
-        logger.log(Level.INFO,"Abre antecedentes del paciente.");
+        logger.log(Level.INFO, "Abre antecedentes del paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 650);
+        options.put("width", 540);
         options.put("height", 500);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
-        
+
         //Envio de Parametros
         Map<String, List<String>> parametros = new HashMap<>();
-        
+
         List<String> valNombre = new ArrayList<>();
         valNombre.add(pacienteMostrar.getIdPersona().getNombre());
-        
+
         List<String> valPrimerAp = new ArrayList<>();
         valPrimerAp.add(pacienteMostrar.getIdPersona().getPrimerApellido());
-        
+
         List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
-        
+
         List<String> curp = new ArrayList<>();
         curp.add(pacienteMostrar.getIdPersona().getCurp());
-        
+
         List<String> edad = new ArrayList<>();
-        edad.add(pacienteMostrar.getIdPersona().getEdad()+"");
-            
+        edad.add(pacienteMostrar.getIdPersona().getEdad() + "");
 
         List<String> diabetes = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getDiabetes())
+        if (pacienteMostrar.getEntAntecedentes().getDiabetes()) {
             diabetes.add("true");
-        else
+        } else {
             diabetes.add("false");
-        
+        }
+
         List<String> cancer = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getCancer())
+        if (pacienteMostrar.getEntAntecedentes().getCancer()) {
             cancer.add("true");
-        else
+        } else {
             cancer.add("false");
-        
+        }
+
         List<String> asma = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getAsma())
+        if (pacienteMostrar.getEntAntecedentes().getAsma()) {
             asma.add("true");
-        else
+        } else {
             asma.add("false");
-        
+        }
+
         List<String> vih = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getVih())
+        if (pacienteMostrar.getEntAntecedentes().getVih()) {
             vih.add("true");
-        else
+        } else {
             vih.add("false");
-            
+        }
+
         List<String> has = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getHas())
+        if (pacienteMostrar.getEntAntecedentes().getHas()) {
             has.add("true");
-        else
+        } else {
             has.add("false");
-        
+        }
+
         List<String> epoc = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getEpoc())
+        if (pacienteMostrar.getEntAntecedentes().getEpoc()) {
             epoc.add("true");
-        else
+        } else {
             epoc.add("false");
-        
+        }
+
         List<String> embarazo = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getEmbarazo())
+        if (pacienteMostrar.getEntAntecedentes().getEmbarazo()) {
             embarazo.add("true");
-        else
+        } else {
             embarazo.add("false");
-        
+        }
+
         List<String> artritis = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getArtritis())
+        if (pacienteMostrar.getEntAntecedentes().getArtritis()) {
             artritis.add("true");
-        else
+        } else {
             artritis.add("false");
-        
+        }
+
         List<String> enfau = new ArrayList<>();
-        if(pacienteMostrar.getEntAntecedentes().getEnfautoinmune())
+        if (pacienteMostrar.getEntAntecedentes().getEnfautoinmune()) {
             enfau.add("true");
-        else
+        } else {
             enfau.add("false");
-                
-        logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
-        logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
-        
+        }
+
+        logger.log(Level.INFO, "PrimerAp: {0}", valPrimerAp.get(0));
+        logger.log(Level.INFO, "SegundoAp: {0}", valSegundoAp.get(0));
+
         parametros.put("pacNombre", valNombre);
         parametros.put("pacPrimerAp", valPrimerAp);
         parametros.put("pacSegundoAp", valSegundoAp);
@@ -277,10 +310,10 @@ public class ListadoPacientesMB implements Serializable {
         parametros.put("enfa", enfau);
         parametros.put("curp", curp);
         parametros.put("edad", edad);
-                
+
         PrimeFaces.current().dialog().openDynamic("pacientes/dialAntecedentesPaciente", options, parametros);
     }
-    
+
     public void retornoMostrarAntecedentes(SelectEvent event) {
         FacesMessage msg = null;
         if (event.getObject() != null) {
@@ -293,7 +326,62 @@ public class ListadoPacientesMB implements Serializable {
         }
         utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
-    
+
+    public void editarPaciente() {
+        logger.log(Level.INFO, "Abre dialogo edita paciente.");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 400);
+        options.put("height", 450);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+
+        List<String> idpac = new ArrayList<>();
+        idpac.add(pacienteEditar.getIdPaciente() + "");
+
+        List<String> valNombre = new ArrayList<>();
+        valNombre.add(pacienteEditar.getIdPersona().getNombre());
+
+        List<String> valPrimerAp = new ArrayList<>();
+        valPrimerAp.add(pacienteEditar.getIdPersona().getPrimerApellido());
+
+        List<String> valSegundoAp = new ArrayList<>();
+        valSegundoAp.add(pacienteEditar.getIdPersona().getSegundoApellido());
+
+        List<String> curp = new ArrayList<>();
+        curp.add(pacienteEditar.getIdPersona().getCurp());
+
+        List<String> edad = new ArrayList<>();
+        edad.add(pacienteEditar.getIdPersona().getEdad() + "");
+
+        parametros.put("idpac", idpac);
+        parametros.put("nombre", valNombre);
+        parametros.put("primerapellido", valPrimerAp);
+        parametros.put("segundoapellido", valSegundoAp);
+        parametros.put("curp", curp);
+        parametros.put("edad", edad);
+
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
+    }
+
+    public void retornoEditarPaciente(SelectEvent event) {
+        FacesMessage msg = null;
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo ",
+                            "Diálogo cerrado sin aplicar cambios.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+        cargaPacientes();
+    }
+
     public void guardarCambiosPaciente() {
 
         logger.log(Level.INFO, "Entrando a guardar cambios en paciente.");
@@ -304,27 +392,17 @@ public class ListadoPacientesMB implements Serializable {
             logger.log(Level.INFO, "Buscando paciente id={0}.", paciente.getIdPaciente());
             pacienteEditar = pacienteSB.getPaciente(paciente.getIdPaciente());
             logger.log(Level.INFO, "Entidad Paciente recuperado {0}.", pacienteEditar.getIdPaciente());
-            
+
             logger.log(Level.INFO, "Estado a actualizar={0}.", paciente.getIdEstadopaciente());
             EntEstadopaciente estadopac = estadopacienteSB.getEstadoPaciente(paciente.getIdEstadopaciente());
-            
+
             pacienteEditar.setIdEstadopaciente(estadopac);
-            
+
             pacienteEditar = pacienteSB.updatePaciente(pacienteEditar);
-            
-            
-            //Registrar cambio de estado en Bitacora
-            EntUsuario usrMedico = utilWebSB.getUsrAutenticado();
-            Date fechaEntrada = new Date();
-            EntBitacora estadoPac;
-            if(estadopac.getIdEstadopaciente().intValue()==4)            
-                estadoPac = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMedico);
-            if(estadopac.getIdEstadopaciente().intValue()==3)
-                estadoPac = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMedico);
-           
+
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Exíto",
-                            "Datos actualizados correctamente. ",
+                    .getMensajeAdaptado("Estado Actualizado",
+                            "El estado del paciente se ha actualizado correctamente. ",
                             FacesMessage.SEVERITY_INFO);
 
         } catch (NoExistePacienteException ex) {
@@ -342,77 +420,20 @@ public class ListadoPacientesMB implements Serializable {
                     .getMensajeAdaptado("Error",
                             "Imposible recuperar estado de paciente. ",
                             FacesMessage.SEVERITY_ERROR);
-        } catch (BitacoraException ex) {
-            logger.log(Level.INFO, "El evento no se ha registrado en Bitacora.");
         }
 
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+
         cerrarDialogo(msg);
     }
-    
-    public void editarPaciente() {
-        logger.log(Level.INFO,"Abre dialogo edita paciente.");
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("modal", true);
-        options.put("width", 400);
-        options.put("height", 450);
-        options.put("contentWidth", "100%");
-        options.put("contentHeight", "100%");
-        options.put("headerElement", "customheader");
-        
-        //Envio de Parametros
-        Map<String, List<String>> parametros = new HashMap<>();
-        
-        List<String> idpac = new ArrayList<>();
-        idpac.add(pacienteEditar.getIdPaciente()+"");
-        
-        List<String> valNombre = new ArrayList<>();
-        valNombre.add(pacienteEditar.getIdPersona().getNombre());
-        
-        List<String> valPrimerAp = new ArrayList<>();
-        valPrimerAp.add(pacienteEditar.getIdPersona().getPrimerApellido());
-        
-        List<String> valSegundoAp = new ArrayList<>();
-        valSegundoAp.add(pacienteEditar.getIdPersona().getSegundoApellido());
-        
-        List<String> curp = new ArrayList<>();
-        curp.add(pacienteEditar.getIdPersona().getCurp());
-        
-        List<String> edad = new ArrayList<>();
-        edad.add(pacienteEditar.getIdPersona().getEdad()+"");
-        
-        parametros.put("idpac", idpac);
-        parametros.put("nombre", valNombre);
-        parametros.put("primerapellido", valPrimerAp);
-        parametros.put("segundoapellido", valSegundoAp);
-        parametros.put("curp", curp);
-        parametros.put("edad", edad);
-        
-                
-        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
-    }
-    
-    public void retornoEditarPaciente(SelectEvent event) {
-        FacesMessage msg = null;
-        if (event.getObject() != null) {
-            msg = (FacesMessage) event.getObject();
-        } else {
-            msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Diálogo ",
-                            "Diálogo cerrado sin aplicar cambios.",
-                            FacesMessage.SEVERITY_INFO);
-        }
-        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
-        cargaPacientes();
-    }
-    
-    public void cerrarDialogo(){
+
+    public void cerrarDialogo() {
         FacesMessage mensaje = Mensaje.getInstance()
-                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                                                   FacesMessage.SEVERITY_INFO);
+                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+                        FacesMessage.SEVERITY_INFO);
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
-    
+
     public void cerrarDialogo(FacesMessage mensaje) {
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
@@ -431,7 +452,6 @@ public class ListadoPacientesMB implements Serializable {
         this.pacientesComp = usuariosComp;
     }
 
-    
     /**
      * @return the pacienteMostrar
      */
@@ -446,28 +466,12 @@ public class ListadoPacientesMB implements Serializable {
         this.pacienteMostrar = pacienteMostrar;
     }
 
-    public EntMedico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(EntMedico medico) {
-        this.medico = medico;
-    }
-
     public EntPaciente getPacienteEditar() {
         return pacienteEditar;
     }
 
     public void setPacienteEditar(EntPaciente pacienteEditar) {
         this.pacienteEditar = pacienteEditar;
-    }
-
-    public List<EntEstadopaciente> getCatEstado() {
-        return catEstado;
-    }
-
-    public void setCatEstado(List<EntEstadopaciente> catEstado) {
-        this.catEstado = catEstado;
     }
 
     public PersonaVO getPersona() {
@@ -486,5 +490,35 @@ public class ListadoPacientesMB implements Serializable {
         this.paciente = paciente;
     }
 
-    
+    public List<EntEstadopaciente> getCatEstado() {
+        return catEstado;
+    }
+
+    public void setCatEstado(List<EntEstadopaciente> catEstado) {
+        this.catEstado = catEstado;
+    }
+
+    public List<EntPaciente> getAltasPacientes() {
+        return altasPacientes;
+    }
+
+    public void setAltasPacientes(List<EntPaciente> AltasPacientes) {
+        this.altasPacientes = AltasPacientes;
+    }
+
+    public List<EntPaciente> getDecesosPacientes() {
+        return decesosPacientes;
+    }
+
+    public void setDecesosPacientes(List<EntPaciente> DecesosPacientes) {
+        this.decesosPacientes = DecesosPacientes;
+    }
+
+    public List<EntPaciente> getPacientesMonitoreados() {
+        return pacientesMonitoreados;
+    }
+
+    public void setPacientesMonitoreados(List<EntPaciente> pacientesMonitoreados) {
+        this.pacientesMonitoreados = pacientesMonitoreados;
+    }    
 }

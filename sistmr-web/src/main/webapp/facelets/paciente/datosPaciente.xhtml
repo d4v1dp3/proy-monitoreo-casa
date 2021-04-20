@@ -17,11 +17,24 @@
         </ui:define>
 
         <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+            </style>
+            
             <h:form id="frIDatos">
                 <p:growl id="msgsID" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnGIDatosPaciente" header="Mis Datos" style="margin-bottom:20px">
+                <p:panel id="pnGIDatosPaciente" header="Mis Datos" style="margin-bottom:20px" styleClass="green">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 

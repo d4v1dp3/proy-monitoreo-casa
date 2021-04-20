@@ -6,21 +6,18 @@
  */
 package ipn.cic.web.sistmr.bean.admon;
 
-import ipn.cic.sistmr.exception.BitacoraException;
 import ipn.cic.sistmr.exception.CaretaHospitalException;
 import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.exception.PacienteException;
-import ipn.cic.sistmr.modelo.EntBitacora;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntGenero;
 import ipn.cic.sistmr.modelo.EntHospital;
 import ipn.cic.sistmr.modelo.EntMedico;
 import ipn.cic.sistmr.modelo.EntPaciente;
-import ipn.cic.sistmr.modelo.EntUsuario;
-import ipn.cic.sistmr.sesion.BitacoraSBLocal;
+import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
@@ -34,7 +31,6 @@ import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,19 +63,18 @@ public class GestionPacienteMB implements Serializable {
     private List<EntHospital> listaHospital;
     private List<EntMedico> listaMedicos;
     private List<EntCaretaHospital> listCaretaHospital;
-
+    private List<EntPersona> personaMedico;
+    
     @EJB
     GestionPacienteBDLocal gstPac;
-    @EJB
-    MedicoSBLocal medicoSB;
     @EJB
     UtilWebSBLocal utilWebSB;
     @EJB
     CatalogoSBLocal catalogoSB;
     @EJB
-    CaretaHospitalSBLocal caretahospitalSB;
+    MedicoSBLocal medicoSB;
     @EJB
-    BitacoraSBLocal bitacoraSB;
+    CaretaHospitalSBLocal caretahospitalSB;
 
     public void iniciaVO() {
         setDatUsuario(new UsuarioVO());
@@ -97,30 +92,48 @@ public class GestionPacienteMB implements Serializable {
         antecedentes.add("Embarazo");
         antecedentes.add("Artritis");
         antecedentes.add("Enf autoinmune");
-
+        
         listaHospital = new ArrayList();
-
+        personaMedico = new ArrayList();
+        
         try {
             //Cargar Lista de Hospitales
-            setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
+            listaHospital = catalogoSB.getCatalogo("EntHospital");
+            
+            if(listaHospital.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Hospital",
+                            "Se requiere información del Hospital para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Imposible recuperar Datos de Hospital :{0} ", ex.getMessage());
+            logger.log(Level.SEVERE, "Imposible recuperar datos de Hospital :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
                             "No es posible recuperar datos de Hospital:" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
+        
 
-        listCaretaHospital = new ArrayList();
         try {
-            setListCaretaHospital(caretahospitalSB.getCaretasNoAsignadas());
-
+            //Cargar Lista de Dispositivos no asignados
+            listCaretaHospital = caretahospitalSB.getCaretasNoAsignadas();
+            
+            if(listCaretaHospital.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Dispositivo",
+                            "Se requiere de un dispositivo disponible para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (CaretaHospitalException ex) {
-           logger.log(Level.SEVERE, "Imposible recuperar Datos de Caretas :{0} ",ex.getMessage());
+            listCaretaHospital = new ArrayList();
+            logger.log(Level.SEVERE, "Imposible recuperar datos de Dispositivos :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "No es posible recuperar lista de Caretas:" + ex.getMessage(),
+                            "No es posible recuperar lista de Dispositivos:" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
@@ -128,20 +141,29 @@ public class GestionPacienteMB implements Serializable {
         try {
             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
         } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Imposible recuperar Datos de Genero :{0} ",ex.getMessage());
+            logger.log(Level.SEVERE, "Imposible recuperar datos de Genero :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "No es posible recuperar catálogo de género :" + ex.getMessage(),
+                            "No es posible recuperar catálogo de género:" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
-
-        listaMedicos = new ArrayList();
+        
+               
         try {
             //Cargar Lista de Medicos
             setListaMedicos((List<EntMedico>) medicoSB.getMedicos());
+
+            if(listaMedicos.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Médico",
+                            "Se requiere información de Médico para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (MedicoException ex) {
-            logger.log(Level.INFO, "Imposible recuperar catalogo de medicos");
+            listaMedicos = new ArrayList(); 
+            logger.log(Level.SEVERE, "Entidad de medico no encontrado:{0} ",ex.getMessage());
         }
 
         try {
@@ -153,7 +175,7 @@ public class GestionPacienteMB implements Serializable {
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
-        logger.log(Level.INFO, "Categorias en Form AltaPaciente[Fin]");
+        logger.log(Level.INFO, "Formulario desplegado correctamente.");
     }
 
     public void guardarPaciente() {
@@ -166,41 +188,32 @@ public class GestionPacienteMB implements Serializable {
 
         try {
             pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, datAntecedentes, getDatUsuario());
-            
-            //Registrar evento en Bitacora
-            EntUsuario usrAdmin = utilWebSB.getUsrAutenticado();
-            Date fechaEntrada = new Date();
-            EntBitacora ingreso_pac = bitacoraSB.eventoRegistroDePaciente(fechaEntrada, usrAdmin);
-            
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
                             "Error al intentar guardar médico :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
             return;
         } catch (IDUsuarioException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "El ID de Paciente Existe. CAMBIARLO",
+                            "El ID de Paciente ya existe. CAMBIARLO",
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
             return;
-        } catch (BitacoraException ex) {
-            logger.log(Level.INFO, "El evento no se ha registrado en Bitacora.");
         }
-        
         FacesMessage msg = null;
         if (pacGuardado == null) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Imposible guardar datos de Paciente, intente más tarde",
+                            "Imposible guardar datos de Paciente, intentelo más tarde.",
                             FacesMessage.SEVERITY_ERROR);
             cerrarDialogo(msg);
         } else {
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Exíto",
-                            "El registro de paciente se realizó correctamente : id=" + this.pacGuardado.getIdPaciente(),
+                    .getMensajeAdaptado("Paciente Registrado",
+                            "El registro de paciente se realizó correctamente: Id=" + this.pacGuardado.getIdPaciente(),
                             FacesMessage.SEVERITY_INFO);
         }
 
@@ -208,10 +221,10 @@ public class GestionPacienteMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-        FacesMessage mensaje = Mensaje.getInstance()
-                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                        FacesMessage.SEVERITY_INFO);
-        cerrarDialogo(mensaje);
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                        FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(null);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {
@@ -317,4 +330,12 @@ public class GestionPacienteMB implements Serializable {
         this.listaMedicos = listaMedicos;
     }
 
+    public List<EntPersona> getPersonaMedico() {
+        return personaMedico;
+    }
+
+    public void setPersonaMedico(List<EntPersona> personaMedico) {
+        this.personaMedico = personaMedico;
+    }
+   
 }

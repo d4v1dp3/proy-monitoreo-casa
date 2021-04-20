@@ -70,14 +70,130 @@
                     <div class="p-grid p-dir-col">
                         <p:panelGrid>
                             <p:row>
+                                
                                 <p:column style="border-color: white;">
                                     <p:panelGrid>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">PACIENTE</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">ANTECEDENTES</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
-                                                <center><i class="fas fa-user" style="font-size: 8em; color: #D5D5D5"></i></center>
+                                                <p:panelGrid>
+                                                    <p:row>
+                                                        <p:column colspan="2" style="border-color: white;"></p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+
+                                                <p:panelGrid columns="1"
+                                                             columnClasses="ui-grid-col-12"
+                                                             layout="grid"
+                                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                                             style="border:0px none; background-color:transparent;">
+
+
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.diabetes}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    DIABETES" />                                                        
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.diabetes}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    DIABETES" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.cancer}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    CÁNCER" />
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.cancer}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    CÁNCER" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.asma}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    ASMA" />
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.asma}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    ASMA" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.vih}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    VIH" />
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.vih}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    VIH" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.has}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    HAS" />
+                                                    </p:column>
+                                                    <p:column rendered="#{dialAntecedentesMB.has}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    HAS" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.epoc}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    EPOC" />
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.epoc}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    EPOC" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.embarazo}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    EMBARAZO" />
+                                                    </p:column>
+                                                    <p:column rendered="#{dialAntecedentesMB.embarazo}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    EMBARAZO" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.artritis}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    ARTRITIS" />
+                                                    </p:column>
+
+                                                    <p:column rendered="#{dialAntecedentesMB.artritis}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    ARTRITIS" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                    <p:column rendered="#{!dialAntecedentesMB.enfautoinmune}">
+                                                        <i class="pi pi-times rojo"></i>
+                                                        <p:outputLabel value="    ENF. AUTOINMUNE" />
+                                                    </p:column>
+                                                    <p:column rendered="#{dialAntecedentesMB.enfautoinmune}">
+                                                        <i class="pi pi-check verde"></i>
+                                                        <p:outputLabel value="    ENF. AUTOINMUNE" style="font-weight: bold"/>
+                                                    </p:column>
+
+                                                </p:panelGrid>
+
+                                            </p:column>
+                                        </p:row>
+                                        
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="border-color: white;">
+                                    <p:panelGrid>
+<!--                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">PACIENTE</p:column>
+                                        </p:row>-->
+                                        <p:row>
+                                            <p:column>
+                                                <center><i class="fas fa-user" style="font-size: 7em; color: #D5D5D5"></i></center>
                                             </p:column>
                                         </p:row>
                                         <p:row>
@@ -96,7 +212,7 @@
 
 
                                                     <p:column style="background-color: lightcoral">
-                                                        <p:outputLabel value="NOMBRE:" />
+                                                        <p:outputLabel value="PACIENTE:" />
                                                     </p:column>
 
                                                     <p:column style="background-color: lightcoral">
@@ -134,121 +250,6 @@
                                     </p:panelGrid>
 
                                 </p:column>
-                                <p:column style="border-color: white;">
-                                    <p:panelGrid>
-                                        <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">ANTECEDENTES</p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:panelGrid>
-                                                    <p:row>
-                                                        <p:column colspan="2" style="border-color: white;"></p:column>
-                                                    </p:row>
-                                                </p:panelGrid>
-
-                                                <p:panelGrid columns="1"
-                                                             columnClasses="ui-grid-col-12"
-                                                             layout="grid"
-                                                             styleClass="ui-panelgrid-blank ui-fluid"
-                                                             style="border:0px none; background-color:transparent;">
-
-
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.diabetes}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Diabetes" />                                                        
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.diabetes}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Diabetes" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.cancer}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Cáncer" />
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.cancer}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Cáncer" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.asma}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Asma" />
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.asma}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Asma" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.vih}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="VIH" />
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.vih}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="VIH" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.has}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="HAS" />
-                                                    </p:column>
-                                                    <p:column rendered="#{dialAntecedentesMB.has}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="HAS" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.epoc}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="EPOC" />
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.epoc}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="EPOC" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.embarazo}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Embarazo" />
-                                                    </p:column>
-                                                    <p:column rendered="#{dialAntecedentesMB.embarazo}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Embarazo" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.artritis}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Artritis" />
-                                                    </p:column>
-
-                                                    <p:column rendered="#{dialAntecedentesMB.artritis}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Artritis" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                    <p:column rendered="#{!dialAntecedentesMB.enfautoinmune}">
-                                                        <i class="pi pi-times rojo"></i>
-                                                        <p:outputLabel value="Enf. Autoinmune" />
-                                                    </p:column>
-                                                    <p:column rendered="#{dialAntecedentesMB.enfautoinmune}">
-                                                        <i class="pi pi-check verde"></i>
-                                                        <p:outputLabel value="Enf. Autoinmune" style="font-weight: bold"/>
-                                                    </p:column>
-
-                                                </p:panelGrid>
-
-                                            </p:column>
-                                        </p:row>
-                                        
-                                    </p:panelGrid>
-                                </p:column>
                             </p:row>
                         </p:panelGrid>
                     </div>
@@ -257,4 +258,3 @@
         </h:body>
     </f:view>
 </html>
-
