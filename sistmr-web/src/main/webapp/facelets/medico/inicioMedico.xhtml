@@ -44,7 +44,7 @@ Todos los derechos reservados
                 <p:growl id="msgsIM" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnGIPaciente" header="Inicio Médico" style="margin-bottom:20px" styleClass="green">
+                <p:panel id="pnGIPaciente" header="Inicio Médico" style="margin-bottom:20px">
                     <center>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
@@ -107,14 +107,6 @@ Todos los derechos reservados
                                                         <p:outputLabel value="#{inicioMedicoMB.persona.curp}" style="font-weight: bold"/>
                                                     </p:column>
 
-                                                    <!--                                                    <p:column>
-                                                                                                            <p:outputLabel value="TELÉFONO:" />
-                                                                                                        </p:column>
-                                                    
-                                                                                                        <p:column style="background-color: lightcoral">
-                                                                                                            <p:outputLabel value="#{inicioMedicoMB.medico.celular}" style="font-weight: bold"/>
-                                                                                                        </p:column>-->
-
                                                 </p:panelGrid>
 
                                             </p:column>
@@ -145,7 +137,7 @@ Todos los derechos reservados
 
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel header="Estables">
+                                                        <p:panel header="Estables" styleClass="green">
                                                             <p:knob max="#{inicioMedicoMB.pacientesComp.size()}" 
                                                                     value="#{inicioMedicoMB.pacientesEstables.size()}" disabled="true" 
                                                                     foregroundColor="#00e0e0" width="100px"/>
@@ -153,7 +145,7 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel header="Graves">
+                                                        <p:panel header="Graves" styleClass="green">
                                                             <p:knob max="#{inicioMedicoMB.pacientesComp.size()}"
                                                                     value="#{inicioMedicoMB.pacientesGraves.size()}" disabled="true" 
                                                                     foregroundColor="#ff9c31" width="100px"/>
@@ -190,7 +182,7 @@ Todos los derechos reservados
 
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel header="Hospital">
+                                                        <p:panel header="Hospital" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fa fa-building-o" style="font-size: 6em; color: #94aebd;"></i>
@@ -203,7 +195,7 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel header="Pacientes Atendidos">
+                                                        <p:panel header="Pacientes Atendidos" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fas fa-user" style="font-size: 6em; color: #94aebd;"></i>
@@ -216,7 +208,7 @@ Todos los derechos reservados
                                                     </p:column>
                                                     
                                                     <p:column style="text-align: center;">
-                                                        <p:panel header="Pacientes en Monitoreo">
+                                                        <p:panel header="Pacientes en Monitoreo" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fas fa-bed" style="font-size: 6em; color: #94aebd;"></i>

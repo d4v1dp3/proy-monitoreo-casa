@@ -47,16 +47,16 @@ Todos los derechos reservados
                 <div>
 
                 </div>
-                <p:panel id="pnGHospital" header="Gestión de Hospital" style="margin-bottom:20px" styleClass="green">
+                <p:panel id="pnGHospital" header="Gestión de Hospital" style="margin-bottom:20px">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
                                 Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>
                             </p>
-                            <h3>ALTA DE HOSPITAL</h3>
+                            <center><h3>ALTA DE HOSPITAL</h3></center>
                         </div>
                         <div class="p-col" style="align-content: center;">
-                            <p:panel id="hpDatos" header="Datos de Hospital">
+                            <p:panel id="hpDatos" header="Datos de Hospital" styleClass="green">
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column><p:outputLabel for="nomHosp" value="Nombre Hospital:" /> </p:column>
@@ -140,17 +140,17 @@ Todos los derechos reservados
                 
                 <p:growl id="msgsEH" showDetail="true" />
                 
-                <p:panel id="pnEHospital" header="Gestión de Hospital" styleClass="green" style="margin-bottom:20px">
+                <p:panel id="pnEHospital" header="Gestión de Hospital" style="margin-bottom:20px">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
                                 Página para la gestión de los datos del hospital que administra el <b>#{gestionHospitalMB.nomSistema}</b>
                             </p>     
-                            <h3>ACTUALIZACION DE DATOS DE HOSPITAL</h3>
+                            <center><h3>ACTUALIZACIÓN DE DATOS DE HOSPITAL</h3></center>
                         </div>
                         <div class="p-col" style="align-content: center;">
                             
-                            <p:panel id="ehpDatos" header="Datos de Hospital">
+                            <p:panel id="ehpDatos" header="Datos de Hospital"  styleClass="green">
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column><p:outputLabel for="enomHosp" value="Nombre Hospital:" /> </p:column>

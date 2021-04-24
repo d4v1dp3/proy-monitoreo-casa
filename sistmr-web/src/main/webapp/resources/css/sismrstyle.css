@@ -17,6 +17,7 @@ Todos los derechos reservados
    bottom: 0;
    width: 100%;
    background-color: #333333;
+   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
    color: white;
    text-align: center;
 }
@@ -54,3 +55,15 @@ h3 {
         background: #efefef;
         border-radius: 4px;
     }
+    
+    .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+                
+                .ui-widget-header{
+                 background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }

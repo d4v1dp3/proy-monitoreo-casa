@@ -47,7 +47,7 @@ Todos los derechos reservados
                     <p:autoUpdate />
                 </p:growl>
 
-                <p:panel id="pnDisp" header="Gestión de Dispositivos" footer="" style="margin-bottom:20px" styleClass="green">
+                <p:panel id="pnDisp" header="Gestión de Dispositivos" footer="" style="margin-bottom:20px">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
@@ -64,7 +64,7 @@ Todos los derechos reservados
                                 </p>    
                             </div>
 
-                            <p:panel id="pnGDispositivosNA" header="Dispositivos No Asignados" style="margin-bottom:20px">
+                            <p:panel id="pnGDispositivosNA" header="Dispositivos No Asignados" style="margin-bottom:20px" styleClass="green">
                                 <p:dataTable var="caretahospitalNA" value="#{gestionDispositivosMB.caretashospitalNA}" rows="10"
                                              paginator="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -107,7 +107,7 @@ Todos los derechos reservados
                                 </p:dataTable>
                             </p:panel>
                             <br/>
-                            <p:panel id="pnGDispositivos" header="Dispositivos Asignados" style="margin-bottom:20px">
+                            <p:panel id="pnGDispositivos" header="Dispositivos Asignados" style="margin-bottom:20px" styleClass="green">
                                 <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospital}" rows="10"
                                              paginator="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

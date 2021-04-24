@@ -46,12 +46,13 @@ Todos los derechos reservados
                     <p:autoUpdate />
                 </p:growl>
                 
-                <p:panel id="pnIAdmin" header="Inicio Administrador" style="margin-bottom:20px" styleClass="green">
+                <p:panel id="pnIAdmin" header="Inicio" style="margin-bottom:20px">
                     <center>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
                                 <p> 
-                                    <p:outputLabel value="Bienvenido(a), " style="font-weight: bold; color: #4CAF50;"/>
+                                    <p:outputLabel value="BIENVENIDO(A), " style="font-weight: bold; color: #4CAF50;"/>
+                                    <br/>
                                     <p:outputLabel value="#{inicioAdminMB.nomAdmin}" style="font-weight: bold; color: #4CAF50;"/>.
                                 </p>
                             </div>
@@ -80,7 +81,7 @@ Todos los derechos reservados
 
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="hosp" header="Hospital">
+                                                        <p:panel id="hosp" header="Hospital" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fa fa-building-o" style="font-size: 7em; color: #94aebd;"></i>
@@ -95,7 +96,7 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="med" header="Médicos">
+                                                        <p:panel id="med" header="Médicos" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fa fa-user-md" style="font-size: 7em; color: #94aebd;"></i>
@@ -110,7 +111,7 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="disp" header="Dispositivos">
+                                                        <p:panel id="disp" header="Dispositivos" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
                                                             <i class="fa fa-github-alt" style="font-size: 7em; color: #94aebd;"></i>
@@ -126,10 +127,10 @@ Todos los derechos reservados
                                                     </p:column>
                                                     
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="pac" header="Pacientes">
+                                                        <p:panel id="pac" header="Pacientes" styleClass="green">
                                                             <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
                                                             <br/>
-                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <i class="fas fa-bed" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             
                                                             <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 30px;font-weight: bold; color:  #3883ce" />
@@ -156,16 +157,16 @@ Todos los derechos reservados
 
                                         <p:row>
                                             <p:column style="text-align: center;">
-
-                                                <p:panel header="Ingresos">
+                                                
+                                                <p:panel header="Ingresos" styleClass="green">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#00e0e0" value="#{inicioAdminMB.ingresosPac.size()}" height="110px"/>
                                                 </p:panel>
 
-                                                <p:panel header="Altas">
+                                                <p:panel header="Altas" styleClass="green">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#47e308" value="#{inicioAdminMB.altasPac.size()}" height="110px" />
                                                 </p:panel>
 
-                                                <p:panel header="Decesos">
+                                                <p:panel header="Decesos" styleClass="green">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#e31f08" value="#{inicioAdminMB.decesosPac.size()}" height="110px" />
                                                 </p:panel>
 
@@ -184,17 +185,22 @@ Todos los derechos reservados
 
                                         <p:row>
                                             <p:column style="text-align: center;">
-                                                <p:accordionPanel widgetVar="basic">
-                                                    <p:tab title="Ingresos" titleStyleClass="tab">
-                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoIngresosPac}" style="width:100%;" />
-                                                    </p:tab>
-                                                    <p:tab title="Altas" titleStyleClass="tab">
-                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoAltasPac}" style="width:100%;" />
-                                                    </p:tab>
-                                                    <p:tab title="Decesos" titleStyleClass="tab">
-                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoDecesosPac}" style="width:100%;" />
-                                                    </p:tab>
-                                                </p:accordionPanel>
+                                                <br/>
+                                                <p:panel header="Ingreso de Pacientes" toggleable="true" closable="false" toggleSpeed="100"
+                                                    closeSpeed="100" widgetVar="panel1" collapsed="true" styleClass="green">
+                                                        <p:chart id="ingp" type="bar" model="#{inicioAdminMB.graficoIngresosPac}" style="width:100%;" />
+                                                </p:panel>
+                                                <br/>
+                                                <p:panel header="Altas de Pacientes" toggleable="true" closable="false" toggleSpeed="100"
+                                                    closeSpeed="100" widgetVar="panel2" collapsed="true" styleClass="green">
+                                                        <p:chart id="altp" type="bar" model="#{inicioAdminMB.graficoAltasPac}" style="width:100%;" />
+                                                </p:panel>
+                                                <br/>
+                                                <p:panel header="Decesos de Pacientes" toggleable="true" closable="false" toggleSpeed="100"
+                                                    closeSpeed="100" widgetVar="panel3" collapsed="true" styleClass="green">
+                                                        <p:chart id="decp" type="bar" model="#{inicioAdminMB.graficoDecesosPac}" style="width:100%;" />
+                                                </p:panel>
+                                                <br/>
                                             </p:column>
                                         </p:row>
 

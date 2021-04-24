@@ -107,6 +107,7 @@ public class InicioAdminMB implements Serializable {
 
         ingresosPac = new ArrayList();
         altasPac = new ArrayList();
+        decesosPac = new ArrayList();
         
         meses.add("Enero");
         meses.add("Febrero");
