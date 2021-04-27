@@ -43,10 +43,10 @@ public class DialAntecedentesMB implements Serializable{
     private String enfautoinmune= "";
     
     public void cerrarDialogo() {
-        FacesMessage mensaje = Mensaje.getInstance()
-                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                        FacesMessage.SEVERITY_INFO);
-        cerrarDialogo(mensaje);
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                        FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(null);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {

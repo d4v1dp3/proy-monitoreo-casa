@@ -18,13 +18,16 @@ Todos los derechos reservados
 }
 
 body {
-    background: #eeeeee;
+    /*background: #eeeeee;*/
+    background: white;
 }
 
 .contenedorprincipal{
     margin: 1em;
     min-height: 45vh;
     padding: 1em;
+    background: white;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 } 
 
 .navbar{
@@ -77,6 +80,7 @@ body {
 .titulocontainer>div {
     text-align: left;
 }
+
 
 /*--------------Footer------------*/
 footer{
@@ -133,6 +137,12 @@ footer{
     align-items: center;
 }
 
+.is {
+    /*font-weight: bold;*/
+    color: #a8a9a9;
+    font-size: 18px;
+}
+
 
 /*------LOGIN--------*/
 
@@ -158,6 +168,7 @@ footer{
     width: 90%;
     max-width: 400px;
     text-align: center;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 input[type=text],
