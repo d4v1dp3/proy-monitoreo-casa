@@ -22,6 +22,7 @@ import ipn.cic.sistmr.sesion.CatalogoSBLocal;
 import ipn.cic.sistmr.sesion.EstadoPacienteSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
 import ipn.cic.sistmr.sesion.PacienteSBLocal;
+import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmr.bean.vo.PacienteVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
 import ipn.cic.web.sistmr.util.Mensaje;
@@ -69,6 +70,8 @@ public class ListadoPacientesMB implements Serializable {
     private CatalogoSBLocal catalogoSB;
     @EJB
     private BitacoraSBLocal bitacoraSB;
+    @EJB
+    private UsuarioSBLocal usuarioSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
@@ -398,21 +401,23 @@ public class ListadoPacientesMB implements Serializable {
             pacienteEditar.setIdEstadopaciente(estadopac);
 
             pacienteEditar = pacienteSB.updatePaciente(pacienteEditar);
-            
-             //Registrar operacion en bitacora
-            Date fechaEntrada = new Date();//Fecha de hoy
-            EntUsuario usrMed = utilWebSB.getUsrAutenticado();
-            if(estadopac.getIdEstadopaciente()==4){
-                EntBitacora evento = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMed);
-            }
-            if(estadopac.getIdEstadopaciente()==3){
-                EntBitacora evento = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMed);
-            }
 
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Estado Actualizado",
                             "El estado del paciente se ha actualizado correctamente. ",
                             FacesMessage.SEVERITY_INFO);
+            
+             //Registrar operacion en bitacora
+            Date fechaEntrada = new Date();//Fecha de hoy
+            EntUsuario usrMed = utilWebSB.getUsrAutenticado();
+            EntUsuario paciente = usuarioSB.getUsuarioDePaciente(pacienteEditar);
+            if(estadopac.getIdEstadopaciente()==4){
+                EntBitacora evento = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMed, paciente);
+            }
+            if(estadopac.getIdEstadopaciente()==3){
+                EntBitacora evento = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMed, paciente);
+            }
+            
 
         } catch (NoExistePacienteException ex) {
             msg = Mensaje.getInstance()
@@ -439,11 +444,10 @@ public class ListadoPacientesMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-//        FacesMessage mensaje = Mensaje.getInstance()
-//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-//                        FacesMessage.SEVERITY_INFO);
-//        PrimeFaces.current().dialog().closeDynamic(mensaje);
-        cerrarDialogo(null);
+        FacesMessage mensaje = Mensaje.getInstance()
+                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+                        FacesMessage.SEVERITY_INFO);
+        PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {
@@ -532,5 +536,5 @@ public class ListadoPacientesMB implements Serializable {
 
     public void setPacientesMonitoreados(List<EntPaciente> pacientesMonitoreados) {
         this.pacientesMonitoreados = pacientesMonitoreados;
-    }    
+    }
 }

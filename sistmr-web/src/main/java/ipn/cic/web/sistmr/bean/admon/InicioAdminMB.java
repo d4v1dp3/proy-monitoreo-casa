@@ -98,16 +98,12 @@ public class InicioAdminMB implements Serializable {
     public void cargarDatos() {
         FacesMessage msg = null;
 
-        logger.log(Level.INFO, "Entra a cargar datos.");
+        logger.log(Level.INFO, "Entra a cargar inicio Administrador.");
+        
         nomSistema = Constantes.getInstance().getString("NOMBRE_SISTEMA");
-
-        medicos = new ArrayList();
-        pacientes = new ArrayList();
-        caretas = new ArrayList();
 
         ingresosPac = new ArrayList();
         altasPac = new ArrayList();
-        decesosPac = new ArrayList();
         
         meses.add("Enero");
         meses.add("Febrero");
@@ -122,53 +118,75 @@ public class InicioAdminMB implements Serializable {
         meses.add("Noviembre");
         meses.add("Diciembre");
         
-
+        EntUsuario usrAdmin = utilWebSB.getUsrAutenticado();
+        EntPersona persona;
+            
         try {
-            EntUsuario usrAdmin = utilWebSB.getUsrAutenticado();
-            EntPersona persona = personaSB.getEntPersona(usrAdmin.getIdPersona());
+            //Recuperar datos del Usuario
+            persona = personaSB.getEntPersona(usrAdmin.getIdPersona());
             nomAdmin = persona.getNombre();
-
-            medicos = medicoSB.getMedicos();
-            pacientes = catalogoSB.getCatalogo("EntPaciente");
-            caretas = catalogoSB.getCatalogo("EntCareta");
-            caretasSA = caretahospitalSB.getCaretasNoAsignadas();
-            hospital = hospitalSB.getPrimerHospital();
-
-        } catch (MedicoException ex) {
-            logger.log(Level.SEVERE, "Error al cargar medicos.");
-        } catch (NoExisteHospitalException ex) {
-            logger.log(Level.SEVERE, "Error al cargar hospital.");
-        } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Error al recuperar pacientes/caretas.");
-        } catch (CaretaHospitalException ex) {
-            logger.log(Level.SEVERE, "Error al recuperar dispositivos no asignados.");
+            logger.log(Level.INFO, "Usuario administrador: {0}", nomAdmin);
         } catch (NoExistePersonaException ex) {
             logger.log(Level.SEVERE, "Error al recuperar datos del administrador.");
         }
-
-        if (msg == null) {
-            msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Éxito:",
-                            "Pacientes cargados correctamente",
-                            FacesMessage.SEVERITY_INFO);
+        
+        try {
+            //Recuperar datos del Hospital
+            hospital = hospitalSB.getPrimerHospital();
+        } catch (NoExisteHospitalException ex) {
+            logger.log(Level.SEVERE, "Error al cargar primer hospital.");
+            hospital = new EntHospital();
+            hospital.setNombre("Sin Registro");
+            hospital.setTelEmergencias("### ### ####");
         }
-//        utilWebSB.addMsg("frGestPacientes:msgsIP", msg);
-//        PrimeFaces.current().ajax().update("frIPacientes:msgsIP");
 
+        try {
+             medicos = medicoSB.getMedicos();
+        } catch (MedicoException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar lista de medicos.");
+            medicos = new ArrayList();
+        }
+           
+        try {
+            pacientes = catalogoSB.getCatalogo("EntPaciente");
+        } catch (CatalogoException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar lista de pacientes.");
+            pacientes = new ArrayList();
+        }
+            
+        try {
+            caretas = catalogoSB.getCatalogo("EntCareta");
+        } catch (CatalogoException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar listado de caretas.");
+            caretas = new ArrayList();
+        }
+            
+        try {            
+            caretasSA = caretahospitalSB.getCaretasNoAsignadas();
+        } catch (CaretaHospitalException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar dispositivos sin asignar.");
+            caretasSA = new ArrayList();
+        }
 
         /*Recuperar EVENTOS*/
         try {
             ingresosPac = bitacoraSB.getIngresosPacientes();
             altasPac = bitacoraSB.getAltasPacientes();
             decesosPac = bitacoraSB.getDecesosPacientes();
+            logger.log(Level.INFO, "Historicos recuperados.");
         } catch (BitacoraException ex) {
-            Logger.getLogger(InicioAdminMB.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Error al recuperar historicos.");
         }
-
+        
         cargarDatosGraficoIngresos();
         cargarDatosGraficoAltas();
         cargarDatosGraficoDecesos();
-
+        
+        
+//        utilWebSB.addMsg("frGestPacientes:msgsIP", msg);
+//        PrimeFaces.current().ajax().update("frIAdmin:msgsIAdmin");
+        
+        logger.log(Level.INFO, "\tDatos inicio Admin cargados correctamente.");
     }
 
     

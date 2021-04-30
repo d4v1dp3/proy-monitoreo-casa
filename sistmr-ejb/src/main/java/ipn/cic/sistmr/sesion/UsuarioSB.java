@@ -11,6 +11,7 @@ import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.exception.UsuarioException;
 import ipn.cic.sistmr.modelo.EntMedico;
+import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
@@ -152,5 +153,17 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             
         }
         return null;
+    }
+        
+    @Override
+    public EntUsuario getUsuarioDePaciente(EntPaciente paciente) {
+       try{
+            query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
+            query.setParameter("idPersona",paciente.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            return usuario;
+        }catch(Exception e){
+            return null;
+        }   
     }
 }

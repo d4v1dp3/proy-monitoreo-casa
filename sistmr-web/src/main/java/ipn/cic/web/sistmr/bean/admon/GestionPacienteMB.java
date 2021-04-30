@@ -12,6 +12,7 @@ import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.IDUsuarioException;
 import ipn.cic.sistmr.exception.MedicoException;
 import ipn.cic.sistmr.exception.PacienteException;
+import ipn.cic.sistmr.exception.UsuarioException;
 import ipn.cic.sistmr.modelo.EntBitacora;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
@@ -25,6 +26,7 @@ import ipn.cic.sistmr.sesion.BitacoraSBLocal;
 import ipn.cic.sistmr.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmr.sesion.CatalogoSBLocal;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
+import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmr.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmr.bean.vo.PacienteVO;
 import ipn.cic.web.sistmr.bean.vo.PersonaVO;
@@ -82,6 +84,8 @@ public class GestionPacienteMB implements Serializable {
     CaretaHospitalSBLocal caretahospitalSB;
     @EJB
     BitacoraSBLocal bitacoraSB;
+    @EJB
+    UsuarioSBLocal usuarioSB;
 
     public void iniciaVO() {
         setDatUsuario(new UsuarioVO());
@@ -199,7 +203,10 @@ public class GestionPacienteMB implements Serializable {
             //Registrar operacion en bitacora
             Date fechaEntrada = new Date();//Fecha de hoy
             EntUsuario usrAdmin = utilWebSB.getUsrAutenticado();
-            EntBitacora evento = bitacoraSB.eventoRegistroDePaciente(fechaEntrada, usrAdmin);
+            
+            EntUsuario paciente = usuarioSB.getUsuario(datUsuario.getIdUsuario());
+            EntBitacora evento = bitacoraSB.eventoRegistroDePaciente(fechaEntrada, usrAdmin, paciente);
+            
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
@@ -216,6 +223,8 @@ public class GestionPacienteMB implements Serializable {
             return;
         } catch (BitacoraException ex) {
             logger.log(Level.INFO, "ERROR: No se registro evento en bitacora.");
+        } catch (UsuarioException ex) {
+            logger.log(Level.INFO, "ERROR: No se recupero el usuaruo del paciente registrado.");
         }
         
         FacesMessage msg = null;

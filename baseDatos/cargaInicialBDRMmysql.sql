@@ -43,7 +43,7 @@ INSERT INTO RM_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (4,'Paci
 
 /*-- Definición de Opciones*/
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (1, 'Salir', 'ui-icon-close', '#{sesionMB.cerrarSesion}');
-Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (2, 'Gestión usuarios', 'fas fa-id-card', '/faces/facelets/admon/gestionUsuarios.xhtml');
+Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (2, 'Gestión Usuarios', 'fas fa-id-card', '/faces/facelets/admon/gestionUsuarios.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'Gestión Hospital', 'fas fa-hospital', '/faces/facelets/admon/gestionHospital.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
 Insert into RM_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
@@ -112,24 +112,36 @@ VALUES(92.0,100.0,81.0,92.0,0.0,81.0,
        100,120,121,139,140,190,
        60,80,81,89,90,100);
        
+/*Para el inicio de sesion de un usuario en el sistema*/
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('1', 'INICIA_SESION');
+
 /*Para el registro de un paciente en el sistema por el administrador */
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('1', 'REGISTRO_PACIENTE');
+VALUES ('2', 'REGISTRA_PACIENTE');
 /*Para el registro de un medico en el sistema por el administrador */
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('2', 'REGISTRO_MEDICO');
-/*Para el alta de un paciente en el sistema por el medico */
+VALUES ('3', 'REGISTRA_MEDICO');
+/*Para el registro de un medico en el sistema por el administrador */
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('3', 'ALTA_PACIENTE');
-/*Para el deceso de un paciente en el sistema por el medico */
+VALUES ('4', 'REGISTRA_DISPOSITIVO');
+
+/*Para la actualizacion del estado de un paciente en el sistema por el medico */
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('4', 'DECESO_PACIENTE');
-/*Para el inicios de sesion de un usuario en el sistema*/
+VALUES ('5', 'ACTUALIZA_ESTADO_PACIENTE');
+
+/*Para identificar el Paciente registrado*/
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('5', 'INICIO_SESION_ADMIN');
+VALUES ('6', 'PACIENTE_REGISTRADO');
+/*Para identificar el medico registrado*/
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('6', 'INICIO_SESION_MED');
+VALUES ('7', 'MEDICO_REGISTRADO');
+
+
+/*Para senalar el cambio de estado del paciente*/
 INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
-VALUES ('7', 'INICIO_SESION_PAC');
+VALUES ('8', 'PACIENTE_ALTA');
+INSERT INTO RM_EVENTOBITACORA (ID_EVENTO, DESCRIPCION)
+VALUES ('9', 'PACIENTE_DECESO');
 
 commit;
