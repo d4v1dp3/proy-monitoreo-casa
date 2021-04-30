@@ -444,10 +444,11 @@ public class ListadoPacientesMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-        FacesMessage mensaje = Mensaje.getInstance()
-                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                        FacesMessage.SEVERITY_INFO);
-        PrimeFaces.current().dialog().closeDynamic(mensaje);
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                        FacesMessage.SEVERITY_INFO);
+//        PrimeFaces.current().dialog().closeDynamic(mensaje);
+        cerrarDialogo(null);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {
