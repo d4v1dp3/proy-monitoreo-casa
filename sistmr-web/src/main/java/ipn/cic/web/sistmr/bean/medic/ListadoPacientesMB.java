@@ -329,7 +329,7 @@ public class ListadoPacientesMB implements Serializable {
         utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
 
-    public void editarPaciente() {
+    public void editarEstadoPaciente() {
         logger.log(Level.INFO, "Abre dialogo edita paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
@@ -371,7 +371,7 @@ public class ListadoPacientesMB implements Serializable {
         parametros.put("edad", edad);
         parametros.put("idestado", idestado);
 
-        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaEstadoPaciente", options, parametros);
     }
 
     public void retornoEditarPaciente(SelectEvent event) {

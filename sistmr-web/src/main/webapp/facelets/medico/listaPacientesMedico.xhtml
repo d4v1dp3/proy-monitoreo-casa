@@ -108,7 +108,7 @@ Todos los derechos reservados
                                 </p:column>
                                 
                                 <p:column headerText="Estado de salud">
-                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                         <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                         <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                     </p:commandButton>
@@ -160,7 +160,7 @@ Todos los derechos reservados
                                     </p:column>
 
                                     <p:column headerText="Estado de salud">
-                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                         </p:commandButton>
@@ -210,7 +210,7 @@ Todos los derechos reservados
                                     </p:column>
 
                                     <p:column headerText="Estado de salud">
-                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                         </p:commandButton>
