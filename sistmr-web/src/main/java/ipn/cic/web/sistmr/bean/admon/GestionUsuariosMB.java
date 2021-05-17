@@ -71,6 +71,7 @@ public class GestionUsuariosMB implements Serializable {
     private String usuario;
     private String contrasenia;
     private Boolean activo;
+    private String correo;
     
 
     @PostConstruct
@@ -169,7 +170,7 @@ public class GestionUsuariosMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 750);
-        options.put("height", 640);
+        options.put("height", 680);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
@@ -206,6 +207,9 @@ public class GestionUsuariosMB implements Serializable {
         
         List<String> genero = new ArrayList<>();
         genero.add(usuarioEditar.getIdPersona().getIdGenero().getIdGenero()+ "");
+        
+        List<String> correo = new ArrayList<>();
+        correo.add(usuarioEditar.getEmail()+ "");
 
         parametros.put("idUsuario", idusuario);
         parametros.put("nombre", nombre);
@@ -217,6 +221,7 @@ public class GestionUsuariosMB implements Serializable {
         parametros.put("contrasenia", contrasenia);
         parametros.put("activo", activo);  
         parametros.put("idgenero", genero);  
+        parametros.put("correo", correo);  
 
         PrimeFaces.current().dialog().openDynamic("usuarios/dialEditaUsuario", options, parametros);
     }
@@ -250,6 +255,7 @@ public class GestionUsuariosMB implements Serializable {
             usuarioEditar.setIdUsuario(usuario);
             usuarioEditar.setContrasenia(contrasenia);
             usuarioEditar.setActivo(activo);
+            usuarioEditar.setEmail(correo);
             
             usuarioEditar = usuarioSB.updateUsuario(usuarioEditar);
             logger.log(Level.INFO, "Datos de sesion actualizados correctamente {0}.", usuarioEditar.getIdUsuario());
@@ -426,4 +432,14 @@ public class GestionUsuariosMB implements Serializable {
     public void setIdgenero(short idgenero) {
         this.idgenero = idgenero;
     }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    
+    
 }

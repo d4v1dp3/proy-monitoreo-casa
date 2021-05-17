@@ -4,7 +4,7 @@
  * Laboratorio de Robótica y Mecatrónica
  * Todos los derechos reservados
  */
-package ipn.cic.web.sistmr.bean.pacient;
+package ipn.cic.web.sistmr.bean.medic;
 
 import ipn.cic.sistmr.exception.BitacoraException;
 import ipn.cic.sistmr.exception.CatalogoException;
@@ -359,6 +359,9 @@ public class ListadoPacientesMB implements Serializable {
 
         List<String> edad = new ArrayList<>();
         edad.add(pacienteEditar.getIdPersona().getEdad() + "");
+        
+        List<String> idestado = new ArrayList<>();
+        idestado.add(pacienteEditar.getIdEstadopaciente().getIdEstadopaciente() + "");
 
         parametros.put("idpac", idpac);
         parametros.put("nombre", valNombre);
@@ -366,6 +369,7 @@ public class ListadoPacientesMB implements Serializable {
         parametros.put("segundoapellido", valSegundoAp);
         parametros.put("curp", curp);
         parametros.put("edad", edad);
+        parametros.put("idestado", idestado);
 
         PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
     }
@@ -538,4 +542,5 @@ public class ListadoPacientesMB implements Serializable {
     public void setPacientesMonitoreados(List<EntPaciente> pacientesMonitoreados) {
         this.pacientesMonitoreados = pacientesMonitoreados;
     }
+    
 }

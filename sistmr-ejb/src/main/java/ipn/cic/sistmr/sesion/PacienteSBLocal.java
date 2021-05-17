@@ -27,6 +27,7 @@ public interface PacienteSBLocal {
     EntPaciente updatePaciente(EntPaciente pac) throws UpdateEntityException;
     EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException;
     public EntPaciente getPaciente(EntPersona Persona) throws NoExistePacienteException;
+    public List<EntPaciente> getPacientes() throws PacienteException;
     public List<EntPaciente> getPacientes(EntMedico entMedico) throws PacienteException;
     EntCareta getCaretaDePaciente(EntPaciente Paciente) throws NoExistePacienteException;
 }

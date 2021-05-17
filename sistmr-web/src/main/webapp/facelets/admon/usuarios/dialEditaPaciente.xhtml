@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view>
+        <f:metadata> 
+            <f:viewParam name="idPaciente" value="#{gestionPacientesMB.pacienteEditar.idPaciente}" />
+            <f:viewParam name="nombre" value="#{gestionPacientesMB.pacientePersona.nombre}" />
+            <f:viewParam name="primerapellido" value="#{gestionPacientesMB.pacientePersona.primerApellido}" />
+            <f:viewParam name="segundoapellido" value="#{gestionPacientesMB.pacientePersona.segundoApellido}" />
+            <f:viewParam name="curp" value="#{gestionPacientesMB.pacientePersona.curp}" />
+            <f:viewParam name="edad" value="#{gestionPacientesMB.pacientePersona.edad}" />
+            <f:viewParam name="idgenero" value="#{gestionPacientesMB.idgenero}" />
+
+            <f:viewParam name="dircalle" value="#{gestionPacientesMB.pacienteEditar.dirCalle}" />
+            <f:viewParam name="dirnumero" value="#{gestionPacientesMB.pacienteEditar.dirNumero}" />
+            <f:viewParam name="dirinterior" value="#{gestionPacientesMB.pacienteEditar.dirInterior}" />
+            <f:viewParam name="telcel" value="#{gestionPacientesMB.pacienteEditar.telCel}" />
+            <f:viewParam name="telfijo" value="#{gestionPacientesMB.pacienteEditar.telFijo}" />
+            <f:viewParam name="idhospital" value="#{gestionPacientesMB.idhospital}" />
+            <f:viewParam name="idmedico" value="#{gestionPacientesMB.idmedico}" />
+            <f:viewParam name="idcareta" value="#{gestionPacientesMB.idcareta}" />
+            <f:viewParam name="noserie" value="#{gestionPacientesMB.noSerie}" />
+            <f:viewParam name="correo" value="#{gestionPacientesMB.pacienteUsuario.email}" />
+
+            <f:viewParam name="diab" value="#{gestionPacientesMB.diabetes}" />
+            <f:viewParam name="canc" value="#{gestionPacientesMB.cancer}" />
+            <f:viewParam name="asma" value="#{gestionPacientesMB.asma}" />
+            <f:viewParam name="vih" value="#{gestionPacientesMB.vih}" />
+            <f:viewParam name="has" value="#{gestionPacientesMB.has}" />
+            <f:viewParam name="epoc" value="#{gestionPacientesMB.epoc}" />
+            <f:viewParam name="emba" value="#{gestionPacientesMB.embarazo}" />
+            <f:viewParam name="artr" value="#{gestionPacientesMB.artritis}" />
+            <f:viewParam name="enfa" value="#{gestionPacientesMB.enfautoinmune}" />
+
+        </f:metadata>
+        <h:head>
+            <title>Edita Paciente</title>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 90%;
+                }
+                .ui-widget-header{
+                    background-color: #e7e8e9 !important;
+                    border-color: #cacaca !important;
+                    font-weight: bold !important;
+                    color: black !important;
+                    text-align: left !important;
+                }
+                .sinborde{
+                    border-color: white !important;
+                }
+                .titulo{
+                    font-weight: bold !important;
+                }
+
+                /* reset on the showcase style*/
+                body .ui-panelgrid .ui-panelgrid-cell {
+                    background-color: transparent;
+                }
+
+                /* example use of styles for your form */
+                .my-heading-row {
+                    background-color: var(--surface-c);
+                    font-weight: bold;
+                }
+            </style>
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+        </h:head>
+
+        <h:body>
+            <i id="customheader" class="fas fa-bed" style="display:none"></i>
+
+
+            <h:form id="frmAltaPaciente">
+                <p:growl id="msgAltaPassGral" showDetail="true">
+                    <p:autoUpdate/>
+                </p:growl>
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <center>
+                                <h2>
+                                    <p:outputLabel value="ACTUALIZACIÓN DE LOS DATOS DE PACIENTE" class="titulo"></p:outputLabel>
+                                </h2>
+
+                                <!--                                <p>Cambie directamente la informacion en los campos. </p>-->
+                            </center>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="3" class="sinborde"></p:column>
+                                </p:row>
+                            </p:panelGrid>
+
+
+                            <p:panelGrid columns="3"
+                                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                                         layout="grid"
+                                         styleClass="ui-panelgrid-blank ui-fluid"
+                                         style="border:0px none; background-color:transparent;">
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="apPat" value="Apellido Paterno:" />
+                                    <p:inputText id="apPat" value="#{gestionPacientesMB.pacientePersona.primerApellido}" required="true" />
+                                    <p:message for="apPat" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="apMat" value="Apellido Materno:" /> 
+                                    <p:inputText id="apMat" value="#{gestionPacientesMB.pacientePersona.segundoApellido}" required="true" />
+                                    <p:message for="apMat" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="nomPers" value="Nombre(s):" />                              
+                                    <p:inputText id="nomPers" value="#{gestionPacientesMB.pacientePersona.nombre}" required="true" />
+                                    <p:message for="nomPers" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="curp" value="CURP:" />
+                                    <p:inputText id="curp" value="#{gestionPacientesMB.pacientePersona.curp}" required="true"/> 
+                                    <p:message for="curp" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="genMenu" value="Género:" />
+                                    <p:selectOneMenu id="genMenu" value="#{gestionPacientesMB.idgenero}" dynamic="true">
+                                        <f:selectItems value="#{gestionPacientesMB.catGenero}" var="genero" 
+                                                       itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="genMenu" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="edad" value="Edad:" />
+                                    <p:inputNumber id="edad" value="#{gestionPacientesMB.pacientePersona.edad}" required="true" decimalPlaces="0"/>
+                                    <p:message for="edad"/>
+                                </p:column>        
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="dirCalle" value="Calle:" />
+                                    <p:inputText id="dirCalle" value="#{gestionPacientesMB.pacienteEditar.dirCalle}" required="true" />
+                                    <p:message for="dirCalle"/>
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="numExt" value="Num. Exterior:" />
+                                    <p:inputNumber id="numExt" value="#{gestionPacientesMB.pacienteEditar.dirNumero}" required="true" decimalPlaces="0"/>
+                                    <p:message for="numExt" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="numInt" value="Num. Interior:" />
+                                    <p:inputText id="numInt" value="#{gestionPacientesMB.pacienteEditar.dirInterior}" required="true" />
+                                    <p:message for="numInt" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="telFijo" value="Teléfono Fijo:" />
+
+                                    <p:inputMask id="telFijo" value="#{gestionPacientesMB.pacienteEditar.telFijo}" required="true" 
+                                                 mask="999 999 9999" validateMask="true"/>
+
+                                    <p:message for="telFijo" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="telCel" value="Teléfono Celular:" />
+
+                                    <p:inputMask id="telCel" value="#{gestionPacientesMB.pacienteEditar.telCel}" required="true" 
+                                                 mask="999 999 9999" validateMask="true"/>
+
+                                    <p:message for="telCel" />
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="hEmail" value="Correo Electrónico:" />
+                                    <p:inputText id="hEmail" value="#{gestionPacientesMB.pacienteUsuario.email}" required="true"/> 
+                                    <p:message for="hEmail" />
+                                </p:column>
+
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    
+<!--                    <p:row>
+                        <p:column style="text-align: center" class="ui-widget-header">Datos del Paciente</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+
+                            <p:panelGrid columns="2"
+                                         columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                         layout="grid"
+                                         styleClass="ui-panelgrid-blank ui-fluid"
+                                         style="border:0px none; background-color:transparent;">
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="idHosp" value="Hospital:" />
+                                    <p:selectOneMenu id="idHosp" value="#{gestionPacientesMB.idhospital}" required="true">
+                                        <f:selectItems value="#{gestionPacientesMB.listaHospital}" var="hospital" 
+                                                       itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                        <p:ajax />
+                                    </p:selectOneMenu> 
+                                </p:column>
+
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="idMed" value="Médico:" />
+                                    <p:selectOneMenu id="idMed" value="#{gestionPacientesMB.idmedico}" required="true">
+                                        <f:selectItems value="#{gestionPacientesMB.listaMedicos}" var="medico" 
+                                                       itemLabel="#{medico.idPersona.primerApellido} #{medico.idPersona.segundoApellido} #{medico.idPersona.nombre}" itemValue="#{medico.idMedico}">
+                                        </f:selectItems>
+                                        <p:ajax />
+                                    </p:selectOneMenu>
+                                    <p:message for="idMed" />
+                                </p:column>
+
+                            </p:panelGrid>
+
+                        </p:column>
+                    </p:row>-->
+<!--                    <p:row>
+                        <p:column style="text-align: center" class="ui-widget-header">Antecedentes</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+
+
+
+                        </p:column>
+                    </p:row>-->
+
+
+                    <p:row>
+                        <p:column style="text-align: right">
+                            <p:commandButton value="Guardar" actionListener="#{gestionPacientesMB.guardarCambiosPaciente()}"
+                                             icon="fas fa-save" update="@all"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+            <h:form>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column colspan="3" style="text-align: right">
+
+                            <p:commandButton value="Cerrar" action="#{gestionPacientesMB.cerrarDialogo}" 
+                                             icon="pi pi-times" />  
+
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+
+        </h:body>
+    </f:view>
+</html>

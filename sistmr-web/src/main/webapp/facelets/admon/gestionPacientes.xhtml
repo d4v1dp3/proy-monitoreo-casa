@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : gestionHospital
+    Created on : Septiembre 2020
+    Author     : Iliac Huerta Trujillo
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Gestion_Pacientes
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            <style type="text/css">
+                .green .ui-panel-titlebar{
+                    background-color: #4CAF50 !important;
+                    color: white !important;
+                    border-color: #4CAF50 !important;
+                }
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                }
+
+            </style>
+
+            <h:form id="frGestPacientes">
+                <p:growl id="msgsGP" showDetail="true"  > 
+                    <p:autoUpdate />
+                </p:growl>
+                <p:panel id="pnPacs" header="Gestión Pacientes" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Página para la gestión de los datos de pacientes que administra el <b>#{gestionPacientesMB.nomSistema}</b>
+                            </p>
+                            <p>
+                                <p:commandButton icon="fas fa-bed" value="     Registrar Paciente" title="Registro" actionListener="#{gestionPacientesMB.altaPaciente()}">
+                                    <p:ajax event="dialogReturn" listener="#{gestionPacientesMB.retornoAltaPaciente}" update="@all"/>
+                                </p:commandButton>
+                            </p>
+
+                        </div>
+
+                        <div class="p-col" style="align-content: center;">
+                            <p:dataTable id="pacientes" var="paciente" value="#{gestionPacientesMB.listaPacientes}" rows="10"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                         rowsPerPageTemplate="10,20,30">
+
+                                <f:facet name="header" class="green">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Lista de Pacientes
+
+                                        <div>
+                                            <p:commandButton id="toggler" type="button" value="Mostrar Columnas" icon="pi pi-align-justify"/>
+                                            <p:columnToggler datasource="pacientes" trigger="toggler"/>
+                                        </div>
+                                    </div>
+                                </f:facet>
+
+                                <p:column headerText="Id Paciente">
+                                    <h:outputText value="#{paciente.idPaciente}" />
+                                </p:column>
+
+                                <p:column headerText="Primer Ap." filterBy="#{paciente.idPersona.primerApellido}" filterMatchMode="contains">
+                                    <h:outputText value="#{paciente.idPersona.primerApellido}" />
+                                </p:column>
+
+                                <p:column headerText="Segundo Ap." filterBy="#{paciente.idPersona.segundoApellido}" filterMatchMode="contains">
+                                    <h:outputText value="#{paciente.idPersona.segundoApellido}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre" filterBy="#{paciente.idPersona.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{paciente.idPersona.nombre}" />
+                                </p:column>
+
+                                <p:column headerText="CURP" filterBy="#{paciente.idPersona.curp}" filterMatchMode="contains">
+                                    <h:outputText value="#{paciente.idPersona.curp}" />
+                                </p:column>
+
+                                <p:column headerText="Hospital" style="text-aling:center" >
+                                    <h:outputText value="#{paciente.idHospital.nombre}" />
+                                </p:column>
+
+<!--                                <p:column headerText="Médico" style="text-aling:center" >
+                                    <h:outputText value="" />
+                                </p:column>-->
+
+                                <p:column headerText="Dispositivo" style="text-aling:center" >
+                                    <h:outputText value="#{paciente.idCareta.noSerie}" />
+                                    <h:outputText value="            " />
+                                    <p:commandButton icon="fa fa-github-alt" title="Editar" action="#{gestionPacientesMB.cambioDispositivo()}">
+                                        <f:setPropertyActionListener value="#{paciente}" target="#{gestionPacientesMB.pacienteMostrar}" />
+                                        <p:ajax event="dialogReturn" listener="#{gestionPacientesMB.retornoCambioDispositivo}" update="@all"/>
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:32px;text-align: center">
+                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionPacientesMB.editarPaciente()}">
+                                        <f:setPropertyActionListener value="#{paciente}" target="#{gestionPacientesMB.pacienteMostrar}" />
+                                        <p:ajax event="dialogReturn" listener="#{gestionPacientesMB.retornoEditaPaciente}" update="@all"/>
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+                </p:panel>
+
+
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>

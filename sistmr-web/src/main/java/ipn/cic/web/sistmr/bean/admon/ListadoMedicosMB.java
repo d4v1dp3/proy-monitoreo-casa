@@ -4,21 +4,14 @@
  * Laboratorio de Robótica y Mecatrónica
  * Todos los derechos reservados
  */
-package ipn.cic.web.sistmr.bean.pacient;
+package ipn.cic.web.sistmr.bean.admon;
 
 import ipn.cic.sistmr.exception.MedicoException;
-import ipn.cic.sistmr.exception.PacienteException;
-import ipn.cic.sistmr.exception.UsuarioException;
 import ipn.cic.sistmr.modelo.EntMedico;
-import ipn.cic.sistmr.modelo.EntPaciente;
-import ipn.cic.sistmr.modelo.EntUsuario;
 import ipn.cic.sistmr.sesion.MedicoSBLocal;
-import ipn.cic.sistmr.sesion.PacienteSBLocal;
-import ipn.cic.sistmr.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +24,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
+
 
 /**
  * ManageBean que se utiliza para carga de usuarios en el sistema
@@ -77,7 +71,34 @@ public class ListadoMedicosMB implements Serializable {
 //        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
 //        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
     }
+    
+     public void altaMedico(){
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 700);
+        options.put("height", 640);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
 
+        PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaMedico", options, null);
+    }
+
+     public void retornoAltaMedico(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaMedicos();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
+    }
  
 
     /**

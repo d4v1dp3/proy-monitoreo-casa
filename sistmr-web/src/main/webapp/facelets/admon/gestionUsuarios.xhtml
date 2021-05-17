@@ -54,7 +54,7 @@ Todos los derechos reservados
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
-                                Página para la gestión de los datos de usuarios que administra el <b>#{gestionHospitalMB.nomSistema}</b>
+                                Página para la gestión de los datos de usuarios, en relacion a sus datos personales e inicio de sesion, que administra el <b>#{gestionHospitalMB.nomSistema}</b>
                             </p>
 
                         </div>
@@ -109,7 +109,7 @@ Todos los derechos reservados
                                     <h:outputText value="" styleClass="ui-icon #{usuario.activo ? 'far fa-thumbs-up' : 'far fa-thumbs-down'}"/>
                                 </p:column>
 
-                                <p:column style="width:32px;text-align: center">
+                                <p:column headerText="Editar" style="width:32px;text-align: center">
                                     <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionUsuariosMB.editarUsuario()}">
                                         <f:setPropertyActionListener value="#{usuario}" target="#{gestionUsuariosMB.usuarioEditar}" />
                                         <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
