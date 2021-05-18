@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author J.Perez
+ * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 @Entity
 @Table(name = "RM_ESTADOPACIENTE")

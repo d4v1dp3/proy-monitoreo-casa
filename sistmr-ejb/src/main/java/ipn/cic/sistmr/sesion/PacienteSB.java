@@ -53,7 +53,7 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
         qry.setParameter("idPaciente", idPaciente);
         try {
             EntPaciente res = (EntPaciente) qry.getSingleResult();
-            res.getIdCareta();
+            res.getIdCareta().getIdCareta();
             return res;
         } catch (NoResultException ex) {
             logger.log(Level.SEVERE, "La consulta no obtuvo resultados");

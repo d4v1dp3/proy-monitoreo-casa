@@ -23,8 +23,9 @@ public interface CaretaHospitalSBLocal {
     EntCaretaHospital guardaCaretaHospital(EntCaretaHospital caretahospital) throws CaretaHospitalException;
     EntCaretaHospital getCaretaHospital(EntCareta careta) throws CaretaHospitalException;
     List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException;
-    List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException;
-    List<EntCaretaHospital> getCaretasNoAsignadas(EntHospital entHospital) throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasDisponibles() throws CaretaHospitalException;
+    public List<EntCaretaHospital> getCaretasAveriadas() throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasDisponibles(EntHospital entHospital) throws CaretaHospitalException;
     boolean borrarCaretaHospital(EntCaretaHospital caretahospital) throws RemoveEntityException;
     
 }

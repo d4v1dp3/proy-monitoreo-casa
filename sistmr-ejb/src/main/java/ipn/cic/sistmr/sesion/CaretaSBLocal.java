@@ -11,6 +11,7 @@ import ipn.cic.sistmr.exception.NoExisteCaretaException;
 import ipn.cic.sistmr.exception.RemoveEntityException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.modelo.EntCareta;
+import ipn.cic.sistmr.modelo.EntEstadocareta;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,4 +27,5 @@ public interface CaretaSBLocal {
     List<EntCareta> getCaretas() throws NoExisteCaretaException;
     boolean borrarCareta(EntCareta careta) throws RemoveEntityException;
     EntCareta updateCareta(EntCareta careta) throws UpdateEntityException;
+    public EntEstadocareta getEstadoCareta(EntCareta Careta) throws NoExisteCaretaException;
 }

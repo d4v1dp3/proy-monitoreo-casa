@@ -12,6 +12,7 @@ import ipn.cic.sistmr.exception.RemoveEntityException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.exception.UpdateEntityException;
 import ipn.cic.sistmr.modelo.EntCareta;
+import ipn.cic.sistmr.modelo.EntEstadocareta;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,17 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
         
         EntCareta res = (EntCareta)qry.getSingleResult();
         
+        return res;
+    }
+    
+    @Override
+    public EntEstadocareta getEstadoCareta(EntCareta Careta) throws NoExisteCaretaException {        
+        Query qry = em.createQuery("SELECT e.idEstadocareta FROM EntCareta e WHERE e.idCareta = :idCareta");
+        qry.setParameter("idCareta", Careta.getIdCareta());
+        
+        EntEstadocareta res = (EntEstadocareta)qry.getSingleResult();
+        res.getIdEstadoCareta();
+        res.getDescripcion();
         return res;
     }
     

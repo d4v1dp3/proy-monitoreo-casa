@@ -130,7 +130,7 @@ public class GestionPacienteMB implements Serializable {
 
         try {
             //Cargar Lista de Dispositivos no asignados
-            listCaretaHospital = caretahospitalSB.getCaretasNoAsignadas();
+            listCaretaHospital = caretahospitalSB.getCaretasDisponibles();
             
             if(listCaretaHospital.isEmpty()){
                 FacesMessage msg = Mensaje.getInstance()

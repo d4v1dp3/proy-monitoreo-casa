@@ -11,6 +11,7 @@ import ipn.cic.sistmr.exception.RemoveEntityException;
 import ipn.cic.sistmr.exception.SaveEntityException;
 import ipn.cic.sistmr.modelo.EntCareta;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
+import ipn.cic.sistmr.modelo.EntEstadocareta;
 import ipn.cic.sistmr.modelo.EntHospital;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,12 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
     
     @Override
     public List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException {
-        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e");
+        short idestado = 2;
+        EntEstadocareta estado = new EntEstadocareta(idestado, "ASIGNADO");
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entCareta.idEstadocareta = :idestado");
+        qry.setParameter("idestado", estado);
+        
+        
         List<EntCaretaHospital> res = qry.getResultList();
 
         Query qry2 = em.createQuery("SELECT f.idCareta FROM EntPaciente f");
@@ -83,8 +89,12 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
     }
     
     @Override
-    public List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException {
-        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e");
+    public List<EntCaretaHospital> getCaretasDisponibles() throws CaretaHospitalException {      
+        short idestado = 1;
+        EntEstadocareta estado = new EntEstadocareta(idestado, "DISPONIBLE");
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entCareta.idEstadocareta = :idestado");
+        qry.setParameter("idestado", estado);
+        
         List<EntCaretaHospital> res = qry.getResultList();
         List<EntCaretaHospital> res2 = getCaretasAsignadas();
         res.removeAll(res2);
@@ -103,7 +113,32 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
     }
     
     @Override
-    public List<EntCaretaHospital> getCaretasNoAsignadas(EntHospital entHospital) throws CaretaHospitalException {        
+    public List<EntCaretaHospital> getCaretasAveriadas() throws CaretaHospitalException {
+        short idestado = 3;
+        EntEstadocareta estado = new EntEstadocareta(idestado, "AVERIADO");
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entCareta.idEstadocareta = :idestado");
+        qry.setParameter("idestado", estado);
+        
+        
+        List<EntCaretaHospital> res = qry.getResultList();
+//        List<EntCaretaHospital> res2 = getCaretasAsignadas();
+//        res.removeAll(res2);
+
+        List<EntCaretaHospital> resp = new ArrayList();
+        for (EntCaretaHospital ent : res) {
+            ent.getEntCareta().getIdCareta();
+            ent.getEntCareta().getNoSerie();
+            ent.getEntCareta().getFechaManufactura();
+            ent.getEntHospital().getIdHospital();
+            ent.getEntHospital().getNombre();
+            ent.getFechaAsignacion();
+            resp.add(ent);
+        }
+        return resp;
+    }
+    
+    @Override
+    public List<EntCaretaHospital> getCaretasDisponibles(EntHospital entHospital) throws CaretaHospitalException {        
         Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entHospital = :entHospital");
         qry.setParameter("entHospital", entHospital);
         

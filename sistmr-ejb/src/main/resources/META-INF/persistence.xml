@@ -26,6 +26,7 @@
     <class>ipn.cic.sistmr.modelo.EntRol</class>
     <class>ipn.cic.sistmr.modelo.EntUsuario</class>
     <class>ipn.cic.sistmr.modelo.EntValoresReferencia</class>
+    <class>ipn.cic.sistmr.modelo.EntEstadocareta</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <!-- Properties for Hibernate -->

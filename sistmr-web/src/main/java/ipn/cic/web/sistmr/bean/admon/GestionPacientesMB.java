@@ -6,6 +6,7 @@
  */
 package ipn.cic.web.sistmr.bean.admon;
 
+import ipn.cic.sistmr.exception.CaretaException;
 import ipn.cic.sistmr.exception.CaretaHospitalException;
 import ipn.cic.sistmr.exception.CatalogoException;
 import ipn.cic.sistmr.exception.GeneroException;
@@ -19,6 +20,7 @@ import ipn.cic.sistmr.exception.UsuarioException;
 import ipn.cic.sistmr.modelo.EntAntecedentes;
 import ipn.cic.sistmr.modelo.EntCareta;
 import ipn.cic.sistmr.modelo.EntCaretaHospital;
+import ipn.cic.sistmr.modelo.EntEstadocareta;
 import ipn.cic.sistmr.modelo.EntEstadopaciente;
 import ipn.cic.sistmr.modelo.EntGenero;
 import ipn.cic.sistmr.modelo.EntHospital;
@@ -134,25 +136,28 @@ public class GestionPacientesMB implements Serializable {
     private short idcareta = 0;
     private Integer idmedico = 0;
     
-    private ArrayList<String> descripcion;
+    private ArrayList<String> opcDescripcion;
+    private String descripcion = "SIN NOVEDAD";
+    
 
     @PostConstruct
     public void cargaPacientes() {
         pacienteEditar = new PacienteVO();
         pacientePersona = new PersonaVO();
         pacienteUsuario = new UsuarioVO();
-        descripcion = new ArrayList();
+        opcDescripcion = new ArrayList();
         
-        descripcion.add("ERROR EN TOMA DE SIGNOS");
-        descripcion.add("AVERÍA EN SENSOR");
-        descripcion.add("RUPTURA DEL DISPOSITIVO");
-        descripcion.add("OTRO");
+        opcDescripcion.add("SIN NOVEDAD");
+        opcDescripcion.add("AVERÍA");
+        opcDescripcion.add("RUPTURA");
+        opcDescripcion.add("OTRO");
         
         nomSistema = Constantes.getInstance().getString("NOMBRE_SISTEMA");
         
         FacesMessage msg=null;
-        logger.log(Level.INFO,"Entra a cargar lista de medicos.");
+        logger.log(Level.INFO,"Entra a cargar lista de pacientes.");
         //Recuperar lista de Medicos       
+        
         try {
             listaPacientes = pacienteSB.getPacientes();
             logger.log(Level.INFO,"Lista pacientes recuperada.");
@@ -181,8 +186,8 @@ public class GestionPacientesMB implements Serializable {
         }
         
          try {
-            //Cargar Lista de Dispositivos no asignados
-            listCaretaHospital = caretahospitalSB.getCaretasNoAsignadas();
+            //Cargar Lista de Dispositivos disponibles
+            listCaretaHospital = caretahospitalSB.getCaretasDisponibles();
             
             if(listCaretaHospital.isEmpty()){
                 msg = Mensaje.getInstance()
@@ -330,14 +335,40 @@ public class GestionPacientesMB implements Serializable {
     
     public void guardarCambioDispositivo() {
         
-
+        FacesMessage msg = null;
+        
         try {
-            
             pacienteMostrar = pacienteSB.getPaciente(pacienteEditar.getIdPaciente());
             
-            EntCareta careta = caretaSB.getCareta(idcareta);
-            pacienteMostrar.setIdCareta(careta);
+            //Actualizar estado careta Anterior
+            EntEstadocareta estado;
+            short idestado;
+            EntCareta caretaUpd;
+            logger.log(Level.INFO, "DESCRIPCION: "+descripcion);
+            if(descripcion.equals("SIN NOVEDAD")){
+                idestado = 1;
+                estado = new EntEstadocareta(idestado, "DISPONIBLE");
+                caretaUpd = pacienteSB.getCaretaDePaciente(pacienteMostrar);                
+                caretaUpd.setIdEstadoCareta(estado);                
+            }else{
+                idestado = 3;
+                estado = new EntEstadocareta(idestado, "AVERIADO");
+                caretaUpd = pacienteSB.getCaretaDePaciente(pacienteMostrar);                
+                caretaUpd.setIdEstadoCareta(estado);
+            }
+            caretaUpd = caretaSB.updateCareta(caretaUpd);
+            logger.log(Level.INFO, "ESTADO ACTUALIZADO: "+caretaUpd.getIdEstadoCareta().getDescripcion());
             
+            
+            //Actualizar estado careta Siguiente
+            idestado = 2;
+            estado = new EntEstadocareta(idestado, "ASIGNADO");
+            EntCareta careta = caretaSB.getCareta(idcareta);
+            careta.setIdEstadoCareta(estado);
+            careta = caretaSB.updateCareta(careta);
+            
+            
+            pacienteMostrar.setIdCareta(careta);            
             logger.log(Level.INFO, "Careta asignada: {0}", careta.getNoSerie());
             
             pacienteMostrar = pacienteSB.updatePaciente(pacienteMostrar);
@@ -348,9 +379,8 @@ public class GestionPacientesMB implements Serializable {
 //            
 //            EntUsuario paciente = usuarioSB.getUsuario(datUsuario.getIdUsuario());
 //            EntBitacora evento = bitacoraSB.eventoRegistroDePaciente(fechaEntrada, usrAdmin, paciente);
-            
-//        } catch (BitacoraException ex) {
-//            logger.log(Level.INFO, "ERROR: No se registro evento en bitacora.");
+
+
         } catch (NoExisteCaretaException ex) {
             logger.log(Level.INFO, "ERROR: No se no se recupero la entidad careta.");
         } catch (UpdateEntityException ex) {
@@ -359,7 +389,7 @@ public class GestionPacientesMB implements Serializable {
             logger.log(Level.INFO, "ERROR: Error al recuperar entidad paciente.");
         }
         
-        FacesMessage msg = null;
+        
         if (pacienteMostrar == null) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
@@ -894,12 +924,12 @@ public class GestionPacientesMB implements Serializable {
         this.idmedico = idmedico;
     }
 
-    public ArrayList<String> getDescripcion() {
-        return descripcion;
+    public ArrayList<String> getOpcDescripcion() {
+        return opcDescripcion;
     }
 
-    public void setDescripcion(ArrayList<String> descripcion) {
-        this.descripcion = descripcion;
+    public void setOpcDescripcion(ArrayList<String> opcDescripcion) {
+        this.opcDescripcion = opcDescripcion;
     }
 
     public String getNoSerie() {
@@ -909,6 +939,13 @@ public class GestionPacientesMB implements Serializable {
     public void setNoSerie(String noSerie) {
         this.noSerie = noSerie;
     }
-    
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     
 }

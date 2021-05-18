@@ -19,9 +19,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
+ * @author J.Perez
  */
 @Entity
 @Table(name = "RM_CARETA")
@@ -63,6 +66,9 @@ public class EntCareta implements Serializable {
     private List<EntMedidas> entMedidasList;
     @OneToMany(mappedBy = "idCareta", fetch = FetchType.LAZY)
     private List<EntPaciente> entPacienteList;
+    @JoinColumn(name = "ID_ESTADOCARETA", referencedColumnName = "ID_ESTADOCARETA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private EntEstadocareta idEstadocareta;
 
     public EntCareta() {
     }
@@ -157,6 +163,14 @@ public class EntCareta implements Serializable {
 
     public void setNoSerie(long noSerie) {
         this.noSerie = noSerie;
+    }
+
+    public EntEstadocareta getIdEstadoCareta() {
+        return idEstadocareta;
+    }
+
+    public void setIdEstadoCareta(EntEstadocareta idEstadocareta) {
+        this.idEstadocareta = idEstadocareta;
     }
     
     

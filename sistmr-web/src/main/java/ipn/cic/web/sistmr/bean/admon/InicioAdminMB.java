@@ -162,7 +162,7 @@ public class InicioAdminMB implements Serializable {
         }
             
         try {            
-            caretasSA = caretahospitalSB.getCaretasNoAsignadas();
+            caretasSA = caretahospitalSB.getCaretasDisponibles();
         } catch (CaretaHospitalException ex) {
             logger.log(Level.SEVERE, "Error al recuperar dispositivos sin asignar.");
             caretasSA = new ArrayList();

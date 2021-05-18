@@ -65,7 +65,7 @@ Todos los derechos reservados
                             </div>
 
                             <p:panel id="pnGDispositivosNA" header="Dispositivos (Disponibles)" style="margin-bottom:20px" styleClass="green">
-                                <p:dataTable var="caretahospitalNA" value="#{gestionDispositivosMB.caretashospitalNA}" rows="10"
+                                <p:dataTable var="caretahospitalNA" value="#{gestionDispositivosMB.caretashospitalDisponibles}" rows="10"
                                              paginator="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
@@ -83,8 +83,8 @@ Todos los derechos reservados
                                         <h:outputText value="#{caretahospitalNA.entCareta.fechaManufactura}" />
                                     </p:column>
 
-                                    <p:column headerText="Id Hospital" filterBy="#{caretahospitalNA.entHospital.idHospital}" filterMatchMode="contains">
-                                        <h:outputText value="#{caretahospitalNA.entHospital.idHospital}" />
+                                    <p:column headerText="Hospital" filterBy="#{caretahospitalNA.entHospital.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospitalNA.entHospital.nombre}" />
                                     </p:column>
 
                                     <p:column headerText="Fecha de Asignacion:" filterBy="#{caretahospitalNA.fechaAsignacion}" filterMatchMode="contains">
@@ -111,48 +111,86 @@ Todos los derechos reservados
                             <p:panel header="Dispositivos (En Desuso)" toggleable="true" closable="false" toggleSpeed="100"
                                      closeSpeed="100" widgetVar="panel1" collapsed="true" styleClass="green">
 
+                                <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospitalAveriadas}" rows="10"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                             rowsPerPageTemplate="10,20,30">
+                                    
+                                    <p:column headerText="Id">
+                                        <h:outputText value="#{caretahospital.entCareta.idCareta}"/>
+                                    </p:column>
 
+                                    <p:column headerText="Número de Serie" filterBy="#{caretahospital.entCareta.noSerie}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.noSerie}" />
+                                    </p:column>
+
+                                    <p:column headerText="Fecha de Manufactura" filterBy="#{caretahospital.entCareta.fechaManufactura}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.fechaManufactura}" />
+                                    </p:column>
+
+                                    <p:column headerText="Hospital" filterBy="#{caretahospital.entHospital.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entHospital.nombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="Fecha de Asignacion:" filterBy="#{caretahospital.fechaAsignacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.fechaAsignacion}" />
+                                    </p:column>
+
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton icon="pi pi-pencil" title="Editar" action="#{gestionDispositivosMB.editarDispositivo()}">
+                                            <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaHospitalEditar}" />
+                                            <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEditarDispositivo}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>
+
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.confirmarBaja()}">
+                                            <f:setPropertyActionListener value="#{caretahospitalNA}" target="#{gestionDispositivosMB.caretaHospitalEliminar}" />
+                                            <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEliminarDispositivo}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>
+
+                                </p:dataTable>
 
                             </p:panel>
                             <br/>
                             <p:panel header="Dispositivos (Asignados)" toggleable="true" closable="false" toggleSpeed="100"
                                      closeSpeed="100" widgetVar="panel2" collapsed="true" styleClass="green">
 
-                                <!--<p:panel id="pnGDispositivos" header="Dispositivos Asignados" style="margin-bottom:20px" styleClass="green">-->
-                                    <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospital}" rows="10"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                                 rowsPerPageTemplate="10,20,30">
-                                        <p:column headerText="Id">
-                                            <h:outputText value="#{caretahospital.entCareta.idCareta}"/>
-                                        </p:column>
+                                <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospitalAsignadas}" rows="10"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                             rowsPerPageTemplate="10,20,30">
+                                    <p:column headerText="Id">
+                                        <h:outputText value="#{caretahospital.entCareta.idCareta}"/>
+                                    </p:column>
 
-                                        <p:column headerText="Número de Serie" filterBy="#{caretahospital.entCareta.noSerie}" filterMatchMode="contains">
-                                            <h:outputText value="#{caretahospital.entCareta.noSerie}" />
-                                        </p:column>
+                                    <p:column headerText="Número de Serie" filterBy="#{caretahospital.entCareta.noSerie}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.noSerie}" />
+                                    </p:column>
 
-                                        <p:column headerText="Fecha de Manufactura" filterBy="#{caretahospital.entCareta.fechaManufactura}" filterMatchMode="contains">
-                                            <h:outputText value="#{caretahospital.entCareta.fechaManufactura}" />
-                                        </p:column>
+                                    <p:column headerText="Fecha de Manufactura" filterBy="#{caretahospital.entCareta.fechaManufactura}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.fechaManufactura}" />
+                                    </p:column>
 
-                                        <p:column headerText="Id Hospital" filterBy="#{caretahospital.entHospital.idHospital}" filterMatchMode="contains">
-                                            <h:outputText value="#{caretahospital.entHospital.idHospital}" />
-                                        </p:column>
+                                    <p:column headerText="Hospital" filterBy="#{caretahospital.entHospital.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entHospital.nombre}" />
+                                    </p:column>
 
-                                        <p:column headerText="Fecha de Asignacion:" filterBy="#{caretahospital.fechaAsignacion}" filterMatchMode="contains">
-                                            <h:outputText value="#{caretahospital.fechaAsignacion}" />
-                                        </p:column>
+                                    <p:column headerText="Fecha de Asignacion:" filterBy="#{caretahospital.fechaAsignacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.fechaAsignacion}" />
+                                    </p:column>
 
-                                        <p:column style="width:32px;text-align: center">
-                                            <p:commandButton icon="pi pi-pencil" title="Editar" action="#{gestionDispositivosMB.editarDispositivo()}">
-                                                <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaHospitalEditar}" />
-                                                <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEditarDispositivo}" update="@all"/>
-                                            </p:commandButton>
-                                        </p:column>
+<!--                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton icon="pi pi-pencil" title="Editar" action="#{gestionDispositivosMB.editarDispositivo()}">
+                                            <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaHospitalEditar}" />
+                                            <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEditarDispositivo}" update="@all"/>
+                                        </p:commandButton>
+                                    </p:column>-->
 
-                                    </p:dataTable>
-                                <!--</p:panel>-->
+                                </p:dataTable>
 
                             </p:panel>
 

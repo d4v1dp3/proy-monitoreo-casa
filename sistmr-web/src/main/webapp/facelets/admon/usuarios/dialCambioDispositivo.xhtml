@@ -128,26 +128,24 @@
                                          layout="grid"
                                          styleClass="ui-panelgrid-blank ui-fluid"
                                          style="border:0px none; background-color:transparent;">
+                                
+                                <p:column>
+                                    <p:outputLabel value="Causa de cambio:" />
+                                    <p:selectOneMenu id="idDesc" value="#{gestionPacientesMB.descripcion}" required="true">
+                                        <f:selectItems value="#{gestionPacientesMB.opcDescripcion}" var="desc" 
+                                                       itemLabel="#{desc}" itemValue="#{desc}"/>
+                                        <p:ajax />
+                                    </p:selectOneMenu>
+                                </p:column>
 
                                 <p:column style="background-color: lightcoral">
-                                    <p:outputLabel for="idCareta" value="Seleccionar Dispositivo:" />
+                                    <p:outputLabel for="idCareta" value="Seleccionar Nuevo Dispositivo:" />
                                     <p:selectOneMenu id="idCareta" value="#{gestionPacientesMB.idcareta}" required="true">
                                         <f:selectItems value="#{gestionPacientesMB.listCaretaHospital}" var="caretahospital" 
                                                        itemLabel="#{caretahospital.entCareta.noSerie}" itemValue="#{caretahospital.entCareta.idCareta}"/>
                                         <p:ajax />
                                     </p:selectOneMenu> 
                                 </p:column>
-
-                                <p:column>
-                                    <p:outputLabel value="Causa de cambio:" />
-                                    <p:selectOneMenu id="idDesc" value="Seleccionar" required="true">
-                                        <f:selectItems value="#{gestionPacientesMB.descripcion}" var="desc" 
-                                                       itemLabel="#{desc}" itemValue="#{desc}"/>
-                                        <p:ajax />
-                                    </p:selectOneMenu>
-                                </p:column>
-
-
 
                             </p:panelGrid>
 
