@@ -146,7 +146,7 @@ Todos los derechos reservados
 
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.confirmarBaja()}">
-                                            <f:setPropertyActionListener value="#{caretahospitalNA}" target="#{gestionDispositivosMB.caretaHospitalEliminar}" />
+                                            <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaHospitalEliminar}" />
                                             <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEliminarDispositivo}" update="@all"/>
                                         </p:commandButton>
                                     </p:column>
