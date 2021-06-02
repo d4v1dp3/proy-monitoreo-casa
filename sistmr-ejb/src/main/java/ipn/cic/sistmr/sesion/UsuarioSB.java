@@ -15,6 +15,9 @@ import ipn.cic.sistmr.modelo.EntPaciente;
 import ipn.cic.sistmr.modelo.EntPersona;
 import ipn.cic.sistmr.modelo.EntRol;
 import ipn.cic.sistmr.modelo.EntUsuario;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,6 +96,10 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         if(existeIdUsiario(eu.getIdUsuario())){
             throw new IDUsuarioException();
         }
+        
+        //Cifrado de contrasenia
+        eu.setCifra(getSHA256(eu.getContrasenia()));
+        
         eu = (EntUsuario) this.saveEntity(eu);
         return eu;
     }
@@ -112,6 +119,9 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     
     @Override
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
+        //Cifrado de contrasenia
+        usuario.setCifra(getSHA256(usuario.getContrasenia()));
+        
         return (EntUsuario)this.updateEntity(usuario);   
     }
     
@@ -165,5 +175,19 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         }catch(Exception e){
             return null;
         }   
+    }
+    
+        private String getSHA256(String contrasenia) {
+        try {
+            String password = contrasenia;
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] passwordBytes = password.getBytes();
+            byte[] hash = md.digest(passwordBytes);
+            String passwordHash = Base64.getEncoder().encodeToString(hash);
+            return passwordHash;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ipn.cic.sistmr.sesion.UsuarioSB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

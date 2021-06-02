@@ -171,6 +171,6 @@ public class EntCareta implements Serializable {
     public void setIdEstadoCareta(EntEstadocareta idEstadocareta) {
         this.idEstadocareta = idEstadocareta;
     }
-    
+
     
 }
