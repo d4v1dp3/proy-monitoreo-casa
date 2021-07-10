@@ -30,6 +30,7 @@ import javax.persistence.NoResultException;
  */
 @Stateless
 public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
+
     private static final Logger logger = Logger.getLogger(UsuarioSB.class.getName());
 
     /**
@@ -43,7 +44,7 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     @Override
     public EntUsuario getUsuario(String nomUsuario) throws UsuarioException {
         EntUsuario entUsuario = null;
-        logger.log(Level.INFO,"Nombre del usuario buscado :{0} ", nomUsuario);
+        logger.log(Level.INFO, "Nombre del usuario buscado :{0} ", nomUsuario);
         try {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
             query.setParameter("idUsuario", nomUsuario);
@@ -80,51 +81,51 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
 
     @Override
     public List<EntUsuario> getUsuarios() throws UsuarioException {
-        try{
+        try {
             query = em.createQuery("SELECT usr From EntUsuario usr LEFT JOIN FETCH  usr.idPersona p "
                     + "ORDER BY p.primerApellido, p.segundoApellido, p.nombre");
             return query.getResultList();
-        }catch(Exception e){
-            logger.log(Level.SEVERE,"Error al obtener la lista de usuarios : {0}",e.getMessage());
-            throw new UsuarioException("No esposible obtener la lista de usuarios",e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al obtener la lista de usuarios : {0}", e.getMessage());
+            throw new UsuarioException("No esposible obtener la lista de usuarios", e);
         }
-                    
+
     }
 
     @Override
-    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException, IDUsuarioException{
-        if(existeIdUsiario(eu.getIdUsuario())){
+    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException, IDUsuarioException {
+        if (existeIdUsiario(eu.getIdUsuario())) {
             throw new IDUsuarioException();
         }
-        
+
         //Cifrado de contrasenia
         eu.setCifra(getSHA256(eu.getContrasenia()));
-        
+
         eu = (EntUsuario) this.saveEntity(eu);
         return eu;
     }
-    
+
     @Override
-    public boolean existeIdUsiario(String idUsuario){
-        try{
+    public boolean existeIdUsiario(String idUsuario) {
+        try {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
-            query.setParameter("idUsuario",idUsuario.trim());
+            query.setParameter("idUsuario", idUsuario.trim());
             EntUsuario usuario = (EntUsuario) query.getSingleResult();
-            
-            return usuario!=null;            
-        }catch(NoResultException e){
+
+            return usuario != null;
+        } catch (NoResultException e) {
             return false;
         }
     }
-    
+
     @Override
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
         //Cifrado de contrasenia
         usuario.setCifra(getSHA256(usuario.getContrasenia()));
-        
-        return (EntUsuario)this.updateEntity(usuario);   
+
+        return (EntUsuario) this.updateEntity(usuario);
     }
-    
+
     @Override
     public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException {
         query = em.createQuery("SELECT usr.idPersona From EntUsuario usr WHERE usr.idUsuario=:idUsuario");
@@ -138,46 +139,46 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         persona.getIdGenero();
         return persona;
     }
-    
+
     @Override
-    public EntUsuario getUsuariobyEmail(String email){
+    public EntUsuario getUsuariobyEmail(String email) {
         try {
             query = em.createNamedQuery("EntUsuario.findByEmail");
             query.setParameter("email", email);
             EntUsuario entUsuario = (EntUsuario) query.getSingleResult();
             return entUsuario;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return null;
     }
 
     @Override
     public EntUsuario getUsuarioDeMedico(EntMedico medico) {
-       try{
+        try {
             query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
-            query.setParameter("idPersona",medico.getIdPersona());
-            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            query.setParameter("idPersona", medico.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();
             return usuario;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return null;
     }
-        
+
     @Override
     public EntUsuario getUsuarioDePaciente(EntPaciente paciente) {
-       try{
+        try {
             query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
-            query.setParameter("idPersona",paciente.getIdPersona());
-            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            query.setParameter("idPersona", paciente.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();
             return usuario;
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
-        }   
+        }
     }
-    
-        private String getSHA256(String contrasenia) {
+
+    private String getSHA256(String contrasenia) {
         try {
             String password = contrasenia;
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -189,5 +190,21 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             Logger.getLogger(ipn.cic.sistmr.sesion.UsuarioSB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public EntUsuario getUsuarioCifrado(String idusuario, String cifra) {
+        EntUsuario entUsuario;
+        try {
+            query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idUsuario=:idUsuario and e.cifra=:cifra");
+            query.setParameter("idUsuario", idusuario);
+            query.setParameter("cifra", cifra);
+            entUsuario = (EntUsuario) query.getSingleResult();
+            return entUsuario;
+
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }
