@@ -116,19 +116,11 @@
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
                             </p:panel>
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.fcardColor}">
                                 <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-size: 50px"/>
                                 <h:outputText value="LPM" style="font-size: 15px"/>
                             </p:panel>
-                        </p:column>
-                        <p:column> 
-                            <p:panel id="panelPArt" header="Presión Arterial" styleClass="#{dashboardPacienteMB.pArtColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacPreArtSistolica}"  style="font-size: 50px"/>
-                                <h:outputText value="/"  style="font-size: 50px"/>
-                                <h:outputText value="#{dashboardPacienteMB.pacPreArtDiastolica}"  style="font-size: 50px"/>
-                                <h:outputText value="mmHg"  style="font-size: 15px"/>
-                            </p:panel> 
                         </p:column>
                     </p:row>
                     <p:row>
@@ -148,7 +140,6 @@
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecCardiaca}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecRespiratoria}" style="height:250px;" />
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoPreArterial}" style="height:250px;"/>
                             </p:panelGrid>
                         </p:column>
                     </p:row>
