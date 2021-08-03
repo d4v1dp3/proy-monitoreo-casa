@@ -25,7 +25,6 @@ import javax.persistence.Query;
  * @author J.PEREZ
  */
 @Stateless
-@LocalBean
 public class CaretaSB extends BaseSB implements CaretaSBLocal{
     private static final Logger logger = Logger.getLogger(HospitalSB.class.getName());
 

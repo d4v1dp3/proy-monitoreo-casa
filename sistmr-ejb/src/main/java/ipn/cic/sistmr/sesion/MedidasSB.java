@@ -12,14 +12,12 @@ import ipn.cic.sistmr.modelo.EntMedidas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
  * @author J.PEREZ
  */
 @Stateless
-@LocalBean
 public class MedidasSB extends BaseSB implements MedidasSBLocal{
     private static final Logger logger = Logger.getLogger(HospitalSB.class.getName());
 
