@@ -68,6 +68,9 @@ Todos los derechos reservados
                                     <p:commandButton icon="fas fa-bed" value="     Registrar Paciente" title="Registro" actionListener="#{gestionUsuariosMB.altaPaciente()}">
                                         <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoAltaPaciente}" update="@all"/>
                                     </p:commandButton>
+                                    <p:commandButton icon="fas fa-user-ninja" value="     Registrar Administrador" title="Registro" actionListener="#{gestionUsuariosMB.altaAdministrador()}">
+                                        <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoAltaAdministrador}" update="@all"/>
+                                    </p:commandButton>
                                 </p>    
                             </div>
 

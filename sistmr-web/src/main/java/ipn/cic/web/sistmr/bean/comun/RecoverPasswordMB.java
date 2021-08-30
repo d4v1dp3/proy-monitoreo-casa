@@ -40,7 +40,7 @@ public class RecoverPasswordMB implements Serializable{
     @EJB
     private UsuarioSBLocal usuarioSB;
          
-    @Resource(name = "java:jboss/mail/sisMHospitalMail")
+    @Resource(name = "java:jboss/mail/sisMCasaMail")
     private Session mailSesion;
     
     private EntMedico medico;

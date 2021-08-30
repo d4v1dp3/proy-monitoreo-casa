@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+        <title>Alta Administrador</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+            .ui-widget-header{
+                background-color: #e7e8e9 !important;
+                border-color: #cacaca !important;
+                font-weight: bold !important;
+                color: black !important;
+                text-align: left !important;
+            }
+            .sinborde{
+                border-color: white !important;
+            }
+            .titulo{
+                font-weight: bold !important;
+            }
+
+            /* reset on the showcase style*/
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            /* example use of styles for your form */
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+            }
+        </style>
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+
+    </h:head>
+
+    <h:body>
+        <i class="far fa-save" id="customheader" style="display:none"></i>
+        <h:form id="frmAltaAdministrador">
+            <p:growl id="msgAltaAdmin" showDetail="true">
+                <p:autoUpdate/>
+            </p:growl>
+
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN ADMINISTRADOR" class="titulo"></p:outputLabel>
+                            </h2>
+                            <p>Llene los siguientes campos para registrar un Administrador en el sistema. </p>
+                        </center>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Datos Personales</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="3" class="sinborde"></p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p:panelGrid columns="3"
+                                     columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="apPat" value="Apellido Paterno:" />
+                                <p:inputText id="apPat" value="#{gestionAdministradorMB.datPersona.primerApellido}" required="true" />
+                                <p:message for="apPat" />
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="apMat" value="Apellido Materno:" />
+                                <p:inputText id="apMat" value="#{gestionAdministradorMB.datPersona.segundoApellido}" required="true" />
+                                <p:message for="apMat" />
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="nomPers" value="Nombre(s):" />
+                                <p:inputText id="nomPers" value="#{gestionAdministradorMB.datPersona.nombre}" required="true" />
+                                <p:message for="nomPers" />
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="curp" value="CURP:" />
+                                <p:inputMask id="curp" value="#{gestionAdministradorMB.datPersona.curp}" required="true" 
+                                             mask="a*a*999999a*a*a*99" validateMask="true"/>
+                                <p:message for="curp" />
+                            </p:column>  
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="genMenu" value="Género:" />
+                                <p:selectOneMenu id="genMenu" value="#{gestionAdministradorMB.datPersona.idGenero}" required="true">
+                                    <f:selectItems value="#{gestionAdministradorMB.catGenero}" var="genero" 
+                                                   itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
+                                <p:message for="genMenu" />
+                            </p:column>  
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="edad" value="Edad:" />
+                                <p:inputNumber id="edad" value="#{gestionAdministradorMB.datPersona.edad}" required="true" decimalPlaces="0"/>
+                                <p:message for="edad"/>
+                            </p:column>  
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="hEmail" value="Correo Electrónico:" />
+                                <p:inputText id="hEmail" value="#{gestionAdministradorMB.datUsuario.email}" required="true"> 
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+                                </p:inputText> 
+
+                                <p:message for="hEmail" />
+                            </p:column>
+
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:panelGrid columns="3"
+                                     columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="idUsr" value="Usuario:" />
+                                <p:inputText id="idUsr" value="#{gestionAdministradorMB.datUsuario.idUsuario}" required="true" >
+                                    <p:ajax  event="keyup"/>
+                                </p:inputText>
+                                <p:message id="idUsrMess" for="idUsr" />
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="contra" value="Contraseña:"/>
+                                <p:inputText id="contra" value="#{gestionAdministradorMB.datUsuario.contrasenia}" required="true" />
+
+                                <!--<p:password id="contra" value="# {gestionMedicoMB.datUsuario.contrasenia}" redisplay="true" required="true"/>-->
+
+                                <p:message for="contra" />
+                            </p:column>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="estado" value="Estado de Sesión:"/><br/>
+                                <p:selectBooleanCheckbox id="estado" value="#{gestionAdministradorMB.datUsuario.activo}" itemLabel="Activo"/>
+                            </p:column>
+
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: right">
+                        <p:commandButton icon="fas fa-save" value="Guardar" action="#{gestionAdministradorMB.guardarAdministrador()}"
+                                         update="@all"/>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+        <h:form>
+            <p:panelGrid>
+                <p:row>
+                    <p:column colspan="3" style="text-align: right">
+
+                        <p:commandButton value="Cerrar" actionListener="#{gestionAdministradorMB.cerrarDialogo()}" 
+                                         icon="pi pi-times"/>    
+
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+
+
+    </h:body>
+</html>

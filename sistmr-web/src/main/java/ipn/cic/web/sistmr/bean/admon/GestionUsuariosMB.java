@@ -166,6 +166,34 @@ public class GestionUsuariosMB implements Serializable {
         }
     }
     
+    public void altaAdministrador(){
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 700);
+        options.put("height", 640);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+
+        PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaAdministrador", options, null);
+    }
+    
+    public void retornoAltaAdministrador(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaUsuarios();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
+    }
+    
     public void editarUsuario() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
