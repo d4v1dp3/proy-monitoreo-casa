@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -38,7 +39,7 @@ import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
- * @author J.PEREZ
+ * @author marcos
  */
 
 @Named(value="dashboardPacienteMB")
@@ -56,6 +57,7 @@ public class DashboardPacienteMB implements Serializable{
     
     private EntPaciente paciente;
     private List<EntMedidas> medidasComp;
+    private List<EntMedidas> medidasPorDia;
     private EntValoresReferencia valoresRef; 
     private EntEstadopaciente estadoPaciente;
     
@@ -63,20 +65,22 @@ public class DashboardPacienteMB implements Serializable{
     private String pacientePrimerAp;
     private String pacienteSegundoAp;
     private String pacienteId;
-    private float pacSaturacionOxg;
-    private float pacTemperatura;
-    private short pacFrecRespiratoria;
-    private short pacFrecCardiaca;
+       
+    private String pacSaturacionOxgStr;
+    private String pacTemperaturaStr;
+    private String pacFrecRespiratoriaStr;
+    private String pacFrecCardiacaStr;
+    
     private int   pacPreArtSistolica;
     private int   pacPreArtDiastolica;
     private String pacEstado;
     
     private String fechaUltMedicion;
     private String horaUltMedicion;
-    private String fechaHist;   
-    private int nmedidas;
-    private int indiceMedida;
-    
+    private String fechaActual;  
+    private LocalDate fechaCalendario;
+    private String fechaGraficas;
+        
     private String satOxgColor;
     private String tempColor;
     private String frespColor;
@@ -89,13 +93,21 @@ public class DashboardPacienteMB implements Serializable{
     private LineChartModel historicoFrecRespiratoria = new LineChartModel();
     private LineChartModel historicoPreArterial = new LineChartModel();
     
-    private DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private DateTimeFormatter formatoHora =  DateTimeFormatter.ofPattern("HH:mm:ss");
+    private DateTimeFormatter formatoFecha1 =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private DateTimeFormatter formatoFecha2 =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter formatoHora   =  DateTimeFormatter.ofPattern("HH:mm:ss");
     
-    private LocalDate fechaCalendario;
+    
+
     private TimeZone tz = TimeZone.getDefault();
         
     public void cargaInicial(){
+        
+        float pacSaturacionOxg;
+        float pacTemperatura;
+        short pacFrecRespiratoria;
+        short pacFrecCardiaca;
+        
         try{
             paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
             medidasComp = dashboardBD.getListaMedidas(paciente);
@@ -111,10 +123,23 @@ public class DashboardPacienteMB implements Serializable{
                 pacTemperatura = medida.getTemperatura();
                 pacFrecRespiratoria = medida.getFrecRespiratoria();
                 pacFrecCardiaca = medida.getFrecCardiaca();
-                pacPreArtSistolica = medida.getPreArtSistolica();
-                pacPreArtDiastolica =medida.getPreArtDiastolica();
-                pacEstado = estadoPaciente.getDescripcion(); 
                 
+                if(pacSaturacionOxg>=0) pacSaturacionOxgStr = Float.toString(pacSaturacionOxg);
+                else pacSaturacionOxgStr = "ES";
+                
+                if(pacTemperatura>=0) pacTemperaturaStr = Float.toString(pacTemperatura);
+                else pacTemperaturaStr = "ES";
+                
+                if(pacFrecRespiratoria>=0) pacFrecRespiratoriaStr = Short.toString(pacFrecRespiratoria);
+                else pacFrecRespiratoriaStr = "ES";
+                
+                if(pacFrecCardiaca>=0) pacFrecCardiacaStr = Short.toString(pacFrecCardiaca);
+                else pacFrecCardiacaStr = "ES";
+                
+                //pacPreArtSistolica = medida.getPreArtSistolica();
+                //pacPreArtDiastolica =medida.getPreArtDiastolica();
+                pacEstado = estadoPaciente.getDescripcion(); 
+                               
                 if(pacSaturacionOxg>=valoresRef.getSatOxigenoNormalMin() && pacSaturacionOxg<valoresRef.getSatOxigenoNormalMax()){
                     satOxgColor="greenBackground";     
                 }else if(pacSaturacionOxg>=valoresRef.getSatOxigenoWarningMin() && pacSaturacionOxg<valoresRef.getSatOxigenoWarningMax()){
@@ -155,7 +180,7 @@ public class DashboardPacienteMB implements Serializable{
                     fcardColor="redBackground";
                 }
                     
-                if((pacPreArtSistolica>=valoresRef.getPreArtSistolicaNormalMin() && pacPreArtSistolica<=valoresRef.getPreArtSistolicaNormalMax()) 
+                /*if((pacPreArtSistolica>=valoresRef.getPreArtSistolicaNormalMin() && pacPreArtSistolica<=valoresRef.getPreArtSistolicaNormalMax()) 
                     && (pacPreArtDiastolica>=valoresRef.getPreArtDiastolicaNormalMin() && pacPreArtDiastolica<=valoresRef.getPreArtDiastolicaNormalMax())){
                     pArtColor="greenBackground";
                 }else if((pacPreArtSistolica>=valoresRef.getPreArtSistolicaWarningMin() && pacPreArtSistolica<=valoresRef.getPreArtSistolicaWarningMax())
@@ -166,18 +191,23 @@ public class DashboardPacienteMB implements Serializable{
                     pArtColor="redBackground";
                 }else{
                     pArtColor="redBackground";
-                }
+                }*/
                 
                 LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
-                fechaUltMedicion=fechaMedicion.format(formatoFecha);
-                horaUltMedicion=fechaMedicion.format(formatoHora);
-
-                cargaHistoricoSOxigeno();
-                cargaHistoricoTemperatura();
-                cargaHistoricoFCardiaca();
-                cargaHistoricoFRespiratoria();
-                cargaHistoricoPArterial();
+                fechaUltMedicion=fechaMedicion.format(formatoFecha1);
+                horaUltMedicion =fechaMedicion.format(formatoHora);
+        
+                String[] fechaArr = (fechaActual.trim()).split("-");
+                fechaGraficas =fechaArr[2]+"-"+fechaArr[1]+"-"+fechaArr[0];
+                
+                
+                logger.log(Level.INFO,"Fecha ult medicion {0}",fechaUltMedicion);
+                logger.log(Level.INFO,"Hora  ult medicion {0}",horaUltMedicion);
+                logger.log(Level.INFO,"Fecha graficas     {0}",fechaGraficas);
+                
+                actualizaGraficas();
+              
             }      
             
         }catch(NoExistePacienteDashException ex1){
@@ -191,48 +221,39 @@ public class DashboardPacienteMB implements Serializable{
         }
     }  
     
-    public void updateDashboard(){
-        if (fechaCalendario!=null){
-            fechaHist =fechaCalendario.format(formatoFecha);
-            cargaHistoricoSOxigeno();
-            cargaHistoricoTemperatura();
-            cargaHistoricoFCardiaca();
-            cargaHistoricoFRespiratoria();
-            cargaHistoricoPArterial();
+    public void actualizaGraficas(){
+        if(fechaCalendario!=null){
+            fechaGraficas=fechaCalendario.format(formatoFecha2);
         }
-        
+        medidasPorDia=null;
+        try { 
+            medidasPorDia=dashboardBD.getListaSatOx(paciente, fechaGraficas);
+            logger.log(Level.INFO," Medidas recuperadas del dia: {0}",fechaGraficas+": "+medidasPorDia.size());
+        } catch (NoExisteMedicionesException ex) {
+            logger.log(Level.SEVERE,"Error al recuperar medidas del dia: {0}",fechaGraficas);
+        }
+               
+        cargaHistoricoSOxigeno();
+        cargaHistoricoTemperatura();
+        cargaHistoricoFCardiaca();
+        cargaHistoricoFRespiratoria();
+        //cargaHistoricoPArterial();    
     }
         
     @PostConstruct
     public void DashboardPacienteMB(){
     }   
     
-    public void getNumMedidasPorDia(){
-       
-        nmedidas=0;
-        indiceMedida=0;
-        boolean banderaIndice=true;
-        LocalDateTime fechaMedicion;
-        
-        for(int i=0;i<medidasComp.size();i++){
-            fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
-            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
-                nmedidas+=1;
-                if(banderaIndice==true){
-                    indiceMedida=i;
-                    banderaIndice=false;
-                } 
-            }
-        }
-    }
-    
     public void cargaHistoricoSOxigeno() {
-        
+                 
         float sOxgMin=300;
         float sOxgMax=0;
         float sOxgRefMin=valoresRef.getSatOxigenoNormalMin();
         float sOxgRefMax=valoresRef.getSatOxigenoNormalMax();
         float sOxg;
+        
+        List<EntMedidas> medidasGrafica = new ArrayList();
+        LocalDateTime fechaMedida;
         
         historicoSOxigeno.clear();
         
@@ -242,25 +263,27 @@ public class DashboardPacienteMB implements Serializable{
         maxVal.setLabel("Máximo");
         ChartSeries soxigeno = new ChartSeries();
         soxigeno.setLabel("Saturacion de oxígeno");
-        
-        getNumMedidasPorDia();
-        LocalDateTime fechaMedicion;
-                
-        for (int i=indiceMedida;i<(indiceMedida+nmedidas);i++){
-            fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
-
-            sOxg = medidasComp.get(i).getSaturacionOxigeno();  
+                            
+        for (EntMedidas medida : medidasPorDia){
+            if(medida.getSaturacionOxigeno()>=0){
+                medidasGrafica.add(medida);
+            }
+        }
+                        
+        for(int i=0;i<medidasGrafica.size();i++){
+            fechaMedida = LocalDateTime.ofInstant(medidasGrafica.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
+            sOxg = medidasGrafica.get(i).getSaturacionOxigeno();  
             sOxgMin = sOxg < sOxgMin ? sOxg : sOxgMin; 
             sOxgMax = sOxg > sOxgMax ? sOxg : sOxgMax; 
                 
-            soxigeno.set(fechaMedicion.format(formatoHora), sOxg);
-            
-            if(i==indiceMedida || i==(indiceMedida+nmedidas-1)){
-                minVal.set(fechaMedicion.format(formatoHora),sOxgRefMin);
-                maxVal.set(fechaMedicion.format(formatoHora),sOxgRefMax);
+            soxigeno.set(fechaMedida.format(formatoHora), sOxg);
+          
+            if(i==0 || i==(medidasGrafica.size()-1)){
+                minVal.set(fechaMedida.format(formatoHora),sOxgRefMin);
+                maxVal.set(fechaMedida.format(formatoHora),sOxgRefMax);
             }
         }
-
+        
         historicoSOxigeno.addSeries(soxigeno);
         historicoSOxigeno.addSeries(maxVal);
         historicoSOxigeno.addSeries(minVal);
@@ -289,6 +312,9 @@ public class DashboardPacienteMB implements Serializable{
         float tempRefMax=valoresRef.getTemperaturaNormalMax();
         float temp;
         
+        List<EntMedidas> medidasGrafica = new ArrayList();
+        LocalDateTime fechaMedicion;
+         
         historicoTemperatura.clear();
     
         ChartSeries minVal = new ChartSeries();
@@ -297,23 +323,25 @@ public class DashboardPacienteMB implements Serializable{
         maxVal.setLabel("Máximo");
         ChartSeries temperatura = new ChartSeries();
         temperatura.setLabel("Temperatura");
-        
-        getNumMedidasPorDia();
-        LocalDateTime fechaMedicion;
-        
-        for(int i=indiceMedida;i<(indiceMedida+nmedidas);i++){    
-            fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
               
-            temp = medidasComp.get(i).getTemperatura();    
+        for (EntMedidas medida : medidasPorDia){
+            if(medida.getTemperatura()>=0){
+                medidasGrafica.add(medida);
+            }
+        }
+        
+        for(int i=0;i<medidasGrafica.size();i++){          
+            fechaMedicion = LocalDateTime.ofInstant(medidasGrafica.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));          
+            temp = medidasGrafica.get(i).getTemperatura();    
             tempMin = temp < tempMin ? temp : tempMin; 
             tempMax = temp > tempMax ? temp : tempMax; 
                 
             temperatura.set(fechaMedicion.format(formatoHora), temp);
-            if(i==indiceMedida || i==(indiceMedida+nmedidas-1)){
+            
+            if(i==0 || i==(medidasGrafica.size()-1)){
                 minVal.set(fechaMedicion.format(formatoHora), tempRefMin);
                 maxVal.set(fechaMedicion.format(formatoHora), tempRefMax);
-            }
-            
+            }            
         }
    
         historicoTemperatura.addSeries(temperatura);
@@ -336,59 +364,6 @@ public class DashboardPacienteMB implements Serializable{
         yAxis.setMax(tempMax+2);
     }
 
-    public void cargaHistoricoFCardiaca() {
-        
-        short fCardMin=300;
-        short fCardMax=0;
-        short fCardRefMin=valoresRef.getFrecCardiacaNormalMin();
-        short fCardRefMax=valoresRef.getFrecCardiacaNormalMax();
-        short fCard;
-        
-        historicoFrecCardiaca.clear();
-        
-        ChartSeries minVal = new ChartSeries();
-        minVal.setLabel("Mínimo");
-        ChartSeries maxVal = new ChartSeries();
-        maxVal.setLabel("Máximo");
-        ChartSeries frecuenciaC = new ChartSeries();
-        frecuenciaC.setLabel("Frecuencia cardiaca");
-        
-        getNumMedidasPorDia();
-        LocalDateTime fechaMedicion;
-        
-        for(int i=indiceMedida;i<(indiceMedida+nmedidas);i++){    
-            fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
-            
-            fCard = medidasComp.get(i).getFrecCardiaca();
-            fCardMin = fCard < fCardMin ? fCard : fCardMin; 
-            fCardMax = fCard > fCardMax ? fCard : fCardMax; 
-                
-            frecuenciaC.set(fechaMedicion.format(formatoHora), fCard);
-            if(i==indiceMedida || i==(indiceMedida+nmedidas-1)){
-                minVal.set(fechaMedicion.format(formatoHora), fCardRefMin);
-                maxVal.set(fechaMedicion.format(formatoHora), fCardRefMax);
-            }
-            
-        }
-        historicoFrecCardiaca.addSeries(frecuenciaC);
-        historicoFrecCardiaca.addSeries(maxVal);
-        historicoFrecCardiaca.addSeries(minVal);
-        historicoFrecCardiaca.setSeriesColors("387df5,ff8a7d,ff8a7d");
-        historicoFrecCardiaca.setTitle("Frecuencia Cardíaca");
-        historicoFrecCardiaca.setLegendPosition("e");
-        historicoFrecCardiaca.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-        historicoFrecCardiaca.setShowPointLabels(true); 
-        historicoFrecCardiaca.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
-        
-        fCardMin = fCardMin < fCardRefMin ? fCardMin : fCardRefMin;
-        fCardMax = fCardMax > fCardRefMax ? fCardMax : fCardRefMax;
-        
-        Axis yAxis = historicoFrecCardiaca.getAxis(AxisType.Y);
-        yAxis.setLabel("Frecuencia (LPM)");
-        yAxis.setMin(fCardMin-2);
-        yAxis.setMax(fCardMax+2);
-    }
-    
     public void cargaHistoricoFRespiratoria() {
         
         short fRespMin=100;
@@ -396,7 +371,10 @@ public class DashboardPacienteMB implements Serializable{
         short fRespRefMin=valoresRef.getFrecRespiratoriaNormalMin();
         short fRespRefMax=valoresRef.getFrecRespiratoriaNormalMax();
         short fResp;
-                
+        
+        List<EntMedidas> medidasGrafica = new ArrayList();
+        LocalDateTime fechaMedicion;
+        
         historicoFrecRespiratoria.clear();
         
         ChartSeries minVal = new ChartSeries();
@@ -406,18 +384,22 @@ public class DashboardPacienteMB implements Serializable{
         ChartSeries frecuenciaR = new ChartSeries();
         frecuenciaR.setLabel("Frecuencia Respiratoria");
         
-        getNumMedidasPorDia();
-        LocalDateTime fechaMedicion;
+        for (EntMedidas medida : medidasPorDia){
+            if(medida.getFrecRespiratoria()>=0){
+                medidasGrafica.add(medida);
+            }
+        }
                 
-        for (int i=indiceMedida;i<(indiceMedida+nmedidas);i++){
-            fechaMedicion = LocalDateTime.ofInstant(medidasComp.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
+        for(int i=0;i<medidasGrafica.size();i++){ 
+            fechaMedicion = LocalDateTime.ofInstant(medidasGrafica.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
 
-            fResp = medidasComp.get(i).getFrecRespiratoria();  
+            fResp = medidasGrafica.get(i).getFrecRespiratoria();  
             fRespMin = fResp < fRespMin ? fResp : fRespMin; 
             fRespMax = fResp > fRespMax ? fResp : fRespMax; 
                
             frecuenciaR.set(fechaMedicion.format(formatoHora), fResp);
-            if(i==indiceMedida || i==(indiceMedida+nmedidas-1)){
+            
+            if(i==0 || i==(medidasGrafica.size()-1)){
                 minVal.set(fechaMedicion.format(formatoHora), fRespRefMin);
                 maxVal.set(fechaMedicion.format(formatoHora), fRespRefMax);
             }
@@ -442,9 +424,69 @@ public class DashboardPacienteMB implements Serializable{
         yAxis.setMax(fRespMax+2);
     }
     
+    public void cargaHistoricoFCardiaca() {
+        
+        short fCardMin=300;
+        short fCardMax=0;
+        short fCardRefMin=valoresRef.getFrecCardiacaNormalMin();
+        short fCardRefMax=valoresRef.getFrecCardiacaNormalMax();
+        short fCard;
+        
+        List<EntMedidas> medidasGrafica = new ArrayList();
+        LocalDateTime fechaMedicion;
+        
+        historicoFrecCardiaca.clear();
+        
+        ChartSeries minVal = new ChartSeries();
+        minVal.setLabel("Mínimo");
+        ChartSeries maxVal = new ChartSeries();
+        maxVal.setLabel("Máximo");
+        ChartSeries frecuenciaC = new ChartSeries();
+        frecuenciaC.setLabel("Frecuencia cardiaca");
+        
+        for (EntMedidas medida : medidasPorDia){
+            if(medida.getFrecCardiaca()>=0){
+                medidasGrafica.add(medida);
+            }
+        }
+        
+        for(int i=0;i<medidasGrafica.size();i++){         
+            fechaMedicion = LocalDateTime.ofInstant(medidasGrafica.get(i).getFechaMedicion().toInstant(), ZoneId.of(tz.getID()));
+            
+            fCard = medidasGrafica.get(i).getFrecCardiaca();
+            fCardMin = fCard < fCardMin ? fCard : fCardMin; 
+            fCardMax = fCard > fCardMax ? fCard : fCardMax; 
+                
+            frecuenciaC.set(fechaMedicion.format(formatoHora), fCard);
+            
+            if(i==0 || i==(medidasGrafica.size()-1)){
+                minVal.set(fechaMedicion.format(formatoHora), fCardRefMin);
+                maxVal.set(fechaMedicion.format(formatoHora), fCardRefMax);
+            }
+            
+        }
+        historicoFrecCardiaca.addSeries(frecuenciaC);
+        historicoFrecCardiaca.addSeries(maxVal);
+        historicoFrecCardiaca.addSeries(minVal);
+        historicoFrecCardiaca.setSeriesColors("387df5,ff8a7d,ff8a7d");
+        historicoFrecCardiaca.setTitle("Frecuencia Cardíaca");
+        historicoFrecCardiaca.setLegendPosition("e");
+        historicoFrecCardiaca.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+        historicoFrecCardiaca.setShowPointLabels(true); 
+        historicoFrecCardiaca.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
+        
+        fCardMin = fCardMin < fCardRefMin ? fCardMin : fCardRefMin;
+        fCardMax = fCardMax > fCardRefMax ? fCardMax : fCardRefMax;
+        
+        Axis yAxis = historicoFrecCardiaca.getAxis(AxisType.Y);
+        yAxis.setLabel("Frecuencia (LPM)");
+        yAxis.setMin(fCardMin-2);
+        yAxis.setMax(fCardMax+2);
+    }
+        
     public void cargaHistoricoPArterial() {
         
-        int diasMin=200;
+        /*int diasMin=200;
         int sisMax=0;
         int diasRefMin=valoresRef.getPreArtDiastolicaNormalMin();
         int sisRefMax=valoresRef.getPreArtSistolicaNormalMax();
@@ -464,7 +506,6 @@ public class DashboardPacienteMB implements Serializable{
         ChartSeries diastolica = new ChartSeries();
         diastolica.setLabel("Presión Arterial Diastólica");
         
-        getNumMedidasPorDia();
         LocalDateTime fechaMedicion;
                 
         for (int i=indiceMedida;i<(indiceMedida+nmedidas);i++){
@@ -502,7 +543,7 @@ public class DashboardPacienteMB implements Serializable{
         Axis yAxis = historicoPreArterial.getAxis(AxisType.Y);
         yAxis.setLabel("mmHg");
         yAxis.setMin(diasMin-2);
-        yAxis.setMax(sisMax+2);
+        yAxis.setMax(sisMax+2);*/
     }
 
 
@@ -537,39 +578,39 @@ public class DashboardPacienteMB implements Serializable{
     public void setPacienteId(String pacienteId){
         this.pacienteId = pacienteId;
     }
+
+    public String getPacSaturacionOxgStr() {
+        return pacSaturacionOxgStr;
+    }
+
+    public void setPacSaturacionOxgStr(String pacSaturacionOxgStr) {
+        this.pacSaturacionOxgStr = pacSaturacionOxgStr;
+    }
+
+    public String getPacTemperaturaStr() {
+        return pacTemperaturaStr;
+    }
+
+    public void setPacTemperaturaStr(String pacTemperaturaStr) {
+        this.pacTemperaturaStr = pacTemperaturaStr;
+    }
+
+    public String getPacFrecRespiratoriaStr() {
+        return pacFrecRespiratoriaStr;
+    }
+
+    public void setPacFrecRespiratoriaStr(String pacFrecRespiratoriaStr) {
+        this.pacFrecRespiratoriaStr = pacFrecRespiratoriaStr;
+    }
+
+    public String getPacFrecCardiacaStr() {
+        return pacFrecCardiacaStr;
+    }
+
+    public void setPacFrecCardiacaStr(String pacFrecCardiacaStr) {
+        this.pacFrecCardiacaStr = pacFrecCardiacaStr;
+    }
     
-    public float getPacSaturacionOxg() {
-        return pacSaturacionOxg;
-    }
-
-    public void setPacSaturacionOxg(float pacSaturacionOxg) {
-        this.pacSaturacionOxg = pacSaturacionOxg;
-    }
-
-    public float getPacTemperatura() {
-        return pacTemperatura;
-    }
-
-    public void setPacTemperatura(float pacTemperatura) {
-        this.pacTemperatura = pacTemperatura;
-    }
-
-    public short getPacFrecRespiratoria() {
-        return pacFrecRespiratoria;
-    }
-
-    public void setPacFrecRespiratoria(short pacFrecRespiratoria) {
-        this.pacFrecRespiratoria = pacFrecRespiratoria;
-    }
-
-    public short getPacFrecCardiaca() {
-        return pacFrecCardiaca;
-    }
-
-    public void setPacFrecCardiaca(short pacFrecCardiaca) {
-        this.pacFrecCardiaca = pacFrecCardiaca;
-    }
-
     public int getPacPreArtSistolica() {
         return pacPreArtSistolica;
     }
@@ -610,14 +651,14 @@ public class DashboardPacienteMB implements Serializable{
         this.horaUltMedicion = horaUltMedicion;
     }
 
-    public String getFechaHist() {
-        return fechaHist;
+    public String getFechaActual() {
+        return fechaActual;
     }
 
-    public void setFechaHist(String fechaHist) {
-        this.fechaHist = fechaHist;
+    public void setFechaActual(String fechaActual) {
+        this.fechaActual = fechaActual;
     }    
-    
+
     public LocalDate getFechaCalendario() {
         return fechaCalendario;
     }

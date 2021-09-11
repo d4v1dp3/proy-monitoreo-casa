@@ -27,4 +27,5 @@ public interface DashboardBDLocal {
     public List<EntMedidas> getListaMedidas(EntPaciente entPaciente) throws NoExisteMedicionesException;
     public EntValoresReferencia getValoresRef(Short idValRef) throws NoExisteValoresRefException;
     public EntEstadopaciente getEstadoPac(Long idPaciente) throws NoExisteEstadoPacException;
+    public List<EntMedidas> getListaSatOx(EntPaciente entPaciente, String fechaGraficas) throws NoExisteMedicionesException;
 }

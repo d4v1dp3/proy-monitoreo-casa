@@ -81,4 +81,16 @@ public class DashboardBD extends BaseSB implements DashboardBDLocal {
         }
 
     }
+
+    @Override
+    public List<EntMedidas> getListaSatOx(EntPaciente entPaciente, String fechaGraficas) throws NoExisteMedicionesException {
+        query = em.createQuery("SELECT e FROM EntMedidas e WHERE e.entPaciente = :entPaciente AND cast(e.fechaMedicion as date) = '"+fechaGraficas.trim()+"'");
+        query.setParameter("entPaciente", entPaciente);
+        try{
+            return query.getResultList();
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener lista de mediciones: {0}",e.getMessage());
+            throw new NoExisteMedicionesException("No es posible obtener lista de mediciones del paciente");
+        }
+    }
 }
