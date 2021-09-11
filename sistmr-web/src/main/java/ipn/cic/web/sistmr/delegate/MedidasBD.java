@@ -117,8 +117,8 @@ public class MedidasBD implements MedidasBDLocal {
                 logger.log(Level.INFO, "temp: {0}", medidas.getTemperatura());
                 logger.log(Level.INFO, "fresp: {0}", medidas.getFrecRespiratoria());
                 logger.log(Level.INFO, "fcard: {0}", medidas.getFrecCardiaca());
-                logger.log(Level.INFO, "pSis: {0}", medidas.getPreArtSistolica());
-                logger.log(Level.INFO, "pDias: {0}", medidas.getPreArtDiastolica());
+            //    logger.log(Level.INFO, "pSis: {0}", medidas.getPreArtSistolica());
+            //    logger.log(Level.INFO, "pDias: {0}", medidas.getPreArtDiastolica());
             } else {
                 logger.log(Level.INFO, "Medidas fuera de los rangos");
                 String pac = "Paciente: " + persona.getPrimerApellido()
@@ -165,8 +165,7 @@ public class MedidasBD implements MedidasBDLocal {
 
     private int errorSensores(EntMedidas medidas) {
         if (medidas.getSaturacionOxigeno() < 0 || medidas.getTemperatura() < 0
-                || medidas.getFrecRespiratoria() < 0 || medidas.getFrecCardiaca() < 0
-                || medidas.getPreArtSistolica() < 0 || medidas.getPreArtDiastolica() < 0) {
+                || medidas.getFrecRespiratoria() < 0 || medidas.getFrecCardiaca() < 0) {
             return 1;
         }
         return 0;
@@ -202,7 +201,7 @@ public class MedidasBD implements MedidasBDLocal {
                 reporte += " \nFrecuencia cardiaca: " + Short.toString(medidas.getFrecCardiaca());
             }
 
-            if (medidas.getPreArtSistolica() < 0) {
+            /*if (medidas.getPreArtSistolica() < 0) {
                 reporte += " \nError sensor: Presion Arterial Sistolica";
             } else if (medidas.getPreArtSistolica() < valoresRef.getPreArtSistolicaNormalMin() || medidas.getPreArtSistolica() >= valoresRef.getPreArtSistolicaAlertMin()) {
                 reporte += " \nPresion Arterial Sistolica: " + Integer.toString(medidas.getPreArtSistolica());
@@ -212,7 +211,7 @@ public class MedidasBD implements MedidasBDLocal {
                 reporte += " \nError sensor: Presion Arterial Diastolica";
             } else if (medidas.getPreArtDiastolica() < valoresRef.getPreArtDiastolicaNormalMin() || medidas.getPreArtDiastolica() >= valoresRef.getPreArtDiastolicaAlertMin()) {
                 reporte += " \nPresion Arterial Diastolica: " + Integer.toString(medidas.getPreArtDiastolica());
-            }
+            }*/
 
             return reporte;
         } catch (NoExisteValoresRefException ex) {

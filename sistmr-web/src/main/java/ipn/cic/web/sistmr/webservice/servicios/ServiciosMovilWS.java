@@ -35,7 +35,7 @@ import javax.ejb.EJB;
 public class ServiciosMovilWS {
     
     @EJB
-    private MedidasBDLocal medidasDB;
+    private MedidasBDLocal medidasBD;
     
     @POST
     public JsonObject recibeMedidas(JsonObject datos) throws MedidasException, NoExistePacienteException{
@@ -59,7 +59,7 @@ public class ServiciosMovilWS {
             MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
             med.setFechaMedicion(Calendar.getInstance().getTime());
             
-            respuesta = medidasDB.guardarMedidas(med);
+            respuesta = medidasBD.guardarMedidas(med);
             
         }catch(NoExistePacienteException ex){
             respuesta = Json.createObjectBuilder()

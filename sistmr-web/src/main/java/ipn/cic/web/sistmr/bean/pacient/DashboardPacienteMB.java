@@ -227,7 +227,7 @@ public class DashboardPacienteMB implements Serializable{
         }
         medidasPorDia=null;
         try { 
-            medidasPorDia=dashboardBD.getListaSatOx(paciente, fechaGraficas);
+            medidasPorDia=dashboardBD.getListaMedidas(paciente, fechaGraficas);
             logger.log(Level.INFO," Medidas recuperadas del dia: {0}",fechaGraficas+": "+medidasPorDia.size());
         } catch (NoExisteMedicionesException ex) {
             logger.log(Level.SEVERE,"Error al recuperar medidas del dia: {0}",fechaGraficas);

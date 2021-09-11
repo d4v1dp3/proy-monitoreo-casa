@@ -83,7 +83,7 @@ public class DashboardBD extends BaseSB implements DashboardBDLocal {
     }
 
     @Override
-    public List<EntMedidas> getListaSatOx(EntPaciente entPaciente, String fechaGraficas) throws NoExisteMedicionesException {
+    public List<EntMedidas> getListaMedidas(EntPaciente entPaciente, String fechaGraficas) throws NoExisteMedicionesException {
         query = em.createQuery("SELECT e FROM EntMedidas e WHERE e.entPaciente = :entPaciente AND cast(e.fechaMedicion as date) = '"+fechaGraficas.trim()+"'");
         query.setParameter("entPaciente", entPaciente);
         try{
