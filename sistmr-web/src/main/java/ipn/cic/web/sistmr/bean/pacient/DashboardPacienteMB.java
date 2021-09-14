@@ -44,8 +44,7 @@ import org.primefaces.model.chart.LineChartModel;
 
 @Named(value="dashboardPacienteMB")
 @ViewScoped
-public class DashboardPacienteMB implements Serializable{
-    
+public class DashboardPacienteMB implements Serializable{  
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(DashboardPacienteMB.class.getName());
     
@@ -746,7 +745,4 @@ public class DashboardPacienteMB implements Serializable{
     public void setpArtColor(String pArtColor) {
         this.pArtColor = pArtColor;
     }
-
-    
-    
 }

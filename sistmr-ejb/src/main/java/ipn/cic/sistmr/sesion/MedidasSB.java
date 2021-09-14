@@ -19,13 +19,14 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class MedidasSB extends BaseSB implements MedidasSBLocal{
-    private static final Logger logger = Logger.getLogger(HospitalSB.class.getName());
+    private static final Logger logger = Logger.getLogger(MedidasSB.class.getName());
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
     public EntMedidas guardaMedidas(EntMedidas med) throws MedidasException {
         try {
+             //logger.log(Level.INFO,"Datos de Fecha en Medidas :{0}",med.getFechaMedicion());
             return (EntMedidas)saveEntity(med);
         } catch (SaveEntityException ex) {
             logger.log(Level.SEVERE,"Error al intentar salvar entidad medidas : {0}", ex.getMessage());

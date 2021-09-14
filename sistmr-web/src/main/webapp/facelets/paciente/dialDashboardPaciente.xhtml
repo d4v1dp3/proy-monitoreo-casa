@@ -11,7 +11,7 @@
             <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
             <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
             <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>
-            <f:viewParam name="pacfechaHist" value="#{dashboardPacienteMB.fechaHist}"/>
+            <f:viewParam name="pacfechaHist" value="#{dashboardPacienteMB.fechaActual}"/>
             <f:viewAction action="#{dashboardPacienteMB.cargaInicial}"/>
         </f:metadata>
         <h:head>
@@ -92,13 +92,13 @@
                         
                         <p:column>
                             <p:panel id="panelOxigeno" header="Saturación de Oxígeno" styleClass="#{dashboardPacienteMB.satOxgColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxg}" style="font-size: 50px;"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxgStr}" style="font-size: 50px;"/>
                                 <h:outputText value="%"  style="font-size: 15px;"/>
                             </p:panel>
                         </p:column>
                         <p:column>
                             <p:panel id="panelTemperatura" header="Temperatura" styleClass="#{dashboardPacienteMB.tempColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacTemperatura}"  style="font-size: 50px;"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacTemperaturaStr}"  style="font-size: 50px;"/>
                                 <h:outputText value="°C"  style="font-size: 15px;"/>
                             </p:panel>
                         </p:column>
@@ -107,13 +107,13 @@
                     <p:row> 
                         <p:column>
                             <p:panel id="panelfRespiratoria" header="Frecuencia Respiratoria" styleClass="#{dashboardPacienteMB.frespColor}" >  
-                                <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoria}"  style="font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoriaStr}"  style="font-size: 50px"/>
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
                             </p:panel>
                         </p:column>
                         <p:column colspan="2">
                             <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.fcardColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecCardiacaStr}"  style="font-size: 50px"/>
                                 <h:outputText value="LPM" style="font-size: 15px"/>
                             </p:panel>
                         </p:column>

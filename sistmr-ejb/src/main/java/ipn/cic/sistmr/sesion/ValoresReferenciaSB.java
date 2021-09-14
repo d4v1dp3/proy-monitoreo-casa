@@ -61,7 +61,7 @@ public class ValoresReferenciaSB extends BaseSB implements ValoresReferenciaSBLo
     
     @Override
     public EntValoresReferencia getValoresReferenciaId(Short idValRef) throws NoExisteValoresRefException{
-        logger.log(Level.SEVERE,"Recuperando valores de referencia");
+        logger.log(Level.INFO,"Recuperando valores de referencia");
         query = em.createQuery("SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValRef");
         query.setParameter("idValRef", idValRef);
         try{

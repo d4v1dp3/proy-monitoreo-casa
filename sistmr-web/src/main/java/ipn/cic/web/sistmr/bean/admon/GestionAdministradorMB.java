@@ -98,6 +98,11 @@ public class GestionAdministradorMB implements Serializable {
         cerrarDialogo(msg);
     }
 
+    public void cerrarDialogo(){
+        logger.log(Level.INFO,"Invocando cerrar dialogo.");
+        cerrarDialogo(null);
+    }
+    
     private void cerrarDialogo(FacesMessage mensaje) {
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }

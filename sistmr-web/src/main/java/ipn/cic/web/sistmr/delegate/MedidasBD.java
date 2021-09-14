@@ -105,6 +105,7 @@ public class MedidasBD implements MedidasBDLocal {
             medidas.setPreArtDiastolica(med.getPreArtDiastolica());
 
             medidas = medidasSB.guardaMedidas(medidas);
+             //logger.log(Level.INFO,"Datos de despues de guardar medidas :{0}",medidas.getFechaMedicion());
             medico = medicoSB.getMedicoDePaciente(paciente);
             usuario = usuarioSB.getUsuarioDeMedico(medico);
             persona = personaSB.getPersonaDePaciente(paciente.getIdPaciente());

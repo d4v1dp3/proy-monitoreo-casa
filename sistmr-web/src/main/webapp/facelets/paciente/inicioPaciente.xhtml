@@ -50,7 +50,8 @@
                                 <p:column style="border-color: white;">
                                     <p:panelGrid>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Mis Datos</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" 
+                                                      class="ui-widget-header">Mis Datos</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
@@ -112,7 +113,8 @@
                                             </p:column>
                                         </p:row>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Antecedentes</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" 
+                                                      class="ui-widget-header">Antecedentes</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
@@ -211,7 +213,8 @@
                                 <p:column style="border-color: white;">
                                     <p:panelGrid>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Información del Paciente</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" 
+                                                      class="ui-widget-header">Información del Paciente</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
@@ -232,7 +235,8 @@
                                                         <p:panel id="pacSignos" header="Signos y Sintomas">
                                                             <i class="fas fa-heartbeat" style="font-size: 6em; color: #94aebd;"></i>
                                                             <br/>
-                                                            <p:commandButton value="Ver Signos y Sintomas" title="Dashboard" actionListener="#{inicioPacienteMB.mostrarDashboard()}">
+                                                            <p:commandButton value="Ver Signos y Sintomas" title="Dashboard" 
+                                                                             actionListener="#{inicioPacienteMB.mostrarDashboard()}">
                                                                 <p:ajax event="dialogReturn" listener="#{inicioPacienteMB.mostrarDashboard()}" update="@all"/>
                                                             </p:commandButton>
                                                         </p:panel>
@@ -246,7 +250,8 @@
                                                             <p:outputLabel value="#{inicioPacienteMB.hospital.nombre}" style="font-weight: bold"> </p:outputLabel>
                                                             <br/>
                                                             <p:outputLabel value="Teléfono: " />
-                                                            <p:outputLabel value="#{inicioPacienteMB.hospital.telEmergencias}" style="font-weight: bold"> </p:outputLabel>
+                                                            <p:outputLabel value="#{inicioPacienteMB.hospital.telEmergencias}" style="font-weight: bold">
+                                                            </p:outputLabel>
                                                         </p:panel>
                                                     </p:column>
 
@@ -255,14 +260,21 @@
                                                             <i class="fas fa-user-md" style="font-size: 6em; color: #94aebd;"></i>
                                                             <br/>
                                                             <p:outputLabel value="Nombre: " />
-                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.nombre}" style="font-weight: bold"> </p:outputLabel>
+                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.nombre}" style="font-weight: bold">
+                                                            </p:outputLabel>
                                                             <p:outputLabel value=" " />
-                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.primerApellido}" style="font-weight: bold"> </p:outputLabel>
+                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.primerApellido}" 
+                                                                           style="font-weight: bold"> 
+                                                            </p:outputLabel>
                                                             <p:outputLabel value=" " />
-                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.segundoApellido}" style="font-weight: bold"> </p:outputLabel>
+                                                            <p:outputLabel value="#{inicioPacienteMB.medicoPac.idPersona.segundoApellido}" 
+                                                                           style="font-weight: bold"> 
+                                                            </p:outputLabel>
                                                             <br/>
                                                             <p:outputLabel value="Email: " />
-                                                            <p:outputLabel value="#{inicioPacienteMB.usuarioMedico.email}" style="font-weight: bold"> </p:outputLabel>
+                                                            <p:outputLabel value="#{inicioPacienteMB.usuarioMedico.email}" 
+                                                                           style="font-weight: bold"> 
+                                                            </p:outputLabel>
                                                         </p:panel>
                                                     </p:column>
 

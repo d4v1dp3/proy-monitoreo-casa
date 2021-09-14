@@ -58,11 +58,11 @@ public class GestionBienvenidaMB implements Serializable{
         
         for(EntRol rol: rolesUsu){
             if(rol.getIdRol()==rol_paciente){
-                ruta = "/faces/facelets/paciente/inicioPaciente.xhtml?faces-redirect=true";        
+                ruta = "/facelets/paciente/inicioPaciente.xhtml?faces-redirect=true";        
             }else if(rol.getIdRol()==rol_medico){
-                ruta = "/faces/facelets/medico/inicioMedico.xhtml?faces-redirect=true";
+                ruta = "/facelets/medico/inicioMedico.xhtml?faces-redirect=true";
             }else if(rol.getIdRol()==rol_administrador){
-                ruta = "/faces/facelets/admon/inicioAdmin.xhtml?faces-redirect=true";
+                ruta = "/facelets/admon/inicioAdmin.xhtml?faces-redirect=true";
             }
         }       
         return ruta;

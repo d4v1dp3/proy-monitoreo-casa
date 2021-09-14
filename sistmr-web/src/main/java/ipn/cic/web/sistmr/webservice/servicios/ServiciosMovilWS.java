@@ -21,6 +21,8 @@ import ipn.cic.sistmr.exception.MedidasException;
 import ipn.cic.sistmr.exception.NoExistePacienteException;
 import ipn.cic.web.sistmr.delegate.MedidasBDLocal;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 /**
@@ -33,6 +35,7 @@ import javax.ejb.EJB;
 
 @Path("persistemedicion")
 public class ServiciosMovilWS {
+    private static final Logger logger = Logger.getLogger(ServiciosMovilWS.class.getName());
     
     @EJB
     private MedidasBDLocal medidasBD;
@@ -58,6 +61,10 @@ public class ServiciosMovilWS {
             Gson gson= new Gson();
             MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
             med.setFechaMedicion(Calendar.getInstance().getTime());
+            //logger.log(Level.INFO,"Datos de calendario :{0}",med.getFechaMedicion());
+            //logger.log(Level.INFO,"Datos de calendario :{0}",Calendar.getInstance());
+            //logger.log(Level.INFO,"Datos de calendario :{0}",Calendar.getInstance().getTimeZone());
+            //logger.log(Level.INFO,"Datos de calendario :{0}",Calendar.getInstance().getTime());
             
             respuesta = medidasBD.guardarMedidas(med);
             
