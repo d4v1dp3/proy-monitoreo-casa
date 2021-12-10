@@ -2,3 +2,5 @@
 /sistmr-web/target/
 /sistmr-ear/target/
 /nbactions.xml
+.project
+.settings

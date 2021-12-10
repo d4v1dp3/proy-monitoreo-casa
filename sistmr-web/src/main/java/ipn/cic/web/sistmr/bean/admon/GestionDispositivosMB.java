@@ -25,6 +25,7 @@ import ipn.cic.sistmr.sesion.HospitalSBLocal;
 import ipn.cic.web.sistmr.util.Mensaje;
 import ipn.cic.web.sistmr.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -332,11 +333,11 @@ public class GestionDispositivosMB implements Serializable {
     }
 
     public void editarDispositivo() {
-       
+       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         
         idCareta = caretaHospitalEditar.getEntCareta().getIdCareta();
         noSerie = caretaHospitalEditar.getEntCareta().getNoSerie();
-        fechaManufactura = caretaHospitalEditar.getEntCareta().getFechaManufactura().toString();
+        fechaManufactura = sdf.format(caretaHospitalEditar.getEntCareta().getFechaManufactura());
         
         try {
             estadocareta = caretaSB.getEstadoCareta(caretaHospitalEditar.getEntCareta());
