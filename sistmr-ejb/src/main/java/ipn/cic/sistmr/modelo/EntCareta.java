@@ -99,7 +99,7 @@ public class EntCareta implements Serializable {
     
     public void setFechaManufactura(String fechaManufactura){
         try {
-            this.fechaManufactura = new SimpleDateFormat("yyyy-MM-dd").parse(fechaManufactura);
+            this.fechaManufactura = new SimpleDateFormat("dd-MM-yyyy").parse(fechaManufactura);
         } catch (ParseException e) {
         }
     }
