@@ -50,7 +50,7 @@ import org.primefaces.event.SelectEvent;
 public class GestionDispositivosMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(GestionUsuariosMB.class.getName());
+    private static final Logger logger = Logger.getLogger(GestionDispositivosMB.class.getName());
 
     @EJB
     private CaretaSBLocal caretaSB;
